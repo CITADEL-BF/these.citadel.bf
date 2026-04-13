@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>these.citadel.bf – Portail des thèses et publications scientifiques</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<header class="navbar">
+  <div class="navbar-logo">
+    <img src="assets/images/logo-citadel.png" alt="CITADEL" class="logo-img" />
+  </div>
+  <nav>
+    <a href="index.html" class="active">Accueil</a>
+    <a href="pages/publications.html">Publications</a>
+    <a href="pages/publications.html">Thèses</a>
+    <a href="#">Chercheurs</a>
+    <a href="#">Contact</a>
+    <a href="#" class="btn-connect">SE CONNECTER</a>
+  </nav>
+</header>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Bienvenue sur <span>these.citadel.bf</span></h1>
+    <p>Portail des thèses et publications scientifiques du Citadel</p>
+    <div class="search-bar">
+      <input type="text" placeholder="Rechercher des articles, thèses..." />
+      <button>
+        <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS ══ -->
+<div class="stats">
+  <div class="stat-item">
+    <span class="stat-num" data-target="120">0</span>
+    <span class="stat-label">Publications</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="20">0</span>
+    <span class="stat-label">Auteurs</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num" data-target="500">0</span>
+    <span class="stat-label">Citations</span>
+  </div>
+</div>
+
+<!-- ══ EXPLORE ══ -->
+<section class="explore">
+  <h2 class="section-title">Explorez nos ressources</h2>
+  <div class="custom-select-wrapper">
+    <div class="custom-select" id="categorySelect">
+      <div class="select-selected" onclick="toggleDropdown()">
+        <span id="selectLabel">Sélectionnez une catégorie...</span>
+        <svg class="select-arrow" id="selectArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <ul class="select-options" id="selectOptions">
+        <li onclick="selectCategory(event, 'Articles')"> Articles</li>
+        <li onclick="selectCategory(event, 'Thèses')"> Thèses</li>
+        <li onclick="selectCategory(event, 'Mémoires')"> Mémoires</li>
+        <li onclick="selectCategory(event, 'Rapports')"> Rapports</li>
+        <li onclick="selectCategory(event, 'Posters')"> Posters</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PUBLICATIONS ══ -->
+<section class="publications">
+  <h2 class="section-title">Dernières Publications</h2>
+  <div class="pub-list" id="pub-list">
+
+    <!-- Les publications sont chargées dynamiquement depuis data/publications.json -->
+    <!-- Fallback statique si le JSON n'est pas disponible -->
+
+    <div class="pub-item">
+      <div class="pub-header" onclick="togglePub(this)">
+        <div class="pub-dot"></div>
+        <span class="pub-title">Evaluating Acoustic Parameters for DeepFake Detection in Audio Signals</span>
+        <span class="pub-meta">Abeeze Burpte Dire, 30 Jan 2024</span>
+        <button class="pub-toggle">▼</button>
+      </div>
+      <div class="pub-body">
+        <span class="pub-abstract-label">Abstract</span>
+        <p class="pub-abstract-text">This study evaluates acoustic parameters for detecting deepfake audio signals, analyzing spectral and temporal features to distinguish authentic from synthetic speech. Results show high accuracy using MFCC and pitch variation metrics.</p>
+        <a class="btn-pdf" href="#">📄 PDF</a>
+      </div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-header" onclick="togglePub(this)">
+        <div class="pub-dot"></div>
+        <span class="pub-title">Text-to-OWL: Automated Ontology Construction from Natural Language Text</span>
+        <span class="pub-meta">Zénabo Ouédraogo, 2023</span>
+        <button class="pub-toggle">▼</button>
+      </div>
+      <div class="pub-body">
+        <span class="pub-abstract-label">Abstract</span>
+        <p class="pub-abstract-text">Presents an automated pipeline converting unstructured text into OWL ontologies using NLP and transformer-based models. Evaluated on domain-specific corpora with promising precision and recall scores.</p>
+        <a class="btn-pdf" href="#">📄 PDF</a>
+      </div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-header" onclick="togglePub(this)">
+        <div class="pub-dot"></div>
+        <span class="pub-title">Voice Interaction in Moore Language: A Speech Recognition Approach</span>
+        <span class="pub-meta">Rodrigue KABANGO, December, 2023</span>
+        <button class="pub-toggle">▼</button>
+      </div>
+      <div class="pub-body">
+        <span class="pub-abstract-label">Abstract</span>
+        <p class="pub-abstract-text">Proposes a speech recognition system adapted to the Moore language (spoken in Burkina Faso), addressing data scarcity with transfer learning and data augmentation techniques. Achieves competitive word error rates.</p>
+        <a class="btn-pdf" href="#">📄 PDF</a>
+      </div>
+    </div>
+
+    <div class="pub-item">
+      <div class="pub-header" onclick="togglePub(this)">
+        <div class="pub-dot"></div>
+        <span class="pub-title">Detecting Illicit Data Leaks on Android Applications</span>
+        <span class="pub-meta">Serge Lionel Nikiema, December, 2024</span>
+        <button class="pub-toggle">▼</button>
+      </div>
+      <div class="pub-body">
+        <span class="pub-abstract-label">Abstract</span>
+        <p class="pub-abstract-text">Introduces a static and dynamic analysis framework for detecting unauthorized data exfiltration in Android apps, identifying sensitive API misuse and network leaks across a large app corpus.</p>
+        <a class="btn-pdf" href="#">📄 PDF</a>
+      </div>
+    </div>
+
+    <div class="pub-item" id="featured-pub">
+      <div class="pub-header" onclick="togglePub(this)">
+        <div class="pub-dot" style="background:var(--red)"></div>
+        <span class="pub-title">AI-Based Approach for Early Diagnosis of Hemorrhagic Stroke</span>
+        <span class="pub-meta">Serge Lionel Nikiema, December, 2022</span>
+        <button class="pub-toggle" style="background:var(--red)">▼</button>
+      </div>
+      <div class="pub-body open">
+        <span class="pub-abstract-label" style="background:var(--red)">Abstract</span>
+        <p class="pub-abstract-text">A hemorrhagic stroke is a life-threatening medical condition that happens when a blood vessel in your brain ruptures and bleeds — it constitutes a burden on health services and the victim's family. The current definitive diagnosis of stroke is based on brain scanning and AI-assisted methods are explored to accelerate detection.</p>
+        <a class="btn-pdf" href="#">📄 PDF</a>
+      </div>
+    </div>
+
+  </div>
+  <div class="btn-voir-plus">
+    <a href="#">Voir Plus ▼</a>
+  </div>
+</section>
+
+<!-- ══ CHERCHEURS + AXES ══ -->
+<div style="background:var(--white); padding: 0 5% 48px;">
+  <div class="bottom-section" style="padding-top:48px;">
+
+    <div>
+      <p class="sub-title">Nos Chercheurs</p>
+      <div class="chercheurs-grid">
+        <div class="chercheur-card">
+          <div class="chercheur-avatar">
+            <img src="assets/images/chercheurs/tinto.png" alt="Mr TINTO" />
+          </div>
+          <span class="chercheur-name">Mr TINTO</span>
+        </div>
+        <div class="chercheur-card">
+          <div class="chercheur-avatar">
+            <img src="assets/images/chercheurs/sabane.png" alt="Dr SABANE" />
+          </div>
+          <span class="chercheur-name">Dr SABANE</span>
+        </div>
+        <div class="chercheur-card">
+          <div class="chercheur-avatar">
+            <img src="assets/images/chercheurs/bissyande.png" alt="Dr BISSYANDE" />
+          </div>
+          <span class="chercheur-name">Dr BISSYANDE</span>
+        </div>
+      </div>
+      <a class="btn-all-chercheurs" href="#">Voir tous les Chercheurs →</a>
+    </div>
+
+    <div>
+      <p class="sub-title">Axes de Recherche</p>
+      <div class="axes-list">
+        <div class="axe-item priority"><span class="axe-dot" style="background:#e53935"></span>LANGUE &amp; PATRIMOINE</div>
+        <div class="axe-item priority"><span class="axe-dot" style="background:#43a047"></span>SANTÉ &amp; BIEN-ÊTRE</div>
+        <div class="axe-item priority"><span class="axe-dot" style="background:#f0a500"></span>AGRICULTURE ET PASTORALISME</div>
+        <div class="axe-item"><span class="axe-dot" style="background:#1e88e5"></span>FINTECH &amp; SÉCURITÉ</div>
+        <div class="axe-item"><span class="axe-dot" style="background:#8e24aa"></span>CONFIDENTIALITÉ ET EXPLICABILITÉ</div>
+        <div class="axe-item"><span class="axe-dot" style="background:#00897b"></span>ÉNERGIE ET CHANGEMENT CLIMATIQUE</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-social">
+    <div class="social-link" title="Facebook">𝕗</div>
+    <div class="social-link" title="X / Twitter">𝕏</div>
+    <div class="social-link" title="LinkedIn">in</div>
+    <div class="social-link" title="Email">✉</div>
+    <div class="social-link" title="YouTube">▶</div>
+    <div class="social-link" title="TikTok">♪</div>
+  </div>
+  <div class="footer-bottom">
+    <span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
+    <a href="#">Politique de Confidentialité</a>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

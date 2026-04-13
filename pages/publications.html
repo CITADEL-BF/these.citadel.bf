@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publications — these.citadel.bf</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/publications.css" />
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<header class="navbar">
+  <div class="navbar-logo">
+    <img src="../assets/images/logo-citadel.png" alt="CITADEL" class="logo-img" />
+  </div>
+  <nav>
+    <a href="../index.html">Accueil</a>
+    <a href="publications.html" class="active">Publications</a>
+    <a href="publications.html">Thèses</a>
+    <a href="#">Chercheurs</a>
+    <a href="#">Contact</a>
+    <a href="#" class="btn-connect">SE CONNECTER</a>
+  </nav>
+</header>
+
+<!-- ══ HERO ══ -->
+<section class="hero" style="padding: 40px 20px;">
+  <div class="hero-content">
+    <h1>Publications Scientifiques</h1>
+    <p>Accédez à l'ensemble des travaux de recherche produits par les membres de CITADEL</p>
+  </div>
+</section>
+
+<!-- ══ PUBLICATIONS PAGE ══ -->
+<section class="pub-page">
+  <div class="search-filters">
+    <input type="text" id="searchInput" placeholder="Rechercher par titre, mot-clé, auteur..." />
+    <div class="filters">
+      <select id="filterYear"><option value="">Année</option></select>
+      <select id="filterAuthor"><option value="">Auteur</option></select>
+      <select id="filterType"><option value="">Type de publication</option></select>
+      <select id="filterTheme"><option value="">Axe de recherche</option></select>
+    </div>
+    <div class="result-count"><span id="resultCount">0</span> résultat(s) trouvé(s)</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-type="">Tout</button>
+    <button class="tab" data-type="Article">Articles</button>
+    <button class="tab" data-type="Thèse">Thèses</button>
+    <button class="tab" data-type="Rapport">Rapports</button>
+    <button class="tab" data-type="Poster">Posters</button>
+    <button class="tab" data-type="Mémoire">Mémoires</button>
+  </div>
+
+  <div class="toggle-all">
+    <button id="expandAll">Tout déplier</button>
+    <button id="collapseAll">Tout replier</button>
+  </div>
+
+  <div id="pubResults" class="pub-list"></div>
+  <div id="pagination" class="pagination"></div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-social">
+    <div class="social-link" title="Facebook">𝕗</div>
+    <div class="social-link" title="X / Twitter">𝕏</div>
+    <div class="social-link" title="LinkedIn">in</div>
+    <div class="social-link" title="Email">✉</div>
+    <div class="social-link" title="YouTube">▶</div>
+    <div class="social-link" title="TikTok">♪</div>
+  </div>
+  <div class="footer-bottom">
+    <span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
+    <a href="#">Politique de Confidentialité</a>
+  </div>
+</footer>
+
+<script src="../assets/js/publications.js"></script>
+</body>
+</html>
