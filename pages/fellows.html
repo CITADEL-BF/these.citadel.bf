@@ -3,80 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Publications — these.citadel.bf</title>
+  <title>Fellows — these.citadel.bf</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="../assets/css/style.css" />
-  <link rel="stylesheet" href="../assets/css/publications.css" />
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <link rel="stylesheet" href="../assets/css/fellows.css" />
 </head>
 <body>
 
-<!-- ══ NAVBAR ══ -->
 <header class="navbar">
-  <a href="../index.html">
-  <img src="../assets/images/logo-citadel.png" alt="CITADEL" class="logo-img" />
-</a>
+  <div class="navbar-logo">
+    <a href="../index.html">
+      <img src="../assets/images/logo-citadel.png" alt="CITADEL" class="logo-img" />
+    </a>
+  </div>
   <nav>
     <a href="../index.html">Accueil</a>
-    <a href="publications.html" class="active">Publications</a>
+    <a href="publications.html">Publications</a>
     <a href="publications.html?type=Thèse">Thèses</a>
-    <div class="nav-dropdown">
+<div class="nav-dropdown">
     <a href="#">Fellows ▾</a>
-      <div class="nav-dropdown-menu">
-        <a href="fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
-        <a href="fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
-        <a href="fellows.html?role=fellow"><i class="fa-solid fa-graduation-cap"></i> Fellows</a>
-      </div>
-    </div>
-    <a href="contact.html">Contact</a>
+  <div class="nav-dropdown-menu">
+    <a href="fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
+     <a href="fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
+    <a href="fellows.html?role=fellow"><i class="fa-solid fa-graduation-cap"></i> Fellows</a>
+  </div>
+</div>    <a href="contact.html">Contact</a>
 <div id="google_translate_element" style="display:none"></div>
 <button id="langBtn" class="notranslate" onclick="toggleLang()" style="background:var(--green);color:white;border:none;padding:6px 14px;border-radius:4px;font-weight:700;font-size:.82rem;cursor:pointer;letter-spacing:.06em;">EN</button>
-  <a href="#" class="btn-connect">SE CONNECTER</a>
+<a href="#" class="btn-connect">SE CONNECTER</a>
   </nav>
 </header>
 
-<!-- ══ HERO ══ -->
 <section class="hero" style="padding: 40px 20px;">
   <div class="hero-content">
-<h1>Publications Scientifiques</h1>
-<p>Accédez à l'ensemble des travaux de recherche produits par les membres de CITADEL</p>
+<h1>Nos Fellows</h1>
+    <p>Decouvrez les chercheurs et Fellows du CITADEL et explorez leurs publications</p>
   </div>
 </section>
 
-<!-- ══ PUBLICATIONS PAGE ══ -->
-<section class="pub-page">
-  <div class="search-filters">
-    <input type="text" id="searchInput" placeholder="Rechercher par titre, mot-clé, auteur..." />
-    <div class="filters">
-      <select id="filterYear"><option value="">Année</option></select>
-      <select id="filterAuthor"><option value="">Auteur</option></select>
-      <select id="filterType"><option value="">Type de publication</option></select>
-      <select id="filterTheme"><option value="">Axe de recherche</option></select>
-    </div>
-    <div class="result-count"><span id="resultCount">0</span> résultat(s) trouvé(s)</div>
-  </div>
-
-  <div class="tabs">
-    <button class="tab active" data-type="">Tout</button>
-    <button class="tab" data-type="Article">Articles</button>
-    <button class="tab" data-type="Thèse">Thèses</button>
-    <button class="tab" data-type="Rapport">Rapports</button>
-    <button class="tab" data-type="Poster">Posters</button>
-    <button class="tab" data-type="Mémoire">Mémoires</button>
-  </div>
-
-  <div class="toggle-all">
-<button id="expandAll">Tout déplier</button>
-<button id="collapseAll">Tout replier</button>  </div>
-
-  <div id="pubResults" class="pub-list"></div>
-  <div id="pagination" class="pagination"></div>
+<!-- VUE GRILLE (affichee par defaut) -->
+<section class="fellows-page" id="fellowsGrid">
+  <div class="fellows-grid" id="gridContainer"></div>
 </section>
 
-<!-- ══ FOOTER ══ -->
+<!-- VUE PROFIL (affichee au clic sur un fellow) -->
+<section class="fellow-profile" id="fellowProfile" style="display:none;">
+  <div id="profileContent"></div>
+</section>
+
 <footer>
   <div class="footer-social">
     <div class="social-link" title="Facebook">𝕗</div>
@@ -87,12 +64,12 @@
     <div class="social-link" title="TikTok">♪</div>
   </div>
   <div class="footer-bottom">
-<span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
-<a href="#">Politique de Confidentialité</a>
+    <span>© [CITADEL], 2019 | UV-BF. Tous droits reserves.</span>
+    <a href="#">Politique de Confidentialite</a>
   </div>
 </footer>
 
-<script src="../assets/js/publications.js"></script>
+<script src="../assets/js/fellows.js"></script>
 <script>
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({

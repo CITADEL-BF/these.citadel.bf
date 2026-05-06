@@ -570,6 +570,65 @@ footer {
 .footer-bottom a { color: rgba(255,255,255,.5); transition: color .2s; }
 .footer-bottom a:hover { color: var(--gold); }
 
+/* ── Dropdown Navbar ── */
+.nav-dropdown {
+  position: relative;
+}
+.nav-dropdown > a {
+  cursor: pointer;
+}
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--white);
+  border: 2px solid var(--green);
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  min-width: 220px;
+  z-index: 200;
+  overflow: hidden;
+}
+.nav-dropdown:hover .nav-dropdown-menu {
+  display: block;
+  animation: slideDown .2s ease;
+}
+.nav-dropdown-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px !important;
+  font-size: .85rem !important;
+  color: var(--dark) !important;
+  border-bottom: 1px solid var(--border);
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+.nav-dropdown-menu a:last-child {
+  border-bottom: none;
+}
+.nav-dropdown-menu a:hover {
+  background: #f0faf5;
+  color: var(--green) !important;
+}
+.nav-dropdown-menu a::after {
+  display: none !important;
+}
+.nav-dropdown-menu i {
+  color: var(--green);
+  width: 18px;
+  text-align: center;
+}
+
+/* ── Google Translate ── */
+#google_translate_element { display: none !important; }
+.goog-te-banner-frame { display: none !important; }
+body { top: 0 !important; }
+font[style] { background: none !important; box-shadow: none !important; }
+.skiptranslate { display: none !important; }
+
+
 /* ── Responsive ── */
 @media (max-width: 700px) {
   .navbar nav { gap: 14px; }

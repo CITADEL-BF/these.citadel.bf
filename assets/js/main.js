@@ -1,8 +1,4 @@
-/* ══════════════════════════════════════════
-   main.js – these.citadel.bf
-   ══════════════════════════════════════════ */
-
-/* ── Accordéon publications ── */
+/* ── Accordeon publications ── */
 function togglePub(header) {
   const body = header.nextElementSibling;
   const btn  = header.querySelector('.pub-toggle');
@@ -18,9 +14,10 @@ function togglePub(header) {
   }
 }
 
-/* ── Compteur animé ── */
+/* ── Compteur anime ── */
 function animateCounter(el) {
   const target = parseInt(el.dataset.target, 10);
+  if (target === 0) { el.textContent = '0'; return; }
   const duration = 1400;
   const step = Math.ceil(target / (duration / 16));
   let current = 0;
@@ -31,18 +28,7 @@ function animateCounter(el) {
   }, 16);
 }
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      animateCounter(e.target);
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.5 });
-
-document.querySelectorAll('.stat-num[data-target]').forEach(el => observer.observe(el));
-
-/* ── Dropdown catégories ── */
+/* ── Dropdown categories ── */
 function toggleDropdown() {
   const opts   = document.getElementById('selectOptions');
   const arrow  = document.getElementById('selectArrow');
@@ -62,12 +48,15 @@ function selectCategory(e, name) {
   document.querySelector('.select-selected').classList.remove('open');
   document.querySelectorAll('.select-options li').forEach(li => li.classList.remove('selected'));
   e.currentTarget.classList.add('selected');
+
+  // Filtrer les publications par type
+  filterPublications(name);
 }
 
 // Fermer si clic ailleurs
 document.addEventListener('click', (e) => {
   const select = document.getElementById('categorySelect');
-  if (!select.contains(e.target)) {
+  if (select && !select.contains(e.target)) {
     document.getElementById('selectOptions').classList.remove('open');
     document.getElementById('selectArrow').classList.remove('rotated');
     document.querySelector('.select-selected').classList.remove('open');
@@ -75,54 +64,144 @@ document.addEventListener('click', (e) => {
 });
 
 /* ── Recherche ── */
-document.querySelector('.search-bar button').addEventListener('click', () => {
-  const val = document.querySelector('.search-bar input').value.trim();
-  if (val) alert(`Recherche : "${val}" — connectez le backend ici.`);
-});
+const searchBtn = document.querySelector('.search-bar button');
+const searchInput = document.querySelector('.search-bar input');
 
-document.querySelector('.search-bar input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') document.querySelector('.search-bar button').click();
-});
+if (searchBtn) {
+  searchBtn.addEventListener('click', () => {
+    const val = searchInput.value.trim();
+    if (val) window.location.href = 'pages/publications.html?q=' + encodeURIComponent(val);
+  });
+}
+
+if (searchInput) {
+  searchInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') searchBtn.click();
+  });
+}
+
+/* ── Variables globales ── */
+let allPublications = [];
 
 /* ── Chargement dynamique des publications depuis le JSON ── */
 document.addEventListener('DOMContentLoaded', () => {
   fetch('data/publications.json')
     .then(res => res.json())
     .then(pubs => {
-      const list = document.getElementById('pub-list');
-      if (!list) return;
+      allPublications = pubs;
 
-      list.innerHTML = '';
+      // ── Mettre a jour les statistiques dynamiquement ──
+      const pubCount = pubs.length;
 
-      pubs.forEach((pub, i) => {
-        const isFeatured = pub.featured || false;
-        const dotColor   = isFeatured ? 'var(--red)' : 'var(--green)';
-        const btnColor   = isFeatured ? 'var(--red)' : 'var(--green)';
-        const labelColor = isFeatured ? 'var(--red)' : 'var(--green)';
-        const openClass  = isFeatured ? ' open' : '';
-
-        const item = document.createElement('div');
-        item.className = 'pub-item';
-        if (isFeatured) item.id = 'featured-pub';
-
-        item.innerHTML = `
-          <div class="pub-header" onclick="togglePub(this)">
-            <div class="pub-dot" style="background:${dotColor}"></div>
-            <span class="pub-title">${pub.title}</span>
-            <span class="pub-meta">${pub.author}, ${pub.date}</span>
-            <button class="pub-toggle" style="background:${btnColor}">${isFeatured ? '▲' : '▼'}</button>
-          </div>
-          <div class="pub-body${openClass}">
-            <span class="pub-abstract-label" style="background:${labelColor}">Abstract</span>
-            <p class="pub-abstract-text">${pub.abstract}</p>
-            <a class="btn-pdf" href="${pub.pdf || '#'}">📄 PDF</a>
-          </div>
-        `;
-
-        list.appendChild(item);
+      // Compter les auteurs uniques
+      const authorNames = new Set();
+      pubs.forEach(p => {
+        if (p.authors) {
+          p.authors.forEach(a => authorNames.add(a.name));
+        }
       });
+      const authorCount = authorNames.size;
+
+      // Mettre a jour les data-target des compteurs
+      document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+        const label = el.nextElementSibling;
+        if (label) {
+          const labelText = label.textContent.trim().toLowerCase();
+          if (labelText === 'publications') {
+            el.dataset.target = pubCount;
+          }
+          if (labelText === 'auteurs') {
+            el.dataset.target = authorCount;
+          }
+        }
+      });
+
+      // ── Lancer les compteurs animes apres la mise a jour ──
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            animateCounter(e.target);
+            observer.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      document.querySelectorAll('.stat-num[data-target]').forEach(el => observer.observe(el));
+
+      // ── Afficher les publications ──
+      renderPublications(pubs);
     })
     .catch(err => {
-      console.warn('publications.json non trouvé, les publications statiques du HTML seront utilisées.', err);
+      console.warn('publications.json non trouve, les publications statiques du HTML seront utilisees.', err);
+
+      // Lancer les compteurs meme si le JSON echoue
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            animateCounter(e.target);
+            observer.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      document.querySelectorAll('.stat-num[data-target]').forEach(el => observer.observe(el));
     });
 });
+
+/* ── Rendu des publications ── */
+function renderPublications(pubs) {
+  const list = document.getElementById('pub-list');
+  if (!list) return;
+
+  list.innerHTML = '';
+
+  pubs.forEach((pub) => {
+    const isFeatured = pub.featured || false;
+    const dotColor   = isFeatured ? 'var(--red)' : 'var(--green)';
+    const btnColor   = isFeatured ? 'var(--red)' : 'var(--green)';
+    const labelColor = isFeatured ? 'var(--red)' : 'var(--green)';
+    const openClass  = isFeatured ? ' open' : '';
+    const authorNames = pub.authors ? pub.authors.map(a => a.name).join(', ') : '';
+
+    const item = document.createElement('div');
+    item.className = 'pub-item';
+    if (isFeatured) item.id = 'featured-pub';
+
+    item.innerHTML = `
+      <div class="pub-header" onclick="togglePub(this)">
+        <div class="pub-dot" style="background:${dotColor}"></div>
+        <span class="pub-title">${pub.title}</span>
+        <span class="pub-meta">${authorNames}, ${pub.date}</span>
+        <button class="pub-toggle" style="background:${btnColor}">${isFeatured ? '▲' : '▼'}</button>
+      </div>
+      <div class="pub-body${openClass}">
+        <span class="pub-abstract-label" style="background:${labelColor}">Abstract</span>
+        <p class="pub-abstract-text">${pub.abstract}</p>
+        <a class="btn-pdf" href="${pub.pdf_url || '#'}">📄 PDF</a>
+      </div>
+    `;
+
+    list.appendChild(item);
+  });
+}
+
+/* ── Filtrer les publications par type ── */
+function filterPublications(type) {
+  const typeMap = {
+    'Articles': 'Article',
+    'Theses': 'These',
+    'Thèses': 'Thèse',
+    'Memoires': 'Memoire',
+    'Mémoires': 'Mémoire',
+    'Rapports': 'Rapport',
+    'Posters': 'Poster',
+    'Conferences': 'Conférence',
+    'Conférences': 'Conférence'
+  };
+
+  const filterType = typeMap[type];
+  if (!filterType) return;
+
+  const filtered = allPublications.filter(p => p.type === filterType);
+  renderPublications(filtered);
+}

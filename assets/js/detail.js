@@ -15,8 +15,7 @@ fetch('../data/publications.json')
 function render(p) {
   const authorsHtml = p.authors.map(a => `${a.name} <span style="color:#999">(${a.affiliation})</span>`).join(', ');
   const keywordsHtml = p.keywords.map(k => `<span class="kw-tag">${k}</span>`).join('');
-  const doiBtn = p.doi ? `<a class="btn-action btn-doi" href="https://doi.org/${p.doi}" target="_blank">🔗 DOI</a>` : '';
-
+const doiBtn = p.doi ? `<a class="btn-action btn-doi" href="https://doi.org/${p.doi}" target="_blank">🔗 DOI/URL</a>` : '';
   document.getElementById('detailPage').innerHTML = `
     <a class="back-link" href="publications.html">← Retour aux publications</a>
     <div class="detail-card">
@@ -39,27 +38,8 @@ function render(p) {
       <div class="detail-actions">
         <a class="btn-action btn-pdf-detail" href="../${p.pdf_url}" target="_blank">📄 Télécharger le PDF</a>
         ${doiBtn}
-        <button class="btn-action btn-bibtex" onclick="toggleBibtex()">📋 Citation BibTeX</button>
-      </div>
-
-      <div class="bibtex-box" id="bibtexBox">
-        <button class="copy-btn" onclick="copyBibtex()">Copier</button>
-        <pre id="bibtexContent">${p.bibtex}</pre>
       </div>
     </div>
   `;
-}
-
-function toggleBibtex() {
-  document.getElementById('bibtexBox').classList.toggle('open');
-}
-
-function copyBibtex() {
-  const text = document.getElementById('bibtexContent').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector('.copy-btn');
-    const original = btn.textContent;
-    btn.textContent = '✓ Copié !';
-    setTimeout(() => btn.textContent = original, 2000);
-  });
+  document.getElementById('detailPage').style.opacity = '1';
 }

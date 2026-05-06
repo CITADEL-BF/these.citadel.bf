@@ -1,0 +1,184 @@
+[
+  {
+    "id": "bissyande",
+    "name": "Dr BISSYANDE",
+    "title": "Chercheur Senior",
+    "role": "senior",
+    "photo": "../assets/images/chercheurs/bissyande.png",
+    "bio": "Chercheur en intelligence artificielle et securite logicielle. Il dirige les activites de recherche de CITADEL et encadre plusieurs Fellows dans leurs travaux de these et memoire.",
+    "email": "tegawende.bissyande@citadel.bf",
+    "themes": ["FINTECH & SÉCURITÉ", "CONFIDENTIALITÉ ET EXPLICABILITÉ"],
+    "publications_count": 2
+  },
+  {
+    "id": "sabane",
+    "name": "Dr SABANE",
+    "title": "Chercheur Senior",
+    "role": "senior",
+    "photo": "../assets/images/chercheurs/sabane.png",
+    "bio": "Specialiste en traitement du langage naturel et en intelligence artificielle appliquee au developpement. Il contribue aux projets de recherche sur les langues africaines.",
+    "email": "aminata.sabane@ujkz.bf",
+    "themes": ["LANGUE & PATRIMOINE", "SANTÉ & BIEN-ÊTRE"],
+    "publications_count": 1
+  },
+  {
+    "id": "tinto",
+    "name": "Mr TINTO",
+    "title": "Chercheur Senior",
+    "role": "senior",
+    "photo": "../assets/images/chercheurs/tinto.png",
+    "bio": "Fellow CITADEL specialise dans les applications de l'IA pour l'agriculture et le pastoralisme en Afrique de l'Ouest.",
+    "email": "tinto@citadel.bf",
+    "themes": ["AGRICULTURE ET PASTORALISME", "ÉNERGIE ET CHANGEMENT CLIMATIQUE"],
+    "publications_count": 1
+  },
+  {
+    "id": "kafando",
+    "name": "Rodrique Kafando",
+    "title": "Directeur de Recherche",
+    "role": "directeur",
+    "photo": "../assets/images/chercheurs/Kafando.jpg",
+    "bio": "Rodrique Kafando est titulaire d’un doctorat en IA et possède une expérience significative dans le développement de technologies d’IA (ML, DL, VISION PAR ORDINATEUR, NLP).",
+    "email": "kafando.rodrique@gmail.com",
+    "themes": ["FINTECH & SÉCURITÉ"],
+    "publications_count": 1
+  },
+  {
+    "id": "Hamed",
+    "name": "Hamed Joseph OUILY",
+    "title": "Fellow CITADEL",
+    "role": "fellow",
+    "photo": "../assets/images/chercheurs/Hamed.jpg",
+    "bio": "Bonjour, Je m'appelle Hamed, je suis analyste de données. Je fais du développement backend. J'aimerais associer mes compétences de codeur et d'analyste pour mener à bien mes missions.",
+    "email": "Hamed@citadel.bf",
+    "themes": ["FINTECH & SÉCURITÉ"],
+    "publications_count": 0
+  },
+  {
+    "id": "yameogo",
+    "name": "Angelique S. Yameogo",
+    "title": "Fellow CITADEL",
+    "role": "fellow",
+    "photo": "",
+    "bio": "Chercheuse en detection de fausses informations et traitement automatique du langage. Auteure de Fakipedia, un modele de detection de fake news adapte au Burkina Faso.",
+    "email": "yameogo@citadel.bf",
+    "themes": ["LANGUE & PATRIMOINE"],
+    "publications_count": 1
+  },
+  {
+    "id": "Birba",
+    "name": "Delwende Eliane Birba",
+    "title": "Fellow CITADEL",
+    "role": "fellow",
+    "photo": "../assets/images/chercheurs/Birba.png",
+    "bio": "Je suis ingénieur logiciel au sein du groupe Kindred en Suède. En 2021, j'ai fondé AI-KING GROUP SARL, un laboratoire de recherche en intelligence artificielle et une startup de développement logiciel basée au Burkina Faso. Je suis également chargé de cours à l'Université virtuelle du Burkina Faso, où j'enseigne à distance des cours d'apprentissage automatique dans le cadre du master en sciences des données et intelligence artificielle.",
+    "email": "Hamed@citadel.bf",
+    "themes": ["FINTECH & SÉCURITÉ"],
+    "publications_count": 0
+  },
+  {
+    "id": "Kader",
+    "name": "Abdoul Kader KABORE",
+    "title": "Directeur de Recherche",
+    "role": "directeur",
+    "photo": "../assets/images/chercheurs/Kader.jpg",
+    "bio": "Evaluer la pertinence et l’efficacité de ces processus par rapport à leur conformité avec les règles, normes, procédures, lois et réglementations en vigueur ",
+    "email": "abdoulkader.kabore@citadel.bf",
+    "themes": ["LANGUE & PATRIMOINE"],
+    "publications_count": 0
+  },
+  {
+    "id": "nikiema",
+    "name": "Serge Lionel Nikiema",
+    "title": "Fellow CITADEL",
+    "role": "fellow",
+    "photo": "../assets/images/chercheurs/Serge.png",
+    "bio": "Serge est un passionné de cybersécurité et d’intelligence artificielle, spécialisé dans la détection des fuites illicites de données sur smartphones Android.",
+    "email": "Serge@citadel.bf",
+    "themes": ["CONFIDENTIALITÉ ET EXPLICABILITÉ", "FINTECH & SÉCURITÉ"],
+    "publications_count": 2
+  },
+  {
+    "id": "Athanase",
+    "name": "Athanase SAWADOGO",
+    "title": "Fellow CITADEL",
+    "role": "fellow",
+    "photo": "../assets/images/chercheurs/Athanase.jpg",
+    "bio": "Ingénieur logiciel avec plus de 6 ans d'expérience dans la conception et le développement de solutions numériques innovantes. Expert en exploration, analyse et traitement de données avec l'intelligence artificielle (IA); leadership et élaboration de stratégies axées sur les résultats.",
+    "email": "athanasesaw@gmail.com",
+    "themes": ["CONFIDENTIALITÉ ET EXPLICABILITÉ", "FINTECH & SÉCURITÉ"],
+    "publications_count": 1
+  },
+
+  {
+    "id": "Lydie",
+    "name": "Lydie Simone TAPSOBA",
+    "title": "Fellow CITADEL",
+    "role": "fellow",
+    "photo": "../assets/images/chercheurs/Lydie.jpg",
+    "bio": "Maître-Assistant Système d'Information Institut Burkinabè des Arts et Métiers",
+    "email": "lydie.tapsoba@ujkz.bf",
+    "themes": ["CONFIDENTIALITÉ ET EXPLICABILITÉ", "FINTECH & SÉCURITÉ"],
+    "publications_count": 0
+  },
+
+  {
+    "id": "Fataoh",
+    "name": "Abdoul Fataoh Kaboré",
+    "title": "Fellow CITADEL",
+    "role": "fellow",
+    "photo": "../assets/images/chercheurs/Fataoh.jpg",
+    "bio": "",
+    "email": "abdoulfataoh.kaboro@citadel.bf", 
+    "themes": ["CONFIDENTIALITÉ ET EXPLICABILITÉ", "FINTECH & SÉCURITÉ"],
+    "publications_count": 0
+  },
+
+  {
+    "id": "Maimouna",
+    "name": "Maimouna Ouattara",
+    "title": "Fellow CITADEL",
+    "role": "fellow",
+    "photo": "../assets/images/chercheurs/.jpg",
+    "bio": "",
+    "email": "maimouna.ouattara@citadel.bf", 
+    "themes": ["CONFIDENTIALITÉ ET EXPLICABILITÉ", "FINTECH & SÉCURITÉ"],
+    "publications_count": 0
+  },
+
+  {
+    "id": "Alberick",
+    "name": "Albérick Euraste Djiré",
+    "title": "Fellow CITADEL",
+    "role": "fellow",
+    "photo": "../assets/images/chercheurs/Alberick.png",
+    "bio": "",
+    "email": "euraste.djire@uni.lu", 
+    "themes": ["CONFIDENTIALITÉ ET EXPLICABILITÉ", "FINTECH & SÉCURITÉ"],
+    "publications_count": 0
+  },
+
+  {
+    "id": "Soro",
+    "name": "Adama Soro",
+    "title": "Fellow CITADEL",
+    "role": "fellow",
+    "photo": "../assets/images/chercheurs/.png",
+    "bio": "",
+    "email": "soro@citadel.bf", 
+    "themes": ["CONFIDENTIALITÉ ET EXPLICABILITÉ", "FINTECH & SÉCURITÉ"],
+    "publications_count": 0
+  },
+
+  {
+    "id": "Kabore",
+    "name": "Moumini Kaboré",
+    "title": "Fellow CITADEL",
+    "role": "fellow",
+    "photo": "../assets/images/chercheurs/.png",
+    "bio": "",
+    "email": "moumini.kabore@citadel.bf", 
+    "themes": ["CONFIDENTIALITÉ ET EXPLICABILITÉ", "FINTECH & SÉCURITÉ"],
+    "publications_count": 0
+  }
+]

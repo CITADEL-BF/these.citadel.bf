@@ -5,22 +5,93 @@
   <title>Détail Publication — these.citadel.bf</title>
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link rel="stylesheet" href="../assets/css/detail.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
   <header class="navbar">
-    <div class="navbar-logo"><img src="../assets/images/logo-citadel.png" class="logo-img" /></div>
-    <nav>
-      <a href="../index.html">Accueil</a>
-      <a href="publications.html">Publications</a>
-      <a href="#">Chercheurs</a>
-      <a href="#" class="btn-connect">SE CONNECTER</a>
-    </nav>
-  </header>
+  <div class="navbar-logo">
+    <a href="../index.html">
+      <img src="../assets/images/logo-citadel.png" alt="CITADEL" class="logo-img" />
+    </a>
+  </div>
+  <nav>
+    <a href="../index.html">Accueil</a>
+    <a href="publications.html">Publications</a>
+    <a href="publications.html?type=Thèse">Thèses</a>
+    <div class="nav-dropdown">
+    <a href="#">Fellows ▾</a>
+      <div class="nav-dropdown-menu">
+        <a href="fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
+        <a href="fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
+        <a href="fellows.html?role=fellow"><i class="fa-solid fa-graduation-cap"></i> Fellows</a>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+<div id="google_translate_element" style="display:none"></div>
+<button id="langBtn" class="notranslate" onclick="toggleLang()" style="background:var(--green);color:white;border:none;padding:6px 14px;border-radius:4px;font-weight:700;font-size:.82rem;cursor:pointer;letter-spacing:.06em;">EN</button>
+    <a href="#" class="btn-connect">SE CONNECTER</a>
+  </nav>
+</header>
 
-  <main class="detail-page" id="detailPage">
-    <p style="text-align:center;padding:60px;">Chargement...</p>
+  <main class="detail-page" id="detailPage" style="opacity:0; transition: opacity 0.4s ease;">
+  <p style="text-align:center;padding:60px;color:var(--gray);">Chargement...</p>
   </main>
+  <!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-social">
+    <div class="social-link" title="Facebook">𝕗</div>
+    <div class="social-link" title="X / Twitter">𝕏</div>
+    <div class="social-link" title="LinkedIn">in</div>
+    <div class="social-link" title="Email">✉</div>
+    <div class="social-link" title="YouTube">▶</div>
+    <div class="social-link" title="TikTok">♪</div>
+  </div>
+  <div class="footer-bottom">
+    <span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
+    <a href="#">Politique de Confidentialité</a>
+  </div>
+</footer>
 
-  <script src="../assets/js/detail.js"></script>
+<script src="../assets/js/detail.js"></script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'fr',
+    includedLanguages: 'fr,en',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay: false
+  }, 'google_translate_element');
+}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'fr',
+    includedLanguages: 'fr,en',
+    autoDisplay: false
+  }, 'google_translate_element');
+}
+
+function toggleLang() {
+  var btn = document.getElementById('langBtn');
+  var select = document.querySelector('.goog-te-combo');
+
+  if (!select) return;
+
+  if (btn.textContent === 'EN') {
+    select.value = 'en';
+    select.dispatchEvent(new Event('change'));
+    btn.textContent = 'FR';
+  } else {
+    select.value = 'fr';
+    select.dispatchEvent(new Event('change'));
+    btn.textContent = 'EN';
+  }
+}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

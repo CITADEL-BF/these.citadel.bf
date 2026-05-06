@@ -7,32 +7,43 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 
-<!-- ══ NAVBAR ══ -->
 <header class="navbar">
   <div class="navbar-logo">
+  <a href="index.html">
     <img src="assets/images/logo-citadel.png" alt="CITADEL" class="logo-img" />
-  </div>
+  </a>
+</div>
   <nav>
     <a href="index.html" class="active">Accueil</a>
     <a href="pages/publications.html">Publications</a>
-    <a href="pages/publications.html">Thèses</a>
-    <a href="#">Chercheurs</a>
-    <a href="#">Contact</a>
-    <a href="#" class="btn-connect">SE CONNECTER</a>
+    <a href="pages/publications.html?type=Thèse">Thèses</a>
+    <div class="nav-dropdown">
+    <a href="#">Fellows ▾</a>
+      <div class="nav-dropdown-menu">
+        <a href="pages/fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
+        <a href="pages/fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
+        <a href="pages/fellows.html?role=fellow"><i class="fa-solid fa-graduation-cap"></i> Fellows</a>
+      </div>
+    </div>
+    <a href="pages/contact.html">Contact</a>
+<div id="google_translate_element" style="display:none"></div>
+<button id="langBtn" class="notranslate" onclick="toggleLang()" style="background:var(--green);color:white;border:none;padding:6px 14px;border-radius:4px;font-weight:700;font-size:.82rem;cursor:pointer;letter-spacing:.06em;">EN</button>
+  <a href="#" class="btn-connect">SE CONNECTER</a>
   </nav>
 </header>
 
-<!-- ══ HERO ══ -->
+
 <section class="hero">
   <div class="hero-content">
-    <h1>Bienvenue sur <span>these.citadel.bf</span></h1>
-    <p>Portail des thèses et publications scientifiques du Citadel</p>
+<h1>Bienvenue sur <span>these.citadel.bf</span></h1>      
+<p>Portail des thèses et publications scientifiques du Citadel</p>
     <div class="search-bar">
-      <input type="text" placeholder="Rechercher des articles, thèses..." />
+<input type="text" placeholder="Rechercher des articles, thèses..." />
       <button>
         <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>
       </button>
@@ -44,25 +55,25 @@
 <div class="stats">
   <div class="stat-item">
     <span class="stat-num" data-target="120">0</span>
-    <span class="stat-label">Publications</span>
+<span class="stat-label">Publications</span>
   </div>
   <div class="stat-item">
     <span class="stat-num" data-target="20">0</span>
-    <span class="stat-label">Auteurs</span>
+<span class="stat-label">Auteurs</span>
   </div>
   <div class="stat-item">
     <span class="stat-num" data-target="500">0</span>
-    <span class="stat-label">Citations</span>
+<span class="stat-label">Citations</span>
   </div>
 </div>
 
 <!-- ══ EXPLORE ══ -->
 <section class="explore">
-  <h2 class="section-title">Explorez nos ressources</h2>
+<h2 class="section-title">Explorez nos ressources</h2>
   <div class="custom-select-wrapper">
     <div class="custom-select" id="categorySelect">
       <div class="select-selected" onclick="toggleDropdown()">
-        <span id="selectLabel">Sélectionnez une catégorie...</span>
+<span id="selectLabel">Sélectionnez une catégorie...</span>
         <svg class="select-arrow" id="selectArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <ul class="select-options" id="selectOptions">
@@ -78,7 +89,7 @@
 
 <!-- ══ PUBLICATIONS ══ -->
 <section class="publications">
-  <h2 class="section-title">Dernières Publications</h2>
+<h2 class="section-title">Dernières Publications</h2>
   <div class="pub-list" id="pub-list">
 
     <!-- Les publications sont chargées dynamiquement depuis data/publications.json -->
@@ -156,8 +167,7 @@
 
   </div>
   <div class="btn-voir-plus">
-    <a href="#">Voir Plus ▼</a>
-  </div>
+<a href="pages/publications.html">Voir Plus ▼</a>
 </section>
 
 <!-- ══ CHERCHEURS + AXES ══ -->
@@ -165,13 +175,13 @@
   <div class="bottom-section" style="padding-top:48px;">
 
     <div>
-      <p class="sub-title">Nos Chercheurs</p>
+<p class="sub-title">Nos Fellows</p>
       <div class="chercheurs-grid">
         <div class="chercheur-card">
           <div class="chercheur-avatar">
-            <img src="assets/images/chercheurs/tinto.png" alt="Mr TINTO" />
+            <img src="assets/images/chercheurs/bissyande.png" alt="Dr BISSYANDE" />
           </div>
-          <span class="chercheur-name">Mr TINTO</span>
+          <span class="chercheur-name">Dr BISSYANDE</span>
         </div>
         <div class="chercheur-card">
           <div class="chercheur-avatar">
@@ -181,16 +191,20 @@
         </div>
         <div class="chercheur-card">
           <div class="chercheur-avatar">
-            <img src="assets/images/chercheurs/bissyande.png" alt="Dr BISSYANDE" />
+            <img src="assets/images/chercheurs/tinto.png" alt="Mr TINTO" />
           </div>
-          <span class="chercheur-name">Dr BISSYANDE</span>
+          <span class="chercheur-name">Mr TINTO</span>
         </div>
       </div>
-      <a class="btn-all-chercheurs" href="#">Voir tous les Chercheurs →</a>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+      <a class="btn-all-chercheurs" href="pages/fellows.html?role=directeur">Directeurs de Recherche</a>
+      <a class="btn-all-chercheurs" href="pages/fellows.html?role=senior">Chercheurs Seniors</a>
+      <a class="btn-all-chercheurs" href="pages/fellows.html?role=fellow">Fellows</a>
+    </div>
     </div>
 
     <div>
-      <p class="sub-title">Axes de Recherche</p>
+<p class="sub-title">Axes de Recherche</p>
       <div class="axes-list">
         <div class="axe-item priority"><span class="axe-dot" style="background:#e53935"></span>LANGUE &amp; PATRIMOINE</div>
         <div class="axe-item priority"><span class="axe-dot" style="background:#43a047"></span>SANTÉ &amp; BIEN-ÊTRE</div>
@@ -215,11 +229,39 @@
     <div class="social-link" title="TikTok">♪</div>
   </div>
   <div class="footer-bottom">
-    <span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
-    <a href="#">Politique de Confidentialité</a>
+<span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
+<a href="#">Politique de Confidentialité</a>
   </div>
 </footer>
-
 <script src="assets/js/main.js"></script>
+<script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'fr',
+    includedLanguages: 'fr,en',
+    autoDisplay: false
+  }, 'google_translate_element');
+}
+
+function toggleLang() {
+  var btn = document.getElementById('langBtn');
+  var select = document.querySelector('.goog-te-combo');
+
+  if (!select) return;
+
+  if (btn.textContent === 'EN') {
+    select.value = 'en';
+    select.dispatchEvent(new Event('change'));
+    btn.textContent = 'FR';
+  } else {
+    select.value = 'fr';
+    select.dispatchEvent(new Event('change'));
+    btn.textContent = 'EN';
+  }
+}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

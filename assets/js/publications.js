@@ -2,6 +2,24 @@ let allPubs = [], filtered = [], currentPage = 1, perPage = 5, currentType = '';
 
 fetch('../data/publications.json').then(r => r.json()).then(data => {
   allPubs = data;
+  // Lire le paramètre ?type= dans l'URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const typeParam = urlParams.get('type');
+      if (typeParam) {
+        currentType = typeParam;
+        // Activer l'onglet correspondant
+        document.querySelectorAll('.tab').forEach(t => {
+          t.classList.remove('active');
+          if (t.dataset.type === typeParam) t.classList.add('active');
+        });
+      }
+      // Déplacer le soulignement vert dans la navbar
+      if (typeParam === 'Thèse') {
+        document.querySelectorAll('.navbar nav a').forEach(a => {
+          a.classList.remove('active');
+          if (a.textContent.trim() === 'Thèses') a.classList.add('active');
+        });
+      }
   populateFilters();
   applyFilters();
 });
