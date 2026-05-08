@@ -630,6 +630,12 @@ font[style] { background: none !important; box-shadow: none !important; }
 
 
 /* ── Responsive ── */
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 @media (max-width: 900px) {
   .navbar nav { gap: 16px; }
   .navbar nav a { font-size: .78rem; }
@@ -637,22 +643,37 @@ font[style] { background: none !important; box-shadow: none !important; }
 }
 
 @media (max-width: 700px) {
-  /* Navbar */
   .navbar {
-    flex-wrap: wrap;
+    flex-direction: column;
     height: auto;
-    padding: 10px 4%;
-    gap: 8px;
+    padding: 8px 4%;
+    gap: 6px;
+  }
+  .navbar-logo {
+    justify-content: center;
+    width: 100%;
   }
   .navbar nav {
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 8px 0;
+    gap: 8px 12px;
+    padding: 6px 0;
   }
-  .navbar nav a { font-size: .75rem; }
+  .navbar nav a {
+    font-size: .72rem;
+  }
   .logo-img { height: 34px; }
+
+  .btn-connect {
+    padding: 5px 12px !important;
+    font-size: .7rem !important;
+  }
+  /* Bouton EN (Google Translate) : aussi compact */
+  #langBtn {
+    padding: 5px 10px !important;
+    font-size: .72rem !important;
+  }
 
   /* Dropdown navbar */
   .nav-dropdown-menu {
@@ -663,7 +684,7 @@ font[style] { background: none !important; box-shadow: none !important; }
     min-width: auto;
   }
 
-  /* Hero */
+  /* ─── Hero ─── */
   .hero { padding: 36px 16px 32px; }
   .hero h1 { font-size: 1.4rem; }
   .hero p { font-size: .88rem; }
@@ -671,44 +692,62 @@ font[style] { background: none !important; box-shadow: none !important; }
   .search-bar input { border-radius: 6px 6px 0 0; }
   .search-bar button { padding: 12px; border-radius: 0 0 6px 6px; }
 
-  /* Stats */
+  /* ─── Stats ─── */
   .stats { flex-direction: column; }
   .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.2); padding: 16px; }
   .stat-item:last-child { border-bottom: none; }
   .stat-num { font-size: 2rem; }
 
-  /* Explore */
+  /* ─── Explore ─── */
   .explore { padding: 32px 4%; }
 
-  /* Publications */
   .publications { padding: 32px 4%; }
-  .pub-header { flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
-  .pub-title { font-size: .85rem; width: 100%; order: 2; }
-  .pub-meta { font-size: .72rem; order: 3; }
+  .pub-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 14px;
+  }
   .pub-dot { order: 1; }
-  .pub-toggle { order: 4; }
+  .pub-title {
+    font-size: .9rem;
+    width: calc(100% - 50px);  
+    order: 2;
+    word-break: normal;
+  }
+  .pub-toggle { order: 3; }
+  .pub-meta {
+    font-size: .75rem;
+    width: 100%;
+    order: 4;
+    white-space: normal !important;  
+    line-height: 1.4;
+  }
   .pub-body { padding: 0 14px 14px 14px; }
 
-  /* Chercheurs */
+  /* ─── Chercheurs ─── */
   .chercheurs-grid { flex-wrap: wrap; }
   .chercheur-card { width: 100px; }
   .chercheur-avatar { height: 110px; }
   .chercheur-name { font-size: .75rem; }
 
-  /* Axes */
+  /* ─── Axes ─── */
   .axe-item { font-size: .82rem; }
 
-  /* Footer */
+  /* ─── Footer ─── */
   .footer-bottom { flex-direction: column; text-align: center; }
   .footer-social { gap: 12px; padding: 14px; }
 }
 
 @media (max-width: 480px) {
-  .navbar nav a { font-size: .7rem; }
+  .navbar nav { gap: 6px 10px; }
+  .navbar nav a { font-size: .68rem; }
+  .btn-connect { padding: 4px 10px !important; font-size: .66rem !important; }
+  #langBtn { padding: 4px 9px !important; font-size: .68rem !important; }
   .hero h1 { font-size: 1.2rem; }
   .stat-num { font-size: 1.6rem; }
   .section-title { font-size: 1.2rem; }
   .chercheur-card { width: 85px; }
   .chercheur-avatar { height: 95px; }
   .btn-voir-plus a { font-size: .82rem; padding: 9px 20px; }
+  .pub-title { font-size: .85rem; }
 }
