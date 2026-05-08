@@ -19,7 +19,10 @@
       <img src="../assets/images/logo-citadel.png" alt="CITADEL" class="logo-img" />
     </a>
   </div>
-  <nav>
+  <button class="menu-toggle" aria-label="Menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <nav id="mainNav">
     <a href="../index.html">Accueil</a>
     <a href="publications.html">Publications</a>
     <a href="publications.html?type=Thèse">Thèses</a>
@@ -95,6 +98,25 @@ function toggleLang() {
     btn.textContent = 'EN';
   }
 }
+
+/* ── Menu hamburger mobile ── */
+function toggleMenu() {
+  const nav = document.getElementById('mainNav');
+  const btn = document.querySelector('.menu-toggle');
+  if (!nav || !btn) return;
+  nav.classList.toggle('open');
+  btn.classList.toggle('active');
+}
+
+// Fermer le menu au clic sur un lien
+document.addEventListener('click', (e) => {
+  if (e.target.closest('#mainNav a')) {
+    const nav = document.getElementById('mainNav');
+    const btn = document.querySelector('.menu-toggle');
+    if (nav) nav.classList.remove('open');
+    if (btn) btn.classList.remove('active');
+  }
+});
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </script>

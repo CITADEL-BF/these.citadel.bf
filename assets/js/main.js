@@ -14,6 +14,25 @@ function togglePub(header) {
   }
 }
 
+/* Menu hamburger mobile */
+function toggleMenu() {
+  const nav = document.getElementById('mainNav');
+  const btn = document.querySelector('.menu-toggle');
+  if (!nav || !btn) return;
+  nav.classList.toggle('open');
+  btn.classList.toggle('active');
+}
+
+// Fermer le menu au clic sur un lien
+document.addEventListener('click', (e) => {
+  if (e.target.closest('#mainNav a')) {
+    const nav = document.getElementById('mainNav');
+    const btn = document.querySelector('.menu-toggle');
+    if (nav) nav.classList.remove('open');
+    if (btn) btn.classList.remove('active');
+  }
+});
+
 /* ── Compteur anime ── */
 function animateCounter(el) {
   const target = parseInt(el.dataset.target, 10);
