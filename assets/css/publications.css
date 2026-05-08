@@ -31,3 +31,13 @@
 .pagination { display: flex; justify-content: center; gap: 6px; margin-top: 30px; }
 .pagination button { width: 36px; height: 36px; border: 1px solid var(--border); background: white; border-radius: 4px; cursor: pointer; font-weight: 600; }
 .pagination button.active { background: var(--green); color: white; border-color: var(--green); }
+@media (max-width: 700px) {
+  .pub-page { padding: 20px 12px; }
+  .search-filters { padding: 14px; }
+  .filters { flex-direction: column; }
+  .filters select { width: 100%; }
+  .tabs { flex-wrap: wrap; gap: 2px; }
+  .tab { padding: 8px 12px; font-size: .8rem; }
+  .toggle-all { justify-content: center; }
+  .pagination { flex-wrap: wrap; }
+}

@@ -630,14 +630,85 @@ font[style] { background: none !important; box-shadow: none !important; }
 
 
 /* ── Responsive ── */
-@media (max-width: 700px) {
-  .navbar nav { gap: 14px; }
-  .navbar nav a { font-size: .75rem; }
-  .hero h1 { font-size: 1.5rem; }
+@media (max-width: 900px) {
+  .navbar nav { gap: 16px; }
+  .navbar nav a { font-size: .78rem; }
   .bottom-section { grid-template-columns: 1fr; }
-  .stat-num { font-size: 1.8rem; }
 }
+
+@media (max-width: 700px) {
+  /* Navbar */
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 10px 4%;
+    gap: 8px;
+  }
+  .navbar nav {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 8px 0;
+  }
+  .navbar nav a { font-size: .75rem; }
+  .logo-img { height: 34px; }
+
+  /* Dropdown navbar */
+  .nav-dropdown-menu {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    top: auto;
+    min-width: auto;
+  }
+
+  /* Hero */
+  .hero { padding: 36px 16px 32px; }
+  .hero h1 { font-size: 1.4rem; }
+  .hero p { font-size: .88rem; }
+  .search-bar { flex-direction: column; border-radius: 6px; }
+  .search-bar input { border-radius: 6px 6px 0 0; }
+  .search-bar button { padding: 12px; border-radius: 0 0 6px 6px; }
+
+  /* Stats */
+  .stats { flex-direction: column; }
+  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.2); padding: 16px; }
+  .stat-item:last-child { border-bottom: none; }
+  .stat-num { font-size: 2rem; }
+
+  /* Explore */
+  .explore { padding: 32px 4%; }
+
+  /* Publications */
+  .publications { padding: 32px 4%; }
+  .pub-header { flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
+  .pub-title { font-size: .85rem; width: 100%; order: 2; }
+  .pub-meta { font-size: .72rem; order: 3; }
+  .pub-dot { order: 1; }
+  .pub-toggle { order: 4; }
+  .pub-body { padding: 0 14px 14px 14px; }
+
+  /* Chercheurs */
+  .chercheurs-grid { flex-wrap: wrap; }
+  .chercheur-card { width: 100px; }
+  .chercheur-avatar { height: 110px; }
+  .chercheur-name { font-size: .75rem; }
+
+  /* Axes */
+  .axe-item { font-size: .82rem; }
+
+  /* Footer */
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .footer-social { gap: 12px; padding: 14px; }
+}
+
 @media (max-width: 480px) {
-  .navbar { flex-wrap: wrap; height: auto; padding: 10px 4%; gap: 8px; }
-  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  .navbar nav a { font-size: .7rem; }
+  .hero h1 { font-size: 1.2rem; }
+  .stat-num { font-size: 1.6rem; }
+  .section-title { font-size: 1.2rem; }
+  .chercheur-card { width: 85px; }
+  .chercheur-avatar { height: 95px; }
+  .btn-voir-plus a { font-size: .82rem; padding: 9px 20px; }
 }

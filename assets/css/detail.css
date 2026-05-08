@@ -140,3 +140,11 @@
   cursor: pointer;
 }
 .copy-btn:hover { background: var(--green-light); }
+@media (max-width: 700px) {
+  .detail-page { padding: 20px 12px; }
+  .detail-card { padding: 20px; }
+  .detail-title { font-size: 1.3rem; }
+  .detail-actions { flex-direction: column; }
+  .btn-action { width: 100%; justify-content: center; }
+  .detail-keywords { gap: 6px; }
+}
