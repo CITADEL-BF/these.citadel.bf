@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soumettre une publication – these.citadel.bf</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/soumettre.css" />
+
+  <!-- Netlify Identity Widget -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<header class="navbar">
+  <div class="navbar-logo">
+    <a href="../index.html">
+      <img src="../assets/images/logo-citadel.png" alt="CITADEL" class="logo-img" />
+    </a>
+  </div>
+  <button class="menu-toggle" aria-label="Menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <nav id="mainNav">
+    <a href="../index.html">Accueil</a>
+    <a href="publications.html">Publications</a>
+    <a href="publications.html?type=Thèse">Thèses</a>
+    <div class="nav-dropdown">
+      <a href="#">Fellows ▾</a>
+      <div class="nav-dropdown-menu">
+        <a href="fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
+        <a href="fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
+        <a href="fellows.html?role=fellow"><i class="fa-solid fa-graduation-cap"></i> Fellows</a>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+    <a href="soumettre.html" class="active btn-connect">SOUMETTRE</a>
+  </nav>
+</header>
+
+<!-- ══ CONTENU ══ -->
+<div class="submit-page">
+
+  <!-- ─ ÉCRAN LOGIN ─ -->
+  <div class="auth-gate" id="authGate">
+    <div class="auth-gate-header">
+      <div class="lock-icon">🔐</div>
+      <h2>Espace Fellows</h2>
+      <p>Connectez-vous pour soumettre une publication</p>
+    </div>
+    <div class="auth-gate-body">
+      <p style="font-size:.88rem;color:var(--gray);text-align:center;margin-bottom:20px;line-height:1.6;">
+        Utilisez votre compte fellow CITADEL.<br/>
+        Si vous n'avez pas encore de compte, contactez un administrateur.
+      </p>
+      <button class="btn-login" onclick="netlifyIdentity.open('login')">
+        <i class="fa-solid fa-right-to-bracket"></i> &nbsp;Se connecter
+      </button>
+    </div>
+  </div>
+
+  <!-- ─ FORMULAIRE ─ -->
+  <div class="submit-container" id="submitContainer">
+
+    <div class="user-bar" id="userBar">
+      <span>Connecté en tant que <strong id="userEmail"></strong></span>
+      <button class="btn-logout" onclick="handleLogout()">Déconnexion</button>
+    </div>
+
+    <div class="submit-header">
+      <h1>Soumettre une publication</h1>
+      <p>Remplissez le formulaire — votre document sera examiné par un administrateur avant publication.</p>
+    </div>
+
+    <!-- Progression -->
+    <div class="progress-bar">
+      <div class="progress-step active" id="step-ind-1">
+        <div class="step-circle">1</div>
+        <div class="step-label">Informations</div>
+      </div>
+      <div class="progress-line" id="line-1"></div>
+      <div class="progress-step" id="step-ind-2">
+        <div class="step-circle">2</div>
+        <div class="step-label">Contenu</div>
+      </div>
+      <div class="progress-line" id="line-2"></div>
+      <div class="progress-step" id="step-ind-3">
+        <div class="step-circle">3</div>
+        <div class="step-label">Document</div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 1 -->
+    <div class="form-card active" id="step1">
+      <div class="form-card-title"><i class="fa-solid fa-circle-info"></i> Informations générales</div>
+
+      <div class="form-group">
+        <label for="titre">Titre complet <span class="required">*</span></label>
+        <input type="text" id="titre" class="form-control" placeholder="Titre de la thèse ou publication..." />
+      </div>
+
+      <div class="form-group">
+        <label for="auteurs">Auteur(s) <span class="required">*</span></label>
+        <input type="text" id="auteurs" class="form-control" placeholder="Ex : Nom Prénom, Nom Prénom" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="annee">Année <span class="required">*</span></label>
+          <input type="number" id="annee" class="form-control" placeholder="2024" min="2000" max="2099" />
+        </div>
+        <div class="form-group">
+          <label for="type_doc">Type de document <span class="required">*</span></label>
+          <select id="type_doc" class="form-control">
+            <option value="Thèse">Thèse</option>
+            <option value="Article">Article</option>
+            <option value="Mémoire">Mémoire</option>
+            <option value="Rapport">Rapport</option>
+            <option value="Conférence">Conférence</option>
+            <option value="Poster">Poster</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="universite">Université / Institution <span class="required">*</span></label>
+          <input type="text" id="universite" class="form-control" placeholder="Ex : Université Joseph KI-ZERBO" />
+        </div>
+        <div class="form-group">
+          <label for="domaine">Domaine / Axe de recherche <span class="required">*</span></label>
+          <select id="domaine" class="form-control">
+            <option value="LANGUE & PATRIMOINE">Langue &amp; Patrimoine</option>
+            <option value="SANTÉ & BIEN-ÊTRE">Santé &amp; Bien-être</option>
+            <option value="AGRICULTURE ET PASTORALISME">Agriculture et Pastoralisme</option>
+            <option value="FINTECH & SÉCURITÉ">Fintech &amp; Sécurité</option>
+            <option value="CONFIDENTIALITÉ ET EXPLICABILITÉ">Confidentialité &amp; Explicabilité</option>
+            <option value="ÉNERGIE ET CHANGEMENT CLIMATIQUE">Énergie &amp; Changement Climatique</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-nav">
+        <div></div>
+        <button class="btn-next" onclick="goToStep(2)">Suivant <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 2 -->
+    <div class="form-card" id="step2">
+      <div class="form-card-title"><i class="fa-solid fa-align-left"></i> Résumé &amp; Mots-clés</div>
+
+      <div class="form-group">
+        <label for="resume">Résumé / Abstract <span class="required">*</span></label>
+        <textarea id="resume" class="form-control" rows="6" placeholder="Résumez votre publication..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Mots-clés <span class="required">*</span>
+          <span style="font-weight:400;color:var(--gray);text-transform:none;letter-spacing:0">(Entrée pour ajouter)</span>
+        </label>
+        <div class="tags-input-wrapper" id="tagsWrapper" onclick="document.getElementById('tagInput').focus()">
+          <input type="text" id="tagInput" class="tags-input" placeholder="Ex : Intelligence Artificielle..." />
+        </div>
+        <input type="hidden" id="mots_cles" />
+      </div>
+
+      <div class="form-nav">
+        <button class="btn-prev" onclick="goToStep(1)"><i class="fa-solid fa-arrow-left"></i> Précédent</button>
+        <button class="btn-next" onclick="goToStep(3)">Suivant <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 3 -->
+    <div class="form-card" id="step3">
+      <div class="form-card-title"><i class="fa-solid fa-file-pdf"></i> Fichier PDF</div>
+
+      <div class="form-group">
+        <div class="pdf-upload-area" id="uploadArea">
+          <input type="file" id="pdfFile" accept=".pdf" onchange="handleFileSelect(this)" />
+          <div class="pdf-upload-icon">📄</div>
+          <div class="pdf-upload-text">Cliquez ou glissez votre PDF ici</div>
+          <div class="pdf-upload-hint">Format PDF uniquement · Taille max : 20 Mo</div>
+          <div class="pdf-file-name" id="pdfFileName"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="doi">DOI (optionnel)</label>
+        <input type="text" id="doi" class="form-control" placeholder="Ex : https://doi.org/10.xxxx/xxxxx" />
+      </div>
+
+      <div class="form-nav">
+        <button class="btn-prev" onclick="goToStep(2)"><i class="fa-solid fa-arrow-left"></i> Précédent</button>
+        <button class="btn-submit" id="btnSubmit" onclick="handleSubmit()">
+          <i class="fa-solid fa-paper-plane"></i> Soumettre
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─ SUCCÈS ─ -->
+  <div class="toast-success" id="toastSuccess">
+    <div class="toast-icon">🎉</div>
+    <h2>Soumission envoyée !</h2>
+    <p>Votre publication a bien été reçue.<br />Elle sera examinée par un administrateur et publiée sous peu.<br /><strong>Merci pour votre contribution à CITADEL.</strong></p>
+    <a href="../index.html">Retour à l'accueil</a>
+  </div>
+
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-social">
+    <div class="social-link">𝕗</div>
+    <div class="social-link">𝕏</div>
+    <div class="social-link">in</div>
+    <div class="social-link">✉</div>
+    <div class="social-link">▶</div>
+    <div class="social-link">♪</div>
+  </div>
+  <div class="footer-bottom">
+    <span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
+    <a href="#">Politique de Confidentialité</a>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+let currentUser = null;
+let pdfBase64   = null;
+let pdfFilename = null;
+let tags        = [];
+
+// ── Netlify Identity events ──
+netlifyIdentity.on("login", user => {
+  currentUser = user;
+  netlifyIdentity.close();
+  showSubmitForm();
+});
+
+netlifyIdentity.on("logout", () => {
+  currentUser = null;
+  document.getElementById("authGate").style.display = "block";
+  document.getElementById("submitContainer").classList.remove("visible");
+  document.getElementById("userBar").classList.remove("visible");
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  // Déjà connecté ?
+  const user = netlifyIdentity.currentUser();
+  if (user) { currentUser = user; showSubmitForm(); }
+
+  document.getElementById("tagInput").addEventListener("keydown", handleTagInput);
+});
+
+function showSubmitForm() {
+  document.getElementById("authGate").style.display = "none";
+  document.getElementById("submitContainer").classList.add("visible");
+  document.getElementById("userBar").classList.add("visible");
+  document.getElementById("userEmail").textContent = currentUser.email;
+}
+
+function handleLogout() { netlifyIdentity.logout(); }
+
+// ── Navigation ──
+let currentStep = 1;
+
+function goToStep(n) {
+  if (n > currentStep && !validateStep(currentStep)) return;
+  document.getElementById(`step${currentStep}`).classList.remove("active");
+  currentStep = n;
+  document.getElementById(`step${currentStep}`).classList.add("active");
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function updateProgress() {
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById(`step-ind-${i}`);
+    el.classList.remove("active", "done");
+    if (i < currentStep) el.classList.add("done");
+    if (i === currentStep) el.classList.add("active");
+  }
+  for (let i = 1; i <= 2; i++) {
+    document.getElementById(`line-${i}`).classList.toggle("done", i < currentStep);
+  }
+}
+
+// ── Validation ──
+function validateStep(step) {
+  if (step === 1) {
+    const fields = ["titre", "auteurs", "annee", "universite"];
+    let ok = true;
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { el.classList.add("error"); ok = false; }
+      else el.classList.remove("error");
+    });
+    if (!ok) alert("Veuillez remplir tous les champs obligatoires.");
+    return ok;
+  }
+  if (step === 2) {
+    const resume = document.getElementById("resume");
+    if (!resume.value.trim()) { resume.classList.add("error"); alert("Le résumé est obligatoire."); return false; }
+    resume.classList.remove("error");
+    if (tags.length === 0) { alert("Ajoutez au moins un mot-clé."); return false; }
+    document.getElementById("mots_cles").value = tags.join(", ");
+    return true;
+  }
+  return true;
+}
+
+// ── Tags ──
+function handleTagInput(e) {
+  if (e.key === "Enter" || e.key === ",") {
+    e.preventDefault();
+    const val = e.target.value.trim().replace(/,$/, "");
+    if (val && !tags.includes(val)) { tags.push(val); renderTags(); }
+    e.target.value = "";
+  }
+}
+
+function renderTags() {
+  const wrapper = document.getElementById("tagsWrapper");
+  const input   = document.getElementById("tagInput");
+  wrapper.querySelectorAll(".tag-chip").forEach(c => c.remove());
+  tags.forEach((t, i) => {
+    const chip = document.createElement("div");
+    chip.className = "tag-chip";
+    chip.innerHTML = `${t}<button onclick="removeTag(${i})" type="button">×</button>`;
+    wrapper.insertBefore(chip, input);
+  });
+}
+
+function removeTag(i) { tags.splice(i, 1); renderTags(); }
+
+// ── Upload PDF ──
+function handleFileSelect(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 20 * 1024 * 1024) { alert("Le fichier dépasse 20 Mo."); return; }
+  pdfFilename = file.name;
+  document.getElementById("pdfFileName").textContent = `✔ ${file.name}`;
+  document.getElementById("pdfFileName").classList.add("visible");
+  document.getElementById("uploadArea").classList.add("has-file");
+  const reader = new FileReader();
+  reader.onload = e => { pdfBase64 = e.target.result.split(",")[1]; };
+  reader.readAsDataURL(file);
+}
+
+// ── Soumission ──
+async function handleSubmit() {
+  if (!validateStep(2)) { goToStep(2); return; }
+  if (!pdfBase64) { alert("Veuillez sélectionner un fichier PDF."); return; }
+
+  const btn = document.getElementById("btnSubmit");
+  btn.innerHTML = `<span class="spinner"></span> Envoi en cours...`;
+  btn.disabled = true;
+
+  const payload = {
+    titre:           document.getElementById("titre").value.trim(),
+    auteurs:         document.getElementById("auteurs").value.trim(),
+    resume:          document.getElementById("resume").value.trim(),
+    annee:           document.getElementById("annee").value.trim(),
+    universite:      document.getElementById("universite").value.trim(),
+    domaine:         document.getElementById("domaine").value,
+    type_doc:        document.getElementById("type_doc").value,
+    mots_cles:       tags.join(", "),
+    doi:             document.getElementById("doi").value.trim(),
+    submitter_email: currentUser.email,
+    pdf_base64:      pdfBase64,
+    pdf_filename:    pdfFilename
+  };
+
+  try {
+    const res = await fetch("/.netlify/functions/submit-publication", {
+      method:  "POST",
+      headers: {
+        "Content-Type":  "application/json",
+        "Authorization": `Bearer ${currentUser.token.access_token}`
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      document.getElementById("submitContainer").style.display = "none";
+      document.getElementById("toastSuccess").classList.add("visible");
+    } else {
+      alert("Erreur : " + (data.error || "Réessayez plus tard."));
+      btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Soumettre`;
+      btn.disabled = false;
+    }
+  } catch (err) {
+    alert("Erreur réseau. Vérifiez votre connexion et réessayez.");
+    btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Soumettre`;
+    btn.disabled = false;
+  }
+}
+</script>
+
+</body>
+</html>

@@ -37,7 +37,7 @@
     <a href="pages/contact.html">Contact</a>
 <div id="google_translate_element" style="display:none"></div>
 <button id="langBtn" class="notranslate" onclick="toggleLang()" style="background:var(--green);color:white;border:none;padding:6px 14px;border-radius:4px;font-weight:700;font-size:.82rem;cursor:pointer;letter-spacing:.06em;">EN</button>
-  <a href="#" class="btn-connect">SE CONNECTER</a>
+<a href="pages/soumettre.html" class="btn-connect">SE CONNECTER</a>
   </nav>
 </header>
 
@@ -268,5 +268,11 @@ function toggleLang() {
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>
+  // Rediriger vers soumettre.html après confirmation du compte Netlify
+  if (window.location.hash && window.location.hash.includes('confirmation_token')) {
+    window.location.href = '/pages/soumettre.html' + window.location.hash;
+  }
+</script>
 </body>
 </html>
