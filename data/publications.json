@@ -1,306 +1,612 @@
 [
-{
-  "id": "citadel-2024-french-to-moore",
-  "title": "A Low-Resource Language Translation: French To Mooré",
-  "authors": [
-    { "name": "Hamed Joseph Ouily", "affiliation": "CITADEL / Université Joseph KI-ZERBO" },
-    { "name": "Aminata Sabane", "affiliation": "CITADEL / Université Joseph KI-ZERBO" },
-    { "name": "Delwende Eliane Birba", "affiliation": "AI-KING GROUP" },
-    { "name": "Rodrique Kafando", "affiliation": "CITADEL" },
-    { "name": "Abdoul-Kader Kabore", "affiliation": "CITADEL" },
-    { "name": "Dr Bissyande", "affiliation": "CITADEL / Université Joseph KI-ZERBO" }
-  ],
-  "type": "Article",
-  "venue": "HAL Open Science (Preprint)",
-  "year": 2024,
-  "date": "30 Jan 2024",
-  "abstract": "Natural Language Processing (NLP) is an exciting field of artificial intelligence with the goal of enabling machines to understand human language. Neural Machine Translation (NMT) offers the ability to effectively translate text from a source language to a target language. However, most African languages, especially those in Burkina Faso, have received very little research attention. In this article, we propose automated translation models French to Moore based on Transformers. We achieved a BLEU score of 71.18 for the French to Moore translation. A web application was also developed to make the translation accessible to the public.",
-  "keywords": ["Natural Language Processing", "Neural Machine Translation", "Low-Resource Language", "Moore Language", "Transformers"],
-  "pdf_url": "papers/2024-french-to-moore.pdf",
-  "doi": "https://doi.org/10.1007/978-3-031-88226-5_30",
-  "status": "Preprint",
-  "theme": "LANGUE & PATRIMOINE",
-  "featured": false
-},
-
-{
-  "id": "citadel-2024-hemorrhagic-stroke",
-  "title": "AI-Based Approach for Early Diagnosis Support in Hemorrhagic Stroke",
-  "authors": [
-    { "name": "Athanase Sawadogo", "affiliation": "Université Joseph KI-ZERBO" },
-    { "name": "Lydie Simone Tapsoba", "affiliation": "LAMI, Ouagadougou" },
-    { "name": "Rodrique Kafando", "affiliation": "CITADEL" },
-    { "name": "Abdoul Kader Kabore", "affiliation": "CITADEL" },
-    { "name": "Dr sabane", "affiliation": "Université Joseph KI-ZERBO" },
-    { "name": "Dr Bissyande", "affiliation": "Université Joseph KI-ZERBO / CITADEL" }
-  ],
-  "type": "Article",
-  "venue": "CITADEL Research Paper",
-  "year": 2024,
-  "date": "2024",
-  "abstract": "A hemorrhagic stroke is a life-threatening medical condition that happens when a blood vessel in your brain ruptures and bleeds. The current definitive diagnosis is based on brain scanning, but clinical diagnosis is complex and depends on the skills of the practitioner. This study proposes an artificial intelligence approach for medical assistance in the early clinical diagnosis of hemorrhagic strokes. Three machine learning models were compared: logistic regression, Random Forest and artificial neural networks. The Random Forest model achieved 99.33% accuracy on simulation data and 99.05% on validation data, demonstrating satisfactory results to help health workers make rapid diagnosis.",
-  "keywords": ["Hemorrhagic Stroke", "Machine Learning", "Random Forest", "Clinical Diagnosis", "Healthcare AI"],
-  "pdf_url": "papers/2024-hemorrhagic-stroke.pdf",
-  "doi": "",
-  "status": "Publié",
-  "theme": "SANTÉ & BIEN-ÊTRE",
-  "featured": false
-},
-
-{
-  "id": "citadel-2024-news-summaries-gpt",
-  "title": "AI-driven Generation of News Summaries: Leveraging GPT and Pegasus Summarizer for Efficient Information Extraction",
-  "authors": [
-    { "name": "Issiaka Faissal Compaore", "affiliation": "CITADEL / Université Joseph KI-ZERBO" },
-    { "name": "Rodrique Kafando", "affiliation": "CITADEL" },
-    { "name": "Dr sabane", "affiliation": "CITADEL / Université Joseph KI-ZERBO" },
-    { "name": "Abdoul Kader Kabore", "affiliation": "CITADEL" },
-    { "name": "Dr Bissyande", "affiliation": "CITADEL / Université Joseph KI-ZERBO" }
-  ],
-  "type": "Article",
-  "venue": "HAL Open Science (Preprint)",
-  "year": 2024,
-  "date": "5 Feb 2024",
-  "abstract": "The escalating volume of online information presents a formidable challenge in swiftly accessing pertinent news. This research explores the design and implementation of an online press synthesis tool using advanced AI models. Two pre-trained models, GPT-3.5 Turbo 16k and Pegasus Summarizer, were used to generate high-quality automatic summaries from scraped articles. The methodology encompasses web scraping with Beautiful Soup, model integration, similarity calculation for duplicate detection, and audio matching. GPT-3.5 Turbo 16k achieved the best performance with a BLEU score of 16.39% and a ROUGE score of 0.66% on reference summaries.",
-  "keywords": ["Online Press", "Artificial Intelligence", "Web Scraping", "Transformers", "Abstractive Summarization"],
-  "pdf_url": "papers/2024-news-summaries-gpt.pdf",
-  "doi": "",
-  "status": "Preprint",
-  "theme": "LANGUE & PATRIMOINE",
-  "featured": false
-},
-
-{
-  "id": "citadel-2024-security-situation-bf",
-  "title": "Artificial Intelligence for the Analysis of the Security Situation in Burkina Faso",
-  "authors": [
-    { "name": "Abdoul Fataoh Kaboré", "affiliation": "CITADEL" },
-    { "name": "Maimouna Ouattara", "affiliation": "CITADEL" },
-    { "name": "Rodrique Kafando", "affiliation": "CITADEL" },
-    { "name": "Abdoul Kader Kabore", "affiliation": "CITADEL" },
-    { "name": "Dr BISSYANDE", "affiliation": "CITADEL" }
-  ],
-  "type": "Article",
-  "venue": "HAL Open Science (Preprint) / AFRICOMM",
-  "year": 2024,
-  "date": "30 Jan 2024",
-  "abstract": "In the face of insecurity caused by terrorism in Burkina Faso since 2015, the population expresses their feelings through comments on social platforms, creating significant amounts of data. This study introduces a web scraping tool to gather data, then employs sentiment analysis and hate speech detection models based on transformers. The contributions include establishing a textual corpus related to the security situation, proposing an AI-based methodological approach for data analysis, and suggesting a dashboard for visualizing results. Results reveal increased negative sentiments and hate speech during periods marked by terrorist attacks.",
-  "keywords": ["Security Situation", "Web Scraping", "Sentiment Analysis", "Hate Speech Detection", "Transformers"],
-  "pdf_url": "papers/2024-security-situation-bf.pdf",
-  "doi": "https://doi.org/10.1007/978-3-031-81573-7_14",
-  "status": "Preprint",
-  "theme": "FINTECH & SÉCURITÉ",
-  "featured": false
-},
-
-{
-  "id": "citadel-2024-fakipedia",
-  "title": "Fakipedia: Building and exploiting an AI model for detecting online fake news in Burkina Faso",
-  "authors": [
-    { "name": "Angelique S. Yameogo", "affiliation": "CITADEL / Université Joseph KI-ZERBO" },
-    { "name": "Dr SABANE", "affiliation": "CITADEL / Université Joseph KI-ZERBO" },
-    { "name": "Dr BISSYANDE", "affiliation": "CITADEL / Université Joseph KI-ZERBO" },
-    { "name": "Rodrique Kafando", "affiliation": "CITADEL" },
-    { "name": "Abdoul-Kader Kabore", "affiliation": "CITADEL" }
-  ],
-  "type": "Article",
-  "venue": "HAL Open Science (Preprint)",
-  "year": 2024,
-  "date": "30 Jan 2024",
-  "abstract": "Misinformation poses a significant challenge, especially in developing countries with low literacy rates. The rapid spread on social media, coupled with the lack of robust verification mechanisms, makes distinguishing between credible and false information increasingly difficult. This document outlines efforts to address this challenge in Burkina Faso using the pre-trained linguistic model CAMEMBERT. Preliminary results show high performance with up to a 99.34% F1 score on Fakipedia, suggesting that certain blatant instances of false information can be effectively identified and stopped by automated tools.",
-  "keywords": ["Fake News", "Machine Learning", "Text Classification", "camemBERT", "Artificial Intelligence"],
-  "pdf_url": "papers/2024-fakipedia.pdf",
-  "doi": "https://hal.science/hal-04425410v1",
-  "status": "Preprint",
-  "theme": "LANGUE & PATRIMOINE",
-  "featured": false
-},
-
-{
-  "id": "citadel-2024-video-analytics",
-  "title": "Optimizing Real-time Video Analytics for Resource-Constrained Environments",
-  "authors": [
-    { "name": "Rodrique Kafando", "affiliation": "CITADEL" },
-    { "name": "Dr SABANE", "affiliation": "CITADEL / Université Joseph KI-ZERBO" },
-    { "name": "Dr BISSYANDE", "affiliation": "CITADEL / Université Joseph KI-ZERBO" }
-  ],
-  "type": "Conférence",
-  "venue": "EAI AFRICOMM 2024 - 16th EAI International Conference on e-Infrastructure and e-Services for Developing Countries, Abidjan",
-  "year": 2024,
-  "date": "Nov 2024",
-  "abstract": "Developing countries face a growing demand for video analytics, yet often lack sufficient computational resources. This paper addresses the challenge of deploying real-time video analytics systems on resource-constrained devices, including edge systems. Several techniques are introduced and evaluated, including image resizing, frame skipping, parallel processing, forwarding, queue management, memory optimization, and buffering. Experiments using YOLOv8 for object detection on both CPU and GPU demonstrate effective balancing of performance and resource consumption, enabling real-time video analytics without compromising accuracy and paving the way for practical monitoring and alert systems.",
-  "keywords": ["RTSP Stream", "Real-time Video Analytics", "Computational Optimization", "Post-Training Optimization", "YOLOv8"],
-  "pdf_url": "papers/2024-video-analytics.pdf",
-  "doi": "https://doi.org/10.1007/978-3-032-01910-3_16",
-  "status": "Publié",
-  "theme": "FINTECH & SÉCURITÉ",
-  "featured": false
-},
-
-{
-  "id": "citadel-2024-deepfake-audio",
-  "title": "Evaluating Acoustic Parameters for DeepFake Audio Identification",
-  "authors": [
-    { "name": "Albérick Euraste Djiré", "affiliation": "CITADEL" },
-    { "name": "Dr SABANE", "affiliation": "CITADEL / Université Joseph KI-ZERBO" },
-    { "name": "Abdoul-Kader Kabore", "affiliation": "CITADEL" },
-    { "name": "Rodrique Kafando", "affiliation": "CITADEL" },
-    { "name": "Dr BISSYANDE", "affiliation": "CITADEL / Université Joseph KI-ZERBO" }
-  ],
-  "type": "Conférence",
-  "venue": "HAL Open Science (Preprint)",
-  "year": 2024,
-  "date": "19 Fev 2024",
-  "abstract": "This paper explores the field of machine learning applied to signal processing, focusing on the identification of deepfake audio. With the emergence of audio deepfakes used to orchestrate scams, spread misinformation and manipulate public opinion, the need for robust detection methods is critical. The study presents a comparative review of acoustic parameters used in deepfake audio detection, including pitch, energy, spectral features, MFCCs and mel-spectrograms, evaluating their effectiveness in distinguishing authentic from synthetic speech.",
-  "keywords": ["DeepFake", "Audio Detection", "MFCC", "Mel-Spectrogram", "Signal Processing"],
-  "pdf_url": "papers/2024-deepfake-audio.pdf",
-  "doi": "https://doi.org/10.1109/AMCAI59331.2023.10431521",
-  "status": "Preprint",
-  "theme": "FINTECH & SÉCURITÉ",
-  "featured": false
-},
-
-{
-  "id": "citadel-2024-android-leaks",
-  "title": "Detecting Illicit Data Leaks on Android Smartphones Using an Artificial Intelligence Models",
-  "authors": [
-    { "name": "Serge Lionel Nikiema", "affiliation": "CITADEL" },
-    { "name": "Dr SABANE", "affiliation": "Université Joseph Ki-Zerbo" },
-    { "name": "Abdoul-Kader Kabore", "affiliation": "CITADEL" },
-    { "name": "Rodrique Kafando", "affiliation": "CITADEL / Université Joseph Ki-Zerbo" },
-    { "name": "Dr BISSYANDE", "affiliation": "CITADEL / Université Joseph Ki-Zerbo" }
-  ],
-  "type": "Article",
-  "venue": "AIAI 2024, IFIP AICT 712, Springer Nature Switzerland",
-  "year": 2024,
-  "date": "19 June 2024",
-  "abstract": "In today's digital landscape, hackers and espionage agents are increasingly targeting Android. This study introduces DeepDetector, a system based on artificial intelligence to recognize data thefts in Android. The model is based upon a large dataset of clean and tainted network traffic trained using a Random Forest Classifier. DeepDetector achieves 82.9% accuracy for connection anomaly detection and 89.9% recall, while getting 78.9% accuracy and 81.6 recall for detection under a system mounted with Raspberry Pi. Automatic data collection, dataset preparation, training and testing of the model, as well as leak detection are ensured.",
-  "keywords": ["Android", "Mobile Security", "Data Leak", "Machine Learning", "Anomaly Detection"],
-  "pdf_url": "papers/2024-android-leaks.pdf",
-  "doi": "10.1007/978-3-031-63215-0_14",
-  "status": "Publié",
-  "theme": "CONFIDENTIALITÉ ET EXPLICABILITÉ",
-  "featured": false
-}
-
-,
-{
-  "id": "citadel-2024-ia-securite-burkina",
-  "title": "L'intelligence artificielle pour l'analyse de la situation sécuritaire du Burkina Faso",
-  "authors": [
-    { "name": "Abdoul Fataoh Kabore", "affiliation": "CITADEL / Université Virtuelle du Burkina Faso" },
-    { "name": "Maimouna Ouattara", "affiliation": "CITADEL / Université Joseph Ki-Zerbo" },
-    { "name": "Adama Soro", "affiliation": "Université Norbert Zongo" },
-    { "name": "Rodrique Kafando", "affiliation": "CITADEL / Université Virtuelle du Burkina Faso" },
-    { "name": "Abdoul Kader Kabore", "affiliation": "CITADEL / Université du Luxembourg" }
-  ],
-  "type": "Article",
-  "venue": "À VÉRIFIER (non visible sur la première page)",
-  "year": 2024,
-  "date": "2024",
-  "abstract": "Depuis août 2015, le Burkina Faso fait l'objet d'attaques terroristes visant aussi bien les forces de Défense et de Sécurité (FDS) que les populations civiles. Cette situation d'insécurité impacte le pays dans tous les domaines et se manifeste par des débats nourris au sein de l'opinion publique, notamment sur les réseaux sociaux et dans les commentaires d'articles en ligne. Cet article propose une analyse de la situation sécuritaire à partir d'un corpus de 1080 articles et 13975 commentaires d'internautes, collectés par web scraping. Des techniques d'intelligence artificielle, notamment basées sur les modèles Transformers, sont appliquées pour effectuer une analyse de sentiments (positif, négatif, mixte) et identifier les principales thématiques et tendances qui se dégagent des perceptions des populations sur la situation sécuritaire du pays.",
-  "keywords": ["Sécurité", "Intelligence Artificielle", "Transformers", "Analyse de sentiments", "Web scraping", "Burkina Faso", "Terrorisme"],
-  "pdf_url": "papers/2024-ia-securite-burkina.pdf",
-  "doi": "",
-  "status": "Publié",
-  "theme": "FINTECH & SÉCURITÉ",
-  "featured": false
-},
-
-{
-  "id": "citadel-2023-metatptrans",
-  "title": "MetaTPTrans: A Meta Learning Approach for Multilingual Code Representation Learning",
-  "authors": [
-    { "name": "Weiguo Pian", "affiliation": "SnT, University of Luxembourg" },
-    { "name": "Hanyu Peng", "affiliation": "Baidu Inc., Beijing" },
-    { "name": "Xunzhu Tang", "affiliation": "SnT, University of Luxembourg" },
-    { "name": "Tiezhu Sun", "affiliation": "SnT, University of Luxembourg" },
-    { "name": "Haoye Tian", "affiliation": "SnT, University of Luxembourg" },
-    { "name": "Andrew Habib", "affiliation": "SnT, University of Luxembourg" },
-    { "name": "Jacques Klein", "affiliation": "SnT, University of Luxembourg" },
-    { "name": "Dr BISSYANDE", "affiliation": "CITADEL/ Université Virtuelle du Burkina Faso" }
-  ],
-  "type": "Article",
-  "venue": "AAAI-23, The Thirty-Seventh AAAI Article on Artificial Intelligence",
-  "year": 2023,
-  "date": "2023",
-  "abstract": "Representation learning of source code is essential for applying machine learning to software engineering tasks. Learning code representation from a multilingual source code dataset has been shown to be more effective than learning from single-language datasets separately, since more training data from multilingual dataset improves the model's ability to extract language-agnostic information from source code. However, existing multilingual training overlooks the language-specific information which is crucial for modeling source code across different programming languages, while only focusing on learning a unified model with shared parameters among different languages for language-agnostic information modeling. To address this problem, we propose MetaTPTrans, a meta learning approach for multilingual code representation learning. MetaTPTrans generates different parameters for the feature extractor according to the specific programming language type of the input code snippet, enabling the model to learn both language-agnostic and language-specific information with dynamic parameters in the feature extractor. We conduct experiments on the code summarization and code completion tasks to verify the effectiveness of our approach. The results demonstrate the superiority of our approach with significant improvements on state-of-the-art baselines.",
-  "keywords": ["Meta Learning", "Code Representation", "Multilingual", "Transformers", "Code Summarization", "Code Completion", "AST"],
-  "pdf_url": "papers/2023-metatptrans.pdf",
-  "doi": "https://doi.org/10.1609/aaai.v37i4.25654",
-  "status": "Publié",
-  "theme": "CONFIDENTIALITÉ ET EXPLICABILITÉ",
-  "featured": false
-},
-
-
-{
-  "id": "citadel-2023-snetoolkit",
-  "title": "SNEToolkit: Spatial named entities disambiguation toolkit",
-  "authors": [
-    { "name": "Rodrique Kafando", "affiliation": "CITADEL / Université Virtuelle du Burkina Faso" },
-    { "name": "Rémy Decoupes", "affiliation": "TETIS, Univ Montpellier, AgroParisTech, CIRAD, CNRS, INRAE" },
-    { "name": "Mathieu Roche", "affiliation": "TETIS, Univ Montpellier, AgroParisTech, CIRAD, CNRS, INRAE / CIRAD, Montpellier" },
-    { "name": "Maguelonne Teisseire", "affiliation": "TETIS, Univ Montpellier, AgroParisTech, CIRAD, CNRS, INRAE" }
-  ],
-  "type": "Article",
-  "venue": "SoftwareX, Volume 23, Article 101480, Elsevier",
-  "year": 2023,
-  "date": "23, July 2023",
-  "abstract": "\"Can you tell me where San Jose is located?\" \"Uh! Do you know that there are more than 1700 locations named San Jose in the world?\" The official name of a location is often not the name with which we are familiar. Spatial named entity (SNE) disambiguation is the process of identifying and assigning precise coordinates to a place name that can be identified in a text. This task is not always straightforward, especially when the place name in question is ambiguous for various reasons. In this context, we are interested in the disambiguation of spatial named entities that can be identified in a textual document on a country level. The solution that we propose is based on a set of techniques that allow us to disambiguate the spatial entity considering the context in which it is mentioned from a certain number of characteristics that are specific to it. The solution uses as input a textual document and extricates the named entities identified therein while associating them with the correct coordinates. SNE disambiguation is designed to support the process of fast exploration of spatiotemporal data analysis, most often for event tracking. The proposed approach was tested on 1360 SNEs extracted from the GeoVirus dataset. The results show that SNEToolkit outperformed the baseline, the standard Geonames geocoder, with a recall value of 0.911 against a recall value of 0.871 for the baseline. A flexible Python package is provided for end users.",
-  "keywords": ["Spatial named entity", "Disambiguation", "Geocoding", "Software", "NLP", "Geonames", "spaCy"],
-  "pdf_url": "papers/2023-snetoolkit.pdf",
-  "doi": "10.1016/j.softx.2023.101480",
-  "status": "Publié",
-  "theme": "CONFIDENTIALITÉ ET EXPLICABILITÉ",
-  "featured": false
-},
-
-{
-  "id": "citadel-2025-text-to-owl-tuberculose",
-  "title": "Text-to-OWL: Automated Ontology Construction for Tuberculosis Treatment Recommendation Using Generative AI",
-  "authors": [
-    { "name": "Zonabo Ouédraogo", "affiliation": "CITADEL / Université Joseph Ki-Zerbo" },
-    { "name": "Lydie Simone Tapsoba", "affiliation": "Université Joseph Ki-Zerbo" },
-    { "name": "Dr SABANE", "affiliation": "CITADEL / Université Joseph Ki-Zerbo" },
-    { "name": "Rodrique Kafando", "affiliation": "CITADEL / Université Virtuelle du Burkina Faso" },
-    { "name": "Abdoul Kader Kabore", "affiliation": "Université du Luxembourg" },
-    { "name": "Dr BISSYANDE", "affiliation": "CITADEL / Université du Luxembourg" }
-  ],
-  "type": "Conférence",
-  "venue": "AFRICOMM 2024 — International Conference on e-Infrastructure and e-Services for Developing Countries. In: Towards New e-Infrastructure and e-Services for Developing Countries, LNICST vol. 653, Springer, Cham, pp. 281-294",
-  "year": 2025,
-  "date": "2025-10-23",
-  "abstract": "This paper presents an automated approach for building ontologies to improve treatment recommendations for tuberculosis (TB), in particular multidrug-resistant tuberculosis (MDR-TB) cases in Burkina Faso, using generative language models such as GPT-3. The aim is to facilitate the personalization of treatments according to the patient profile and drug resistance. Two approaches were explored: an automated approach based on the DaVinci GPT-3 model to generate OWL axioms from natural language sentences and a semi-automated approach using text extraction and natural language processing (NLP) techniques. The automated approach was fine-tuned with a dataset consisting of technical guidelines on TB management. The automated approach created an ontology composed of 158 classes, 55 object properties and 57 data properties, outperforming the semi-automated approach in terms of efficiency and accuracy. The axioms generated were validated using Protégé and integrated into a formal knowledge base. The study demonstrates that the use of language models such as GPT-3 can efficiently automate ontology generation, reducing human intervention. This approach is particularly well-suited to the management of complex MDR-TB cases and paves the way for standardization of treatment recommendations, while remaining adaptable to local specificities.",
-  "keywords": ["Tuberculosis", "Generative AI", "Ontologies", "Medical Decision Support Systems", "Text-to-Ontology", "GPT-3", "OWL", "MDR-TB"],
-  "pdf_url": "papers/2025-text-to-owl-tuberculose.pdf",
-  "doi": "10.1007/978-3-032-01910-3_18",
-  "status": "Publié",
-  "theme": "SANTÉ & BIEN-ÊTRE",
-  "featured": false
-},
-
-{
-  "id": "citadel-2023-voice-moore",
-  "title": "Voice Interaction in Moore Language: Study on Isolated Word Recognition in Audio Samples",
-  "authors": [
-    { "name": "Moumini Kaboré", "affiliation": "CITADEL / Université Virtuelle du Burkina Faso" },
-    { "name": "Rodrique Kafando", "affiliation": "CITADEL / Université Virtuelle du Burkina Faso" },
-    { "name": "Dr SABANE", "affiliation": "Département d'Informatique, UFR/SEA - Université Joseph Ki-Zerbo" },
-    { "name": "Abdoul Kader Kabore", "affiliation": "CITADEL / Université Joseph Ki-Zerbo" },
-    { "name": "Dr BISSYANDE", "affiliation": "CITADEL / Université Joseph Ki-Zerbo" }
-  ],
-  "type": "Article",
-  "venue": "JRI 2023 — Journées de Recherche en Informatique, Ouagadougou, Burkina Faso (December 18-20, 2023), EAI",
-  "year": 2023,
-  "date": "2023-12-18",
-  "abstract": "This paper explores the optimization of telephone functionalities through voice interaction in the Moore language, prevalent in Burkina Faso. Data gathered from 492 individuals in Ouagadougou, representing diverse dialects and vocal intensities across age groups, informs the study. Employing K-Nearest Neighbor (KNN), Random Forest (RF), and Recurrent Neural Networks (RNNs), the analysis focuses on 29 Moore language commands, prioritizing practicality and user interaction. The findings suggest promising prospects for RNNs, achieving a 63% accuracy in recognizing isolated words. This success hints at potential advancements in RNNs, incorporating attention mechanisms and end-to-end technology, catering to the voice-controlled mobile device needs of Moore speakers.",
-  "keywords": ["Isolated Word Recognition", "RNN", "Mel-Frequency Cepstral Coefficient", "MFCC", "KNN", "Random Forest", "Moore", "Speech Recognition", "Burkina Faso"],
-  "pdf_url": "papers/2023-voice-moore.pdf",
-  "doi": "10.4108/eai.18-12-2023.2348169",
-  "status": "Publié",
-  "theme": "LANGUE & PATRIMOINE",
-  "featured": false
-}
-
-  ]
+  {
+    "id": "citadel-2026-titre-test",
+    "title": "Titre test",
+    "authors": [
+      {
+        "name": "ouedraogo aziz",
+        "affiliation": "Université Virtuelle"
+      }
+    ],
+    "type": "Rapport",
+    "venue": "Université Virtuelle",
+    "year": 2026,
+    "date": "2026",
+    "abstract": "Abstract test \n hemorrhagic stroke is a life-threatening medical condition that happens when a blood vessel in your brain ruptures and bleeds. The current definitive diagnosis is based on brain scanning, but clinical diagnosis is complex and depends on the skills of the practitioner. This study proposes an artificial intelligence approach for medical assistance in the early clinical diagnosis of hemorrhagic strokes. Three machine learning models were compared: logistic regression, Random Forest and artificial neural networks. The Random Forest model achieved 99.33% accuracy on simulation data and 99.05% on validation data, demonstrating satisfactory results to help health workers make rapid diagnosis.",
+    "keywords": [
+      "internet",
+      "citadel"
+    ],
+    "pdf_url": "papers/citadel-2026-titre-test.pdf",
+    "doi": "",
+    "status": "En attente de validation",
+    "theme": "CONFIDENTIALITÉ ET EXPLICABILITÉ",
+    "featured": false,
+    "submitted_by": "ouedraogoaziz578@gmail.com",
+    "submitted_at": "2026-05-18T14:00:05.878Z"
+  },
+  {
+    "id": "citadel-2024-french-to-moore",
+    "title": "A Low-Resource Language Translation: French To Mooré",
+    "authors": [
+      {
+        "name": "Hamed Joseph Ouily",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      },
+      {
+        "name": "Aminata Sabane",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      },
+      {
+        "name": "Delwende Eliane Birba",
+        "affiliation": "AI-KING GROUP"
+      },
+      {
+        "name": "Rodrique Kafando",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Abdoul-Kader Kabore",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Dr Bissyande",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      }
+    ],
+    "type": "Article",
+    "venue": "HAL Open Science (Preprint)",
+    "year": 2024,
+    "date": "30 Jan 2024",
+    "abstract": "Natural Language Processing (NLP) is an exciting field of artificial intelligence with the goal of enabling machines to understand human language. Neural Machine Translation (NMT) offers the ability to effectively translate text from a source language to a target language. However, most African languages, especially those in Burkina Faso, have received very little research attention. In this article, we propose automated translation models French to Moore based on Transformers. We achieved a BLEU score of 71.18 for the French to Moore translation. A web application was also developed to make the translation accessible to the public.",
+    "keywords": [
+      "Natural Language Processing",
+      "Neural Machine Translation",
+      "Low-Resource Language",
+      "Moore Language",
+      "Transformers"
+    ],
+    "pdf_url": "papers/2024-french-to-moore.pdf",
+    "doi": "https://doi.org/10.1007/978-3-031-88226-5_30",
+    "status": "Preprint",
+    "theme": "LANGUE & PATRIMOINE",
+    "featured": false
+  },
+  {
+    "id": "citadel-2024-hemorrhagic-stroke",
+    "title": "AI-Based Approach for Early Diagnosis Support in Hemorrhagic Stroke",
+    "authors": [
+      {
+        "name": "Athanase Sawadogo",
+        "affiliation": "Université Joseph KI-ZERBO"
+      },
+      {
+        "name": "Lydie Simone Tapsoba",
+        "affiliation": "LAMI, Ouagadougou"
+      },
+      {
+        "name": "Rodrique Kafando",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Abdoul Kader Kabore",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Dr sabane",
+        "affiliation": "Université Joseph KI-ZERBO"
+      },
+      {
+        "name": "Dr Bissyande",
+        "affiliation": "Université Joseph KI-ZERBO / CITADEL"
+      }
+    ],
+    "type": "Article",
+    "venue": "CITADEL Research Paper",
+    "year": 2024,
+    "date": "2024",
+    "abstract": "A hemorrhagic stroke is a life-threatening medical condition that happens when a blood vessel in your brain ruptures and bleeds. The current definitive diagnosis is based on brain scanning, but clinical diagnosis is complex and depends on the skills of the practitioner. This study proposes an artificial intelligence approach for medical assistance in the early clinical diagnosis of hemorrhagic strokes. Three machine learning models were compared: logistic regression, Random Forest and artificial neural networks. The Random Forest model achieved 99.33% accuracy on simulation data and 99.05% on validation data, demonstrating satisfactory results to help health workers make rapid diagnosis.",
+    "keywords": [
+      "Hemorrhagic Stroke",
+      "Machine Learning",
+      "Random Forest",
+      "Clinical Diagnosis",
+      "Healthcare AI"
+    ],
+    "pdf_url": "papers/2024-hemorrhagic-stroke.pdf",
+    "doi": "",
+    "status": "Publié",
+    "theme": "SANTÉ & BIEN-ÊTRE",
+    "featured": false
+  },
+  {
+    "id": "citadel-2024-news-summaries-gpt",
+    "title": "AI-driven Generation of News Summaries: Leveraging GPT and Pegasus Summarizer for Efficient Information Extraction",
+    "authors": [
+      {
+        "name": "Issiaka Faissal Compaore",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      },
+      {
+        "name": "Rodrique Kafando",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Dr sabane",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      },
+      {
+        "name": "Abdoul Kader Kabore",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Dr Bissyande",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      }
+    ],
+    "type": "Article",
+    "venue": "HAL Open Science (Preprint)",
+    "year": 2024,
+    "date": "5 Feb 2024",
+    "abstract": "The escalating volume of online information presents a formidable challenge in swiftly accessing pertinent news. This research explores the design and implementation of an online press synthesis tool using advanced AI models. Two pre-trained models, GPT-3.5 Turbo 16k and Pegasus Summarizer, were used to generate high-quality automatic summaries from scraped articles. The methodology encompasses web scraping with Beautiful Soup, model integration, similarity calculation for duplicate detection, and audio matching. GPT-3.5 Turbo 16k achieved the best performance with a BLEU score of 16.39% and a ROUGE score of 0.66% on reference summaries.",
+    "keywords": [
+      "Online Press",
+      "Artificial Intelligence",
+      "Web Scraping",
+      "Transformers",
+      "Abstractive Summarization"
+    ],
+    "pdf_url": "papers/2024-news-summaries-gpt.pdf",
+    "doi": "",
+    "status": "Preprint",
+    "theme": "LANGUE & PATRIMOINE",
+    "featured": false
+  },
+  {
+    "id": "citadel-2024-security-situation-bf",
+    "title": "Artificial Intelligence for the Analysis of the Security Situation in Burkina Faso",
+    "authors": [
+      {
+        "name": "Abdoul Fataoh Kaboré",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Maimouna Ouattara",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Rodrique Kafando",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Abdoul Kader Kabore",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Dr BISSYANDE",
+        "affiliation": "CITADEL"
+      }
+    ],
+    "type": "Article",
+    "venue": "HAL Open Science (Preprint) / AFRICOMM",
+    "year": 2024,
+    "date": "30 Jan 2024",
+    "abstract": "In the face of insecurity caused by terrorism in Burkina Faso since 2015, the population expresses their feelings through comments on social platforms, creating significant amounts of data. This study introduces a web scraping tool to gather data, then employs sentiment analysis and hate speech detection models based on transformers. The contributions include establishing a textual corpus related to the security situation, proposing an AI-based methodological approach for data analysis, and suggesting a dashboard for visualizing results. Results reveal increased negative sentiments and hate speech during periods marked by terrorist attacks.",
+    "keywords": [
+      "Security Situation",
+      "Web Scraping",
+      "Sentiment Analysis",
+      "Hate Speech Detection",
+      "Transformers"
+    ],
+    "pdf_url": "papers/2024-security-situation-bf.pdf",
+    "doi": "https://doi.org/10.1007/978-3-031-81573-7_14",
+    "status": "Preprint",
+    "theme": "FINTECH & SÉCURITÉ",
+    "featured": false
+  },
+  {
+    "id": "citadel-2024-fakipedia",
+    "title": "Fakipedia: Building and exploiting an AI model for detecting online fake news in Burkina Faso",
+    "authors": [
+      {
+        "name": "Angelique S. Yameogo",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      },
+      {
+        "name": "Dr SABANE",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      },
+      {
+        "name": "Dr BISSYANDE",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      },
+      {
+        "name": "Rodrique Kafando",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Abdoul-Kader Kabore",
+        "affiliation": "CITADEL"
+      }
+    ],
+    "type": "Article",
+    "venue": "HAL Open Science (Preprint)",
+    "year": 2024,
+    "date": "30 Jan 2024",
+    "abstract": "Misinformation poses a significant challenge, especially in developing countries with low literacy rates. The rapid spread on social media, coupled with the lack of robust verification mechanisms, makes distinguishing between credible and false information increasingly difficult. This document outlines efforts to address this challenge in Burkina Faso using the pre-trained linguistic model CAMEMBERT. Preliminary results show high performance with up to a 99.34% F1 score on Fakipedia, suggesting that certain blatant instances of false information can be effectively identified and stopped by automated tools.",
+    "keywords": [
+      "Fake News",
+      "Machine Learning",
+      "Text Classification",
+      "camemBERT",
+      "Artificial Intelligence"
+    ],
+    "pdf_url": "papers/2024-fakipedia.pdf",
+    "doi": "https://hal.science/hal-04425410v1",
+    "status": "Preprint",
+    "theme": "LANGUE & PATRIMOINE",
+    "featured": false
+  },
+  {
+    "id": "citadel-2024-video-analytics",
+    "title": "Optimizing Real-time Video Analytics for Resource-Constrained Environments",
+    "authors": [
+      {
+        "name": "Rodrique Kafando",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Dr SABANE",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      },
+      {
+        "name": "Dr BISSYANDE",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      }
+    ],
+    "type": "Conférence",
+    "venue": "EAI AFRICOMM 2024 - 16th EAI International Conference on e-Infrastructure and e-Services for Developing Countries, Abidjan",
+    "year": 2024,
+    "date": "Nov 2024",
+    "abstract": "Developing countries face a growing demand for video analytics, yet often lack sufficient computational resources. This paper addresses the challenge of deploying real-time video analytics systems on resource-constrained devices, including edge systems. Several techniques are introduced and evaluated, including image resizing, frame skipping, parallel processing, forwarding, queue management, memory optimization, and buffering. Experiments using YOLOv8 for object detection on both CPU and GPU demonstrate effective balancing of performance and resource consumption, enabling real-time video analytics without compromising accuracy and paving the way for practical monitoring and alert systems.",
+    "keywords": [
+      "RTSP Stream",
+      "Real-time Video Analytics",
+      "Computational Optimization",
+      "Post-Training Optimization",
+      "YOLOv8"
+    ],
+    "pdf_url": "papers/2024-video-analytics.pdf",
+    "doi": "https://doi.org/10.1007/978-3-032-01910-3_16",
+    "status": "Publié",
+    "theme": "FINTECH & SÉCURITÉ",
+    "featured": false
+  },
+  {
+    "id": "citadel-2024-deepfake-audio",
+    "title": "Evaluating Acoustic Parameters for DeepFake Audio Identification",
+    "authors": [
+      {
+        "name": "Albérick Euraste Djiré",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Dr SABANE",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      },
+      {
+        "name": "Abdoul-Kader Kabore",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Rodrique Kafando",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Dr BISSYANDE",
+        "affiliation": "CITADEL / Université Joseph KI-ZERBO"
+      }
+    ],
+    "type": "Conférence",
+    "venue": "HAL Open Science (Preprint)",
+    "year": 2024,
+    "date": "19 Fev 2024",
+    "abstract": "This paper explores the field of machine learning applied to signal processing, focusing on the identification of deepfake audio. With the emergence of audio deepfakes used to orchestrate scams, spread misinformation and manipulate public opinion, the need for robust detection methods is critical. The study presents a comparative review of acoustic parameters used in deepfake audio detection, including pitch, energy, spectral features, MFCCs and mel-spectrograms, evaluating their effectiveness in distinguishing authentic from synthetic speech.",
+    "keywords": [
+      "DeepFake",
+      "Audio Detection",
+      "MFCC",
+      "Mel-Spectrogram",
+      "Signal Processing"
+    ],
+    "pdf_url": "papers/2024-deepfake-audio.pdf",
+    "doi": "https://doi.org/10.1109/AMCAI59331.2023.10431521",
+    "status": "Preprint",
+    "theme": "FINTECH & SÉCURITÉ",
+    "featured": false
+  },
+  {
+    "id": "citadel-2024-android-leaks",
+    "title": "Detecting Illicit Data Leaks on Android Smartphones Using an Artificial Intelligence Models",
+    "authors": [
+      {
+        "name": "Serge Lionel Nikiema",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Dr SABANE",
+        "affiliation": "Université Joseph Ki-Zerbo"
+      },
+      {
+        "name": "Abdoul-Kader Kabore",
+        "affiliation": "CITADEL"
+      },
+      {
+        "name": "Rodrique Kafando",
+        "affiliation": "CITADEL / Université Joseph Ki-Zerbo"
+      },
+      {
+        "name": "Dr BISSYANDE",
+        "affiliation": "CITADEL / Université Joseph Ki-Zerbo"
+      }
+    ],
+    "type": "Article",
+    "venue": "AIAI 2024, IFIP AICT 712, Springer Nature Switzerland",
+    "year": 2024,
+    "date": "19 June 2024",
+    "abstract": "In today's digital landscape, hackers and espionage agents are increasingly targeting Android. This study introduces DeepDetector, a system based on artificial intelligence to recognize data thefts in Android. The model is based upon a large dataset of clean and tainted network traffic trained using a Random Forest Classifier. DeepDetector achieves 82.9% accuracy for connection anomaly detection and 89.9% recall, while getting 78.9% accuracy and 81.6 recall for detection under a system mounted with Raspberry Pi. Automatic data collection, dataset preparation, training and testing of the model, as well as leak detection are ensured.",
+    "keywords": [
+      "Android",
+      "Mobile Security",
+      "Data Leak",
+      "Machine Learning",
+      "Anomaly Detection"
+    ],
+    "pdf_url": "papers/2024-android-leaks.pdf",
+    "doi": "10.1007/978-3-031-63215-0_14",
+    "status": "Publié",
+    "theme": "CONFIDENTIALITÉ ET EXPLICABILITÉ",
+    "featured": false
+  },
+  {
+    "id": "citadel-2024-ia-securite-burkina",
+    "title": "L'intelligence artificielle pour l'analyse de la situation sécuritaire du Burkina Faso",
+    "authors": [
+      {
+        "name": "Abdoul Fataoh Kabore",
+        "affiliation": "CITADEL / Université Virtuelle du Burkina Faso"
+      },
+      {
+        "name": "Maimouna Ouattara",
+        "affiliation": "CITADEL / Université Joseph Ki-Zerbo"
+      },
+      {
+        "name": "Adama Soro",
+        "affiliation": "Université Norbert Zongo"
+      },
+      {
+        "name": "Rodrique Kafando",
+        "affiliation": "CITADEL / Université Virtuelle du Burkina Faso"
+      },
+      {
+        "name": "Abdoul Kader Kabore",
+        "affiliation": "CITADEL / Université du Luxembourg"
+      }
+    ],
+    "type": "Article",
+    "venue": "À VÉRIFIER (non visible sur la première page)",
+    "year": 2024,
+    "date": "2024",
+    "abstract": "Depuis août 2015, le Burkina Faso fait l'objet d'attaques terroristes visant aussi bien les forces de Défense et de Sécurité (FDS) que les populations civiles. Cette situation d'insécurité impacte le pays dans tous les domaines et se manifeste par des débats nourris au sein de l'opinion publique, notamment sur les réseaux sociaux et dans les commentaires d'articles en ligne. Cet article propose une analyse de la situation sécuritaire à partir d'un corpus de 1080 articles et 13975 commentaires d'internautes, collectés par web scraping. Des techniques d'intelligence artificielle, notamment basées sur les modèles Transformers, sont appliquées pour effectuer une analyse de sentiments (positif, négatif, mixte) et identifier les principales thématiques et tendances qui se dégagent des perceptions des populations sur la situation sécuritaire du pays.",
+    "keywords": [
+      "Sécurité",
+      "Intelligence Artificielle",
+      "Transformers",
+      "Analyse de sentiments",
+      "Web scraping",
+      "Burkina Faso",
+      "Terrorisme"
+    ],
+    "pdf_url": "papers/2024-ia-securite-burkina.pdf",
+    "doi": "",
+    "status": "Publié",
+    "theme": "FINTECH & SÉCURITÉ",
+    "featured": false
+  },
+  {
+    "id": "citadel-2023-metatptrans",
+    "title": "MetaTPTrans: A Meta Learning Approach for Multilingual Code Representation Learning",
+    "authors": [
+      {
+        "name": "Weiguo Pian",
+        "affiliation": "SnT, University of Luxembourg"
+      },
+      {
+        "name": "Hanyu Peng",
+        "affiliation": "Baidu Inc., Beijing"
+      },
+      {
+        "name": "Xunzhu Tang",
+        "affiliation": "SnT, University of Luxembourg"
+      },
+      {
+        "name": "Tiezhu Sun",
+        "affiliation": "SnT, University of Luxembourg"
+      },
+      {
+        "name": "Haoye Tian",
+        "affiliation": "SnT, University of Luxembourg"
+      },
+      {
+        "name": "Andrew Habib",
+        "affiliation": "SnT, University of Luxembourg"
+      },
+      {
+        "name": "Jacques Klein",
+        "affiliation": "SnT, University of Luxembourg"
+      },
+      {
+        "name": "Dr BISSYANDE",
+        "affiliation": "CITADEL/ Université Virtuelle du Burkina Faso"
+      }
+    ],
+    "type": "Article",
+    "venue": "AAAI-23, The Thirty-Seventh AAAI Article on Artificial Intelligence",
+    "year": 2023,
+    "date": "2023",
+    "abstract": "Representation learning of source code is essential for applying machine learning to software engineering tasks. Learning code representation from a multilingual source code dataset has been shown to be more effective than learning from single-language datasets separately, since more training data from multilingual dataset improves the model's ability to extract language-agnostic information from source code. However, existing multilingual training overlooks the language-specific information which is crucial for modeling source code across different programming languages, while only focusing on learning a unified model with shared parameters among different languages for language-agnostic information modeling. To address this problem, we propose MetaTPTrans, a meta learning approach for multilingual code representation learning. MetaTPTrans generates different parameters for the feature extractor according to the specific programming language type of the input code snippet, enabling the model to learn both language-agnostic and language-specific information with dynamic parameters in the feature extractor. We conduct experiments on the code summarization and code completion tasks to verify the effectiveness of our approach. The results demonstrate the superiority of our approach with significant improvements on state-of-the-art baselines.",
+    "keywords": [
+      "Meta Learning",
+      "Code Representation",
+      "Multilingual",
+      "Transformers",
+      "Code Summarization",
+      "Code Completion",
+      "AST"
+    ],
+    "pdf_url": "papers/2023-metatptrans.pdf",
+    "doi": "https://doi.org/10.1609/aaai.v37i4.25654",
+    "status": "Publié",
+    "theme": "CONFIDENTIALITÉ ET EXPLICABILITÉ",
+    "featured": false
+  },
+  {
+    "id": "citadel-2023-snetoolkit",
+    "title": "SNEToolkit: Spatial named entities disambiguation toolkit",
+    "authors": [
+      {
+        "name": "Rodrique Kafando",
+        "affiliation": "CITADEL / Université Virtuelle du Burkina Faso"
+      },
+      {
+        "name": "Rémy Decoupes",
+        "affiliation": "TETIS, Univ Montpellier, AgroParisTech, CIRAD, CNRS, INRAE"
+      },
+      {
+        "name": "Mathieu Roche",
+        "affiliation": "TETIS, Univ Montpellier, AgroParisTech, CIRAD, CNRS, INRAE / CIRAD, Montpellier"
+      },
+      {
+        "name": "Maguelonne Teisseire",
+        "affiliation": "TETIS, Univ Montpellier, AgroParisTech, CIRAD, CNRS, INRAE"
+      }
+    ],
+    "type": "Article",
+    "venue": "SoftwareX, Volume 23, Article 101480, Elsevier",
+    "year": 2023,
+    "date": "23, July 2023",
+    "abstract": "\"Can you tell me where San Jose is located?\" \"Uh! Do you know that there are more than 1700 locations named San Jose in the world?\" The official name of a location is often not the name with which we are familiar. Spatial named entity (SNE) disambiguation is the process of identifying and assigning precise coordinates to a place name that can be identified in a text. This task is not always straightforward, especially when the place name in question is ambiguous for various reasons. In this context, we are interested in the disambiguation of spatial named entities that can be identified in a textual document on a country level. The solution that we propose is based on a set of techniques that allow us to disambiguate the spatial entity considering the context in which it is mentioned from a certain number of characteristics that are specific to it. The solution uses as input a textual document and extricates the named entities identified therein while associating them with the correct coordinates. SNE disambiguation is designed to support the process of fast exploration of spatiotemporal data analysis, most often for event tracking. The proposed approach was tested on 1360 SNEs extracted from the GeoVirus dataset. The results show that SNEToolkit outperformed the baseline, the standard Geonames geocoder, with a recall value of 0.911 against a recall value of 0.871 for the baseline. A flexible Python package is provided for end users.",
+    "keywords": [
+      "Spatial named entity",
+      "Disambiguation",
+      "Geocoding",
+      "Software",
+      "NLP",
+      "Geonames",
+      "spaCy"
+    ],
+    "pdf_url": "papers/2023-snetoolkit.pdf",
+    "doi": "10.1016/j.softx.2023.101480",
+    "status": "Publié",
+    "theme": "CONFIDENTIALITÉ ET EXPLICABILITÉ",
+    "featured": false
+  },
+  {
+    "id": "citadel-2025-text-to-owl-tuberculose",
+    "title": "Text-to-OWL: Automated Ontology Construction for Tuberculosis Treatment Recommendation Using Generative AI",
+    "authors": [
+      {
+        "name": "Zonabo Ouédraogo",
+        "affiliation": "CITADEL / Université Joseph Ki-Zerbo"
+      },
+      {
+        "name": "Lydie Simone Tapsoba",
+        "affiliation": "Université Joseph Ki-Zerbo"
+      },
+      {
+        "name": "Dr SABANE",
+        "affiliation": "CITADEL / Université Joseph Ki-Zerbo"
+      },
+      {
+        "name": "Rodrique Kafando",
+        "affiliation": "CITADEL / Université Virtuelle du Burkina Faso"
+      },
+      {
+        "name": "Abdoul Kader Kabore",
+        "affiliation": "Université du Luxembourg"
+      },
+      {
+        "name": "Dr BISSYANDE",
+        "affiliation": "CITADEL / Université du Luxembourg"
+      }
+    ],
+    "type": "Conférence",
+    "venue": "AFRICOMM 2024 — International Conference on e-Infrastructure and e-Services for Developing Countries. In: Towards New e-Infrastructure and e-Services for Developing Countries, LNICST vol. 653, Springer, Cham, pp. 281-294",
+    "year": 2025,
+    "date": "2025-10-23",
+    "abstract": "This paper presents an automated approach for building ontologies to improve treatment recommendations for tuberculosis (TB), in particular multidrug-resistant tuberculosis (MDR-TB) cases in Burkina Faso, using generative language models such as GPT-3. The aim is to facilitate the personalization of treatments according to the patient profile and drug resistance. Two approaches were explored: an automated approach based on the DaVinci GPT-3 model to generate OWL axioms from natural language sentences and a semi-automated approach using text extraction and natural language processing (NLP) techniques. The automated approach was fine-tuned with a dataset consisting of technical guidelines on TB management. The automated approach created an ontology composed of 158 classes, 55 object properties and 57 data properties, outperforming the semi-automated approach in terms of efficiency and accuracy. The axioms generated were validated using Protégé and integrated into a formal knowledge base. The study demonstrates that the use of language models such as GPT-3 can efficiently automate ontology generation, reducing human intervention. This approach is particularly well-suited to the management of complex MDR-TB cases and paves the way for standardization of treatment recommendations, while remaining adaptable to local specificities.",
+    "keywords": [
+      "Tuberculosis",
+      "Generative AI",
+      "Ontologies",
+      "Medical Decision Support Systems",
+      "Text-to-Ontology",
+      "GPT-3",
+      "OWL",
+      "MDR-TB"
+    ],
+    "pdf_url": "papers/2025-text-to-owl-tuberculose.pdf",
+    "doi": "10.1007/978-3-032-01910-3_18",
+    "status": "Publié",
+    "theme": "SANTÉ & BIEN-ÊTRE",
+    "featured": false
+  },
+  {
+    "id": "citadel-2023-voice-moore",
+    "title": "Voice Interaction in Moore Language: Study on Isolated Word Recognition in Audio Samples",
+    "authors": [
+      {
+        "name": "Moumini Kaboré",
+        "affiliation": "CITADEL / Université Virtuelle du Burkina Faso"
+      },
+      {
+        "name": "Rodrique Kafando",
+        "affiliation": "CITADEL / Université Virtuelle du Burkina Faso"
+      },
+      {
+        "name": "Dr SABANE",
+        "affiliation": "Département d'Informatique, UFR/SEA - Université Joseph Ki-Zerbo"
+      },
+      {
+        "name": "Abdoul Kader Kabore",
+        "affiliation": "CITADEL / Université Joseph Ki-Zerbo"
+      },
+      {
+        "name": "Dr BISSYANDE",
+        "affiliation": "CITADEL / Université Joseph Ki-Zerbo"
+      }
+    ],
+    "type": "Article",
+    "venue": "JRI 2023 — Journées de Recherche en Informatique, Ouagadougou, Burkina Faso (December 18-20, 2023), EAI",
+    "year": 2023,
+    "date": "2023-12-18",
+    "abstract": "This paper explores the optimization of telephone functionalities through voice interaction in the Moore language, prevalent in Burkina Faso. Data gathered from 492 individuals in Ouagadougou, representing diverse dialects and vocal intensities across age groups, informs the study. Employing K-Nearest Neighbor (KNN), Random Forest (RF), and Recurrent Neural Networks (RNNs), the analysis focuses on 29 Moore language commands, prioritizing practicality and user interaction. The findings suggest promising prospects for RNNs, achieving a 63% accuracy in recognizing isolated words. This success hints at potential advancements in RNNs, incorporating attention mechanisms and end-to-end technology, catering to the voice-controlled mobile device needs of Moore speakers.",
+    "keywords": [
+      "Isolated Word Recognition",
+      "RNN",
+      "Mel-Frequency Cepstral Coefficient",
+      "MFCC",
+      "KNN",
+      "Random Forest",
+      "Moore",
+      "Speech Recognition",
+      "Burkina Faso"
+    ],
+    "pdf_url": "papers/2023-voice-moore.pdf",
+    "doi": "10.4108/eai.18-12-2023.2348169",
+    "status": "Publié",
+    "theme": "LANGUE & PATRIMOINE",
+    "featured": false
+  }
+]
