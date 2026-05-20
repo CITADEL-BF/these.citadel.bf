@@ -1,5 +1,30 @@
 [
   {
+    "id": "citadel-2025-titre-test-2",
+    "title": "Titre test  2",
+    "authors": [
+      {
+        "name": "ouedraogo aziz",
+        "affiliation": "Université Virtuelle"
+      }
+    ],
+    "type": "Poster",
+    "venue": "Université Virtuelle",
+    "year": 2025,
+    "date": "2025",
+    "abstract": "Abstract fictif",
+    "keywords": [
+      "santé"
+    ],
+    "pdf_url": "papers/citadel-2025-titre-test-2.pdf",
+    "doi": "",
+    "status": "En attente de validation",
+    "theme": "SANTÉ & BIEN-ÊTRE",
+    "featured": false,
+    "submitted_by": "ouedraogoaziz578@gmail.com",
+    "submitted_at": "2026-05-20T10:49:23.909Z"
+  },
+  {
     "id": "citadel-2026-titre-test",
     "title": "Titre test",
     "authors": [
