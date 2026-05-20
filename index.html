@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -37,7 +38,7 @@
     <a href="pages/contact.html">Contact</a>
 <div id="google_translate_element" style="display:none"></div>
 <button id="langBtn" class="notranslate" onclick="toggleLang()" style="background:var(--green);color:white;border:none;padding:6px 14px;border-radius:4px;font-weight:700;font-size:.82rem;cursor:pointer;letter-spacing:.06em;">EN</button>
-<a href="pages/soumettre.html" class="btn-connect">SE CONNECTER</a>
+<a href="pages/soumettre.html" class="btn-connect" id="btnConnexion">SE CONNECTER</a>
   </nav>
 </header>
 
@@ -273,6 +274,15 @@ function toggleLang() {
   if (window.location.hash && window.location.hash.includes('confirmation_token')) {
     window.location.href = '/pages/soumettre.html' + window.location.hash;
   }
+</script>
+<script>
+  netlifyIdentity.on("init", user => {
+    const btn = document.getElementById("btnConnexion");
+    if (user) {
+      btn.textContent = "MON ESPACE";
+      btn.style.background = "var(--green)";
+    }
+  });
 </script>
 </body>
 </html>
