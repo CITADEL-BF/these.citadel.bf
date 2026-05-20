@@ -3,16 +3,241 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Soumettre une publication – these.citadel.bf</title>
+  <title>Espace Fellow – these.citadel.bf</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link rel="stylesheet" href="../assets/css/soumettre.css" />
-
-  <!-- Netlify Identity Widget -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <style>
+    /* ── Espace personnel ── */
+    .dashboard {
+      max-width: 860px;
+      margin: 0 auto;
+      display: none;
+    }
+    .dashboard.visible { display: block; }
+
+    .dashboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .dashboard-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--green);
+    }
+    .dashboard-header p {
+      font-size: .88rem;
+      color: var(--gray);
+      margin-top: 2px;
+    }
+    .btn-new-pub {
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 11px 22px;
+      border-radius: var(--radius);
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 700;
+      font-size: .88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background .2s, transform .15s;
+      white-space: nowrap;
+    }
+    .btn-new-pub:hover { background: var(--green-light); transform: translateY(-1px); }
+
+    /* Tabs */
+    .dash-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--border);
+    }
+    .dash-tab {
+      padding: 10px 20px;
+      font-weight: 700;
+      font-size: .85rem;
+      color: var(--gray);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: color .2s, border-color .2s;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .dash-tab.active { color: var(--green); border-bottom-color: var(--green); }
+    .dash-tab:hover { color: var(--green); }
+
+    /* Publications list */
+    .my-pubs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .my-pub-card {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      padding: 18px 22px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      transition: box-shadow .2s;
+    }
+    .my-pub-card:hover { box-shadow: 0 6px 28px rgba(0,0,0,.12); }
+    .my-pub-info { flex: 1; }
+    .my-pub-title {
+      font-weight: 700;
+      font-size: .95rem;
+      color: var(--dark);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .my-pub-meta {
+      font-size: .8rem;
+      color: var(--gray);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .my-pub-meta span { display: flex; align-items: center; gap: 4px; }
+    .pub-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .pub-status.publie {
+      background: #e8f5ee;
+      color: var(--green);
+      border: 1px solid rgba(0,165,80,.2);
+    }
+    .pub-status.attente {
+      background: #fff8e1;
+      color: #f0a500;
+      border: 1px solid rgba(240,165,0,.2);
+    }
+    .pub-status.rejete {
+      background: #fce4ec;
+      color: var(--red);
+      border: 1px solid rgba(249,71,34,.2);
+    }
+    .my-pub-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn-action {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--gray);
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: .78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all .2s;
+    }
+    .btn-action:hover { border-color: var(--green); color: var(--green); }
+    .btn-action.danger:hover { border-color: var(--red); color: var(--red); }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+    .empty-state .empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .empty-state h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--green);
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    .empty-state p { color: var(--gray); font-size: .88rem; margin-bottom: 20px; }
+
+    /* Modal modification */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.2);
+      width: 100%;
+      max-width: 620px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: fadeDown .25s ease;
+    }
+    .modal-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-header h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--green);
+      font-size: 1.1rem;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--gray);
+      transition: color .2s;
+    }
+    .modal-close:hover { color: var(--red); }
+    .modal-body { padding: 20px 24px 24px; }
+    .modal-note {
+      background: #fff8e1;
+      border: 1px solid rgba(240,165,0,.3);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: .82rem;
+      color: #856404;
+      margin-bottom: 16px;
+    }
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
 
@@ -39,11 +264,10 @@
       </div>
     </div>
     <a href="contact.html">Contact</a>
-    <a href="soumettre.html" class="active btn-connect">SOUMETTRE</a>
+    <a href="soumettre.html" class="active btn-connect">SE CONNECTER</a>
   </nav>
 </header>
 
-<!-- ══ CONTENU ══ -->
 <div class="submit-page">
 
   <!-- ─ ÉCRAN LOGIN ─ -->
@@ -51,12 +275,12 @@
     <div class="auth-gate-header">
       <div class="lock-icon">🔐</div>
       <h2>Espace Fellows</h2>
-      <p>Connectez-vous pour soumettre une publication</p>
+      <p>Connectez-vous pour accéder à votre espace</p>
     </div>
     <div class="auth-gate-body">
       <p style="font-size:.88rem;color:var(--gray);text-align:center;margin-bottom:20px;line-height:1.6;">
         Utilisez votre compte fellow CITADEL.<br/>
-        Si vous n'avez pas encore de compte, contactez un administrateur.
+        Pas encore de compte ? Cliquez sur "Se connecter" puis "Sign up".
       </p>
       <button class="btn-login" onclick="netlifyIdentity.open('login')">
         <i class="fa-solid fa-right-to-bracket"></i> &nbsp;Se connecter
@@ -64,59 +288,204 @@
     </div>
   </div>
 
-  <!-- ─ FORMULAIRE ─ -->
-  <div class="submit-container" id="submitContainer">
+  <!-- ─ DASHBOARD ─ -->
+  <div class="dashboard" id="dashboard">
 
-    <div class="user-bar" id="userBar">
+    <div class="user-bar visible">
       <span>Connecté en tant que <strong id="userEmail"></strong></span>
       <button class="btn-logout" onclick="handleLogout()">Déconnexion</button>
     </div>
 
-    <div class="submit-header">
-      <h1>Soumettre une publication</h1>
-      <p>Remplissez le formulaire — votre document sera examiné par un administrateur avant publication.</p>
+    <div class="dashboard-header">
+      <div>
+        <h1>Mon Espace</h1>
+        <p>Gérez vos publications et soumettez de nouveaux documents</p>
+      </div>
+      <button class="btn-new-pub" onclick="showView('submit')">
+        <i class="fa-solid fa-plus"></i> Nouvelle soumission
+      </button>
     </div>
 
-    <!-- Progression -->
-    <div class="progress-bar">
-      <div class="progress-step active" id="step-ind-1">
-        <div class="step-circle">1</div>
-        <div class="step-label">Informations</div>
+    <!-- Tabs -->
+    <div class="dash-tabs">
+      <div class="dash-tab active" id="tab-pubs" onclick="showView('pubs')">
+        <i class="fa-solid fa-book"></i> Mes publications
       </div>
-      <div class="progress-line" id="line-1"></div>
-      <div class="progress-step" id="step-ind-2">
-        <div class="step-circle">2</div>
-        <div class="step-label">Contenu</div>
-      </div>
-      <div class="progress-line" id="line-2"></div>
-      <div class="progress-step" id="step-ind-3">
-        <div class="step-circle">3</div>
-        <div class="step-label">Document</div>
+      <div class="dash-tab" id="tab-submit" onclick="showView('submit')">
+        <i class="fa-solid fa-upload"></i> Soumettre
       </div>
     </div>
 
-    <!-- ÉTAPE 1 -->
-    <div class="form-card active" id="step1">
-      <div class="form-card-title"><i class="fa-solid fa-circle-info"></i> Informations générales</div>
+    <!-- ─ VUE : MES PUBLICATIONS ─ -->
+    <div id="view-pubs">
+      <div class="my-pubs-list" id="myPubsList">
+        <div class="empty-state">
+          <div class="empty-icon">📂</div>
+          <h3>Chargement...</h3>
+        </div>
+      </div>
+    </div>
 
-      <div class="form-group">
-        <label for="titre">Titre complet <span class="required">*</span></label>
-        <input type="text" id="titre" class="form-control" placeholder="Titre de la thèse ou publication..." />
+    <!-- ─ VUE : FORMULAIRE SOUMISSION ─ -->
+    <div id="view-submit" style="display:none;">
+
+      <div class="progress-bar">
+        <div class="progress-step active" id="step-ind-1">
+          <div class="step-circle">1</div>
+          <div class="step-label">Informations</div>
+        </div>
+        <div class="progress-line" id="line-1"></div>
+        <div class="progress-step" id="step-ind-2">
+          <div class="step-circle">2</div>
+          <div class="step-label">Contenu</div>
+        </div>
+        <div class="progress-line" id="line-2"></div>
+        <div class="progress-step" id="step-ind-3">
+          <div class="step-circle">3</div>
+          <div class="step-label">Document</div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="auteurs">Auteur(s) <span class="required">*</span></label>
-        <input type="text" id="auteurs" class="form-control" placeholder="Ex : Nom Prénom, Nom Prénom" />
-      </div>
-
-      <div class="form-row">
+      <!-- ÉTAPE 1 -->
+      <div class="form-card active" id="step1">
+        <div class="form-card-title"><i class="fa-solid fa-circle-info"></i> Informations générales</div>
         <div class="form-group">
-          <label for="annee">Année <span class="required">*</span></label>
-          <input type="number" id="annee" class="form-control" placeholder="2024" min="2000" max="2099" />
+          <label for="titre">Titre complet <span class="required">*</span></label>
+          <input type="text" id="titre" class="form-control" placeholder="Titre de la thèse ou publication..." />
         </div>
         <div class="form-group">
-          <label for="type_doc">Type de document <span class="required">*</span></label>
-          <select id="type_doc" class="form-control">
+          <label for="auteurs">Auteur(s) <span class="required">*</span></label>
+          <input type="text" id="auteurs" class="form-control" placeholder="Ex : Nom Prénom, Nom Prénom" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="annee">Année <span class="required">*</span></label>
+            <input type="number" id="annee" class="form-control" placeholder="2024" min="2000" max="2099" />
+          </div>
+          <div class="form-group">
+            <label for="type_doc">Type de document <span class="required">*</span></label>
+            <select id="type_doc" class="form-control">
+              <option value="Thèse">Thèse</option>
+              <option value="Article">Article</option>
+              <option value="Mémoire">Mémoire</option>
+              <option value="Rapport">Rapport</option>
+              <option value="Conférence">Conférence</option>
+              <option value="Poster">Poster</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="universite">Université / Institution <span class="required">*</span></label>
+            <input type="text" id="universite" class="form-control" placeholder="Ex : Université Joseph KI-ZERBO" />
+          </div>
+          <div class="form-group">
+            <label for="domaine">Domaine / Axe de recherche <span class="required">*</span></label>
+            <select id="domaine" class="form-control">
+              <option value="LANGUE & PATRIMOINE">Langue &amp; Patrimoine</option>
+              <option value="SANTÉ & BIEN-ÊTRE">Santé &amp; Bien-être</option>
+              <option value="AGRICULTURE ET PASTORALISME">Agriculture et Pastoralisme</option>
+              <option value="FINTECH & SÉCURITÉ">Fintech &amp; Sécurité</option>
+              <option value="CONFIDENTIALITÉ ET EXPLICABILITÉ">Confidentialité &amp; Explicabilité</option>
+              <option value="ÉNERGIE ET CHANGEMENT CLIMATIQUE">Énergie &amp; Changement Climatique</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-nav">
+          <div></div>
+          <button class="btn-next" onclick="goToStep(2)">Suivant <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 2 -->
+      <div class="form-card" id="step2">
+        <div class="form-card-title"><i class="fa-solid fa-align-left"></i> Résumé &amp; Mots-clés</div>
+        <div class="form-group">
+          <label for="resume">Résumé / Abstract <span class="required">*</span></label>
+          <textarea id="resume" class="form-control" rows="6" placeholder="Résumez votre publication..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Mots-clés <span class="required">*</span>
+            <span style="font-weight:400;color:var(--gray);text-transform:none;letter-spacing:0">(Entrée pour ajouter)</span>
+          </label>
+          <div class="tags-input-wrapper" id="tagsWrapper" onclick="document.getElementById('tagInput').focus()">
+            <input type="text" id="tagInput" class="tags-input" placeholder="Ex : Intelligence Artificielle..." />
+          </div>
+          <input type="hidden" id="mots_cles" />
+        </div>
+        <div class="form-nav">
+          <button class="btn-prev" onclick="goToStep(1)"><i class="fa-solid fa-arrow-left"></i> Précédent</button>
+          <button class="btn-next" onclick="goToStep(3)">Suivant <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 3 -->
+      <div class="form-card" id="step3">
+        <div class="form-card-title"><i class="fa-solid fa-file-pdf"></i> Fichier PDF</div>
+        <div class="form-group">
+          <div class="pdf-upload-area" id="uploadArea">
+            <input type="file" id="pdfFile" accept=".pdf" onchange="handleFileSelect(this)" />
+            <div class="pdf-upload-icon">📄</div>
+            <div class="pdf-upload-text">Cliquez ou glissez votre PDF ici</div>
+            <div class="pdf-upload-hint">Format PDF uniquement · Taille max : 20 Mo</div>
+            <div class="pdf-file-name" id="pdfFileName"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="doi">DOI (optionnel)</label>
+          <input type="text" id="doi" class="form-control" placeholder="Ex : https://doi.org/10.xxxx/xxxxx" />
+        </div>
+        <div class="form-nav">
+          <button class="btn-prev" onclick="goToStep(2)"><i class="fa-solid fa-arrow-left"></i> Précédent</button>
+          <button class="btn-submit" id="btnSubmit" onclick="handleSubmit()">
+            <i class="fa-solid fa-paper-plane"></i> Soumettre
+          </button>
+        </div>
+      </div>
+
+    </div><!-- fin view-submit -->
+
+  </div><!-- fin dashboard -->
+
+  <!-- ─ SUCCÈS ─ -->
+  <div class="toast-success" id="toastSuccess">
+    <div class="toast-icon">🎉</div>
+    <h2>Soumission envoyée !</h2>
+    <p>Votre publication a bien été reçue.<br />Elle sera examinée par un administrateur et publiée sous peu.<br /><strong>Merci pour votre contribution à CITADEL.</strong></p>
+    <button class="btn-login" style="margin-top:20px;" onclick="backToDashboard()">
+      <i class="fa-solid fa-arrow-left"></i> Retour à mon espace
+    </button>
+  </div>
+
+</div>
+
+<!-- ══ MODAL MODIFICATION ══ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2><i class="fa-solid fa-pen"></i> Modifier la publication</h2>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-note">
+        ⚠️ Une nouvelle demande de modification sera envoyée à l'administrateur pour validation.
+      </div>
+      <div class="form-group">
+        <label>Titre <span class="required">*</span></label>
+        <input type="text" id="edit-titre" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label>Auteur(s) <span class="required">*</span></label>
+        <input type="text" id="edit-auteurs" class="form-control" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Année <span class="required">*</span></label>
+          <input type="number" id="edit-annee" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select id="edit-type" class="form-control">
             <option value="Thèse">Thèse</option>
             <option value="Article">Article</option>
             <option value="Mémoire">Mémoire</option>
@@ -126,93 +495,22 @@
           </select>
         </div>
       </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="universite">Université / Institution <span class="required">*</span></label>
-          <input type="text" id="universite" class="form-control" placeholder="Ex : Université Joseph KI-ZERBO" />
-        </div>
-        <div class="form-group">
-          <label for="domaine">Domaine / Axe de recherche <span class="required">*</span></label>
-          <select id="domaine" class="form-control">
-            <option value="LANGUE & PATRIMOINE">Langue &amp; Patrimoine</option>
-            <option value="SANTÉ & BIEN-ÊTRE">Santé &amp; Bien-être</option>
-            <option value="AGRICULTURE ET PASTORALISME">Agriculture et Pastoralisme</option>
-            <option value="FINTECH & SÉCURITÉ">Fintech &amp; Sécurité</option>
-            <option value="CONFIDENTIALITÉ ET EXPLICABILITÉ">Confidentialité &amp; Explicabilité</option>
-            <option value="ÉNERGIE ET CHANGEMENT CLIMATIQUE">Énergie &amp; Changement Climatique</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-nav">
-        <div></div>
-        <button class="btn-next" onclick="goToStep(2)">Suivant <i class="fa-solid fa-arrow-right"></i></button>
-      </div>
-    </div>
-
-    <!-- ÉTAPE 2 -->
-    <div class="form-card" id="step2">
-      <div class="form-card-title"><i class="fa-solid fa-align-left"></i> Résumé &amp; Mots-clés</div>
-
       <div class="form-group">
-        <label for="resume">Résumé / Abstract <span class="required">*</span></label>
-        <textarea id="resume" class="form-control" rows="6" placeholder="Résumez votre publication..."></textarea>
+        <label>Résumé <span class="required">*</span></label>
+        <textarea id="edit-resume" class="form-control" rows="5"></textarea>
       </div>
-
       <div class="form-group">
-        <label>Mots-clés <span class="required">*</span>
-          <span style="font-weight:400;color:var(--gray);text-transform:none;letter-spacing:0">(Entrée pour ajouter)</span>
-        </label>
-        <div class="tags-input-wrapper" id="tagsWrapper" onclick="document.getElementById('tagInput').focus()">
-          <input type="text" id="tagInput" class="tags-input" placeholder="Ex : Intelligence Artificielle..." />
-        </div>
-        <input type="hidden" id="mots_cles" />
+        <label>Université / Institution</label>
+        <input type="text" id="edit-universite" class="form-control" />
       </div>
-
-      <div class="form-nav">
-        <button class="btn-prev" onclick="goToStep(1)"><i class="fa-solid fa-arrow-left"></i> Précédent</button>
-        <button class="btn-next" onclick="goToStep(3)">Suivant <i class="fa-solid fa-arrow-right"></i></button>
-      </div>
-    </div>
-
-    <!-- ÉTAPE 3 -->
-    <div class="form-card" id="step3">
-      <div class="form-card-title"><i class="fa-solid fa-file-pdf"></i> Fichier PDF</div>
-
-      <div class="form-group">
-        <div class="pdf-upload-area" id="uploadArea">
-          <input type="file" id="pdfFile" accept=".pdf" onchange="handleFileSelect(this)" />
-          <div class="pdf-upload-icon">📄</div>
-          <div class="pdf-upload-text">Cliquez ou glissez votre PDF ici</div>
-          <div class="pdf-upload-hint">Format PDF uniquement · Taille max : 20 Mo</div>
-          <div class="pdf-file-name" id="pdfFileName"></div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="doi">DOI (optionnel)</label>
-        <input type="text" id="doi" class="form-control" placeholder="Ex : https://doi.org/10.xxxx/xxxxx" />
-      </div>
-
-      <div class="form-nav">
-        <button class="btn-prev" onclick="goToStep(2)"><i class="fa-solid fa-arrow-left"></i> Précédent</button>
-        <button class="btn-submit" id="btnSubmit" onclick="handleSubmit()">
-          <i class="fa-solid fa-paper-plane"></i> Soumettre
+      <div class="modal-footer">
+        <button class="btn-prev" onclick="closeModal()">Annuler</button>
+        <button class="btn-submit" id="btnEditSubmit" onclick="handleEdit()">
+          <i class="fa-solid fa-paper-plane"></i> Envoyer la modification
         </button>
       </div>
     </div>
-
   </div>
-
-  <!-- ─ SUCCÈS ─ -->
-  <div class="toast-success" id="toastSuccess">
-    <div class="toast-icon">🎉</div>
-    <h2>Soumission envoyée !</h2>
-    <p>Votre publication a bien été reçue.<br />Elle sera examinée par un administrateur et publiée sous peu.<br /><strong>Merci pour votre contribution à CITADEL.</strong></p>
-    <a href="../index.html">Retour à l'accueil</a>
-  </div>
-
 </div>
 
 <!-- ══ FOOTER ══ -->
@@ -237,41 +535,187 @@ let currentUser = null;
 let pdfBase64   = null;
 let pdfFilename = null;
 let tags        = [];
+let currentStep = 1;
+let editingPub  = null;
+let allPubs     = [];
 
-// ── Netlify Identity events ──
+// ══ NETLIFY IDENTITY ══
 netlifyIdentity.on("login", user => {
   currentUser = user;
   netlifyIdentity.close();
-  showSubmitForm();
+  showDashboard();
 });
 
 netlifyIdentity.on("logout", () => {
   currentUser = null;
   document.getElementById("authGate").style.display = "block";
-  document.getElementById("submitContainer").classList.remove("visible");
-  document.getElementById("userBar").classList.remove("visible");
+  document.getElementById("dashboard").classList.remove("visible");
 });
 
 window.addEventListener("DOMContentLoaded", () => {
-  // Déjà connecté ?
   const user = netlifyIdentity.currentUser();
-  if (user) { currentUser = user; showSubmitForm(); }
-
+  if (user) { currentUser = user; showDashboard(); }
   document.getElementById("tagInput").addEventListener("keydown", handleTagInput);
 });
 
-function showSubmitForm() {
+function showDashboard() {
   document.getElementById("authGate").style.display = "none";
-  document.getElementById("submitContainer").classList.add("visible");
-  document.getElementById("userBar").classList.add("visible");
+  document.getElementById("dashboard").classList.add("visible");
   document.getElementById("userEmail").textContent = currentUser.email;
+  loadMyPublications();
 }
 
 function handleLogout() { netlifyIdentity.logout(); }
 
-// ── Navigation ──
-let currentStep = 1;
+// ══ TABS / VUES ══
+function showView(view) {
+  document.getElementById("view-pubs").style.display   = view === "pubs"   ? "block" : "none";
+  document.getElementById("view-submit").style.display = view === "submit" ? "block" : "none";
+  document.getElementById("toastSuccess").classList.remove("visible");
 
+  document.getElementById("tab-pubs").classList.toggle("active",   view === "pubs");
+  document.getElementById("tab-submit").classList.toggle("active", view === "submit");
+
+  if (view === "submit") resetForm();
+}
+
+function backToDashboard() {
+  document.getElementById("toastSuccess").classList.remove("visible");
+  document.getElementById("dashboard").style.display = "block";
+  showView("pubs");
+  loadMyPublications();
+}
+
+// ══ MES PUBLICATIONS ══
+async function loadMyPublications() {
+  const list = document.getElementById("myPubsList");
+  list.innerHTML = `<div class="empty-state"><div class="empty-icon">⏳</div><h3>Chargement...</h3></div>`;
+
+  try {
+    // Charger publications.json depuis la racine du site
+    const res  = await fetch("../data/publications.json?nocache=" + Date.now());
+    allPubs    = await res.json();
+
+    // Filtrer par email du fellow connecté
+    const myPubs = allPubs.filter(p =>
+      p.submitted_by && p.submitted_by.toLowerCase() === currentUser.email.toLowerCase()
+    );
+
+    if (myPubs.length === 0) {
+      list.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">📂</div>
+          <h3>Aucune publication pour l'instant</h3>
+          <p>Vous n'avez pas encore soumis de document.</p>
+          <button class="btn-new-pub" onclick="showView('submit')">
+            <i class="fa-solid fa-plus"></i> Soumettre mon premier document
+          </button>
+        </div>`;
+      return;
+    }
+
+    list.innerHTML = myPubs.map(pub => `
+      <div class="my-pub-card">
+        <div class="my-pub-info">
+          <div class="my-pub-title">${pub.title}</div>
+          <div class="my-pub-meta">
+            <span><i class="fa-solid fa-calendar"></i> ${pub.year}</span>
+            <span><i class="fa-solid fa-tag"></i> ${pub.type}</span>
+            <span><i class="fa-solid fa-university"></i> ${pub.venue || pub.universite || ""}</span>
+          </div>
+          <div class="my-pub-actions">
+            <button class="btn-action" onclick="openEditModal('${pub.id}')">
+              <i class="fa-solid fa-pen"></i> Modifier
+            </button>
+            ${pub.pdf_url ? `<a class="btn-action" href="../${pub.pdf_url}" target="_blank">
+              <i class="fa-solid fa-file-pdf"></i> Voir PDF
+            </a>` : ""}
+          </div>
+        </div>
+        <span class="pub-status ${pub.status === 'Publié' ? 'publie' : pub.status === 'Rejeté' ? 'rejete' : 'attente'}">
+          ${pub.status === 'Publié' ? '✅ Publié' : pub.status === 'Rejeté' ? '❌ Rejeté' : '⏳ En attente'}
+        </span>
+      </div>
+    `).join("");
+
+  } catch (err) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">⚠️</div>
+        <h3>Erreur de chargement</h3>
+        <p>Impossible de charger vos publications.</p>
+      </div>`;
+  }
+}
+
+// ══ MODAL MODIFICATION ══
+function openEditModal(pubId) {
+  editingPub = allPubs.find(p => p.id === pubId);
+  if (!editingPub) return;
+
+  document.getElementById("edit-titre").value     = editingPub.title;
+  document.getElementById("edit-auteurs").value   = editingPub.authors.map(a => a.name).join(", ");
+  document.getElementById("edit-annee").value     = editingPub.year;
+  document.getElementById("edit-type").value      = editingPub.type;
+  document.getElementById("edit-resume").value    = editingPub.abstract;
+  document.getElementById("edit-universite").value = editingPub.venue || "";
+
+  document.getElementById("modalOverlay").classList.add("open");
+}
+
+function closeModal() {
+  document.getElementById("modalOverlay").classList.remove("open");
+  editingPub = null;
+}
+
+async function handleEdit() {
+  if (!editingPub) return;
+
+  const btn = document.getElementById("btnEditSubmit");
+  btn.innerHTML = `<span class="spinner"></span> Envoi...`;
+  btn.disabled = true;
+
+  const payload = {
+    edit: true,
+    pub_id:    editingPub.id,
+    titre:     document.getElementById("edit-titre").value.trim(),
+    auteurs:   document.getElementById("edit-auteurs").value.trim(),
+    annee:     document.getElementById("edit-annee").value.trim(),
+    type_doc:  document.getElementById("edit-type").value,
+    resume:    document.getElementById("edit-resume").value.trim(),
+    universite: document.getElementById("edit-universite").value.trim(),
+    domaine:   editingPub.theme,
+    mots_cles: (editingPub.keywords || []).join(", "),
+    submitter_email: currentUser.email,
+    pdf_base64: null,
+    pdf_filename: null
+  };
+
+  try {
+    const res  = await fetch("/.netlify/functions/submit-publication", {
+      method:  "POST",
+      headers: {
+        "Content-Type":  "application/json",
+        "Authorization": `Bearer ${currentUser.token.access_token}`
+      },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal();
+      alert("✅ Modification envoyée ! Elle sera appliquée après validation par l'administrateur.");
+    } else {
+      alert("Erreur : " + (data.error || "Réessayez."));
+    }
+  } catch {
+    alert("Erreur réseau.");
+  } finally {
+    btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Envoyer la modification`;
+    btn.disabled = false;
+  }
+}
+
+// ══ NAVIGATION FORMULAIRE ══
 function goToStep(n) {
   if (n > currentStep && !validateStep(currentStep)) return;
   document.getElementById(`step${currentStep}`).classList.remove("active");
@@ -293,10 +737,36 @@ function updateProgress() {
   }
 }
 
-// ── Validation ──
+function resetForm() {
+  currentStep = 1;
+  ["titre","auteurs","annee","universite","doi","resume"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ""; el.classList.remove("error"); }
+  });
+  tags = [];
+  pdfBase64 = null;
+  pdfFilename = null;
+  document.getElementById("tagsWrapper").querySelectorAll(".tag-chip").forEach(c => c.remove());
+  document.getElementById("pdfFileName").textContent = "";
+  document.getElementById("pdfFileName").classList.remove("visible");
+  document.getElementById("uploadArea").classList.remove("has-file");
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById(`step${i}`).classList.remove("active");
+    const ind = document.getElementById(`step-ind-${i}`);
+    ind.classList.remove("active","done");
+  }
+  document.getElementById("step1").classList.add("active");
+  document.getElementById("step-ind-1").classList.add("active");
+  for (let i = 1; i <= 2; i++) document.getElementById(`line-${i}`).classList.remove("done");
+  const btn = document.getElementById("btnSubmit");
+  btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Soumettre`;
+  btn.disabled = false;
+}
+
+// ══ VALIDATION ══
 function validateStep(step) {
   if (step === 1) {
-    const fields = ["titre", "auteurs", "annee", "universite"];
+    const fields = ["titre","auteurs","annee","universite"];
     let ok = true;
     fields.forEach(id => {
       const el = document.getElementById(id);
@@ -317,7 +787,7 @@ function validateStep(step) {
   return true;
 }
 
-// ── Tags ──
+// ══ TAGS ══
 function handleTagInput(e) {
   if (e.key === "Enter" || e.key === ",") {
     e.preventDefault();
@@ -341,7 +811,7 @@ function renderTags() {
 
 function removeTag(i) { tags.splice(i, 1); renderTags(); }
 
-// ── Upload PDF ──
+// ══ UPLOAD PDF ══
 function handleFileSelect(input) {
   const file = input.files[0];
   if (!file) return;
@@ -355,7 +825,7 @@ function handleFileSelect(input) {
   reader.readAsDataURL(file);
 }
 
-// ── Soumission ──
+// ══ SOUMISSION ══
 async function handleSubmit() {
   if (!validateStep(2)) { goToStep(2); return; }
   if (!pdfBase64) { alert("Veuillez sélectionner un fichier PDF."); return; }
@@ -388,18 +858,16 @@ async function handleSubmit() {
       },
       body: JSON.stringify(payload)
     });
-
     const data = await res.json();
-
     if (data.success) {
-      document.getElementById("submitContainer").style.display = "none";
+      document.getElementById("dashboard").style.display = "none";
       document.getElementById("toastSuccess").classList.add("visible");
     } else {
       alert("Erreur : " + (data.error || "Réessayez plus tard."));
       btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Soumettre`;
       btn.disabled = false;
     }
-  } catch (err) {
+  } catch {
     alert("Erreur réseau. Vérifiez votre connexion et réessayez.");
     btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Soumettre`;
     btn.disabled = false;

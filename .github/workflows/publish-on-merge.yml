@@ -1,0 +1,51 @@
+name: Publier soumission après merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  publish:
+    # S'exécute uniquement si la PR est mergée (pas juste fermée)
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'submit/')
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Mettre le statut à Publié
+        run: |
+          node - <<'EOF'
+          const fs   = require("fs");
+          const path = "data/publications.json";
+          const pubs = JSON.parse(fs.readFileSync(path, "utf8"));
+
+          let changed = false;
+          pubs.forEach(p => {
+            if (p.status === "En attente de validation") {
+              p.status = "Publié";
+              changed = true;
+              console.log("✅ Statut mis à jour :", p.title);
+            }
+          });
+
+          if (changed) {
+            fs.writeFileSync(path, JSON.stringify(pubs, null, 2));
+            console.log("Fichier publications.json mis à jour.");
+          } else {
+            console.log("Aucune publication en attente trouvée.");
+          }
+          EOF
+
+      - name: Commit et push
+        run: |
+          git config user.name  "citadel-bot"
+          git config user.email "bot@citadel.bf"
+          git add data/publications.json
+          git diff --staged --quiet || git commit -m "chore: statut publications mis à jour après merge"
+          git push
