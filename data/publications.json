@@ -1,5 +1,30 @@
 [
   {
+    "id": "citadel-2024-titre-test-6",
+    "title": "Titre test 6",
+    "authors": [
+      {
+        "name": "ouedraogo aziz",
+        "affiliation": "Université Virtuelle"
+      }
+    ],
+    "type": "Mémoire",
+    "venue": "Université Virtuelle",
+    "year": 2024,
+    "date": "2024",
+    "abstract": "..............................................................\n...........................",
+    "keywords": [
+      "patrimoine"
+    ],
+    "pdf_url": "papers/citadel-2024-titre-test-6.pdf",
+    "doi": "",
+    "status": "Publié",
+    "theme": "SANTÉ & BIEN-ÊTRE",
+    "featured": false,
+    "submitted_by": "ouedraogoaziz578@gmail.com",
+    "submitted_at": "2026-05-20T15:40:49.870Z"
+  },
+  {
     "id": "citadel-2022-titre-test-5",
     "title": "Titre test 5",
     "authors": [
