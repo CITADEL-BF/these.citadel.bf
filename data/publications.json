@@ -1,5 +1,30 @@
 [
   {
+    "id": "citadel-2024-titre-test-3",
+    "title": "Titre test  3",
+    "authors": [
+      {
+        "name": "ouedraogo aziz",
+        "affiliation": "Université joseph ki zerbo"
+      }
+    ],
+    "type": "Mémoire",
+    "venue": "Université joseph ki zerbo",
+    "year": 2024,
+    "date": "2024",
+    "abstract": "abstract",
+    "keywords": [
+      "langue"
+    ],
+    "pdf_url": "papers/citadel-2024-titre-test-3.pdf",
+    "doi": "",
+    "status": "En attente de validation",
+    "theme": "LANGUE & PATRIMOINE",
+    "featured": false,
+    "submitted_by": "ouedraogoaziz578@gmail.com",
+    "submitted_at": "2026-05-20T11:21:16.236Z"
+  },
+  {
     "id": "citadel-2025-titre-test-2",
     "title": "Titre test  2",
     "authors": [
