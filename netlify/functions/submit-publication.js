@@ -74,7 +74,7 @@ exports.handler = async (event) => {
     keywords: fields.mots_cles.split(",").map(k => k.trim()),
     pdf_url: pdfPath,
     doi: "",
-    status: "En attente de validation",
+status: "Publié",
     theme: fields.domaine,
     featured: false,
     submitted_by: fields.submitter_email || "",
