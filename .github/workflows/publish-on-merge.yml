@@ -5,11 +5,13 @@ on:
     types: [closed]
     branches: [main]
 
+permissions:
+  contents: write
+
 jobs:
   publish:
-    # S'exécute uniquement si la PR est mergée (pas juste fermée)
     if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'submit/')
-    
+
     runs-on: ubuntu-latest
 
     steps:
@@ -17,6 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
 
       - name: Mettre le statut à Publié
         run: |
@@ -30,15 +33,15 @@ jobs:
             if (p.status === "En attente de validation") {
               p.status = "Publié";
               changed = true;
-              console.log("✅ Statut mis à jour :", p.title);
+              console.log("Statut mis à jour :", p.title);
             }
           });
 
           if (changed) {
             fs.writeFileSync(path, JSON.stringify(pubs, null, 2));
-            console.log("Fichier publications.json mis à jour.");
+            console.log("publications.json mis à jour.");
           } else {
-            console.log("Aucune publication en attente trouvée.");
+            console.log("Aucune publication en attente.");
           }
           EOF
 
@@ -47,5 +50,5 @@ jobs:
           git config user.name  "citadel-bot"
           git config user.email "bot@citadel.bf"
           git add data/publications.json
-          git diff --staged --quiet || git commit -m "chore: statut publications mis à jour après merge"
-          git push
+          git diff --staged --quiet || git commit -m "chore: statut mis à jour après merge"
+          git push origin main
