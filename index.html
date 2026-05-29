@@ -38,7 +38,9 @@
     <a href="pages/contact.html">Contact</a>
 <div id="google_translate_element" style="display:none"></div>
 <button id="langBtn" class="notranslate" onclick="toggleLang()" style="background:var(--green);color:white;border:none;padding:6px 14px;border-radius:4px;font-weight:700;font-size:.82rem;cursor:pointer;letter-spacing:.06em;">EN</button>
-<a href="pages/soumettre.html" class="btn-connect" id="btnConnexion">SE CONNECTER</a>
+<a href="pages/soumettre.html" class="btn-connect" id="btnConnexion">
+  SE CONNECTER
+</a>
   </nav>
 </header>
 
@@ -279,8 +281,9 @@ function toggleLang() {
   netlifyIdentity.on("init", user => {
     const btn = document.getElementById("btnConnexion");
     if (user) {
-      btn.textContent = "MON ESPACE";
+      btn.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size:1.6rem;"></i>`;
       btn.style.background = "var(--green)";
+      btn.style.padding = "5px 12px";
     }
   });
 </script>

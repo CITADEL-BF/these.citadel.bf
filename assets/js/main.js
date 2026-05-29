@@ -224,3 +224,14 @@ function filterPublications(type) {
   const filtered = allPublications.filter(p => p.type === filterType);
   renderPublications(filtered);
 }
+// Icone profil navbar
+if (typeof netlifyIdentity !== "undefined") {
+  netlifyIdentity.on("init", user => {
+    const btn = document.getElementById("btnConnexion");
+    if (btn && user) {
+      btn.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size:1.6rem;"></i>`;
+      btn.style.background = "var(--green)";
+      btn.style.padding = "5px 12px";
+    }
+  });
+}
