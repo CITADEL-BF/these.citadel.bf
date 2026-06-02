@@ -1,5 +1,30 @@
 [
   {
+    "id": "citadel-2019-titre-test",
+    "title": "Titre test",
+    "authors": [
+      {
+        "name": "ouedraogo aziz",
+        "affiliation": "Université Virtuelle"
+      }
+    ],
+    "type": "Mémoire",
+    "venue": "Université Virtuelle",
+    "year": 2019,
+    "date": "2019",
+    "abstract": "abstract",
+    "keywords": [
+      "santé"
+    ],
+    "pdf_url": "papers/citadel-2019-titre-test.pdf",
+    "doi": "",
+    "status": "Publié",
+    "theme": "CONFIDENTIALITÉ ET EXPLICABILITÉ",
+    "featured": false,
+    "submitted_by": "ouedraogoaziz578@gmail.com",
+    "submitted_at": "2026-06-02T09:56:14.369Z"
+  },
+  {
     "id": "citadel-2024-french-to-moore",
     "title": "A Low-Resource Language Translation: French To Mooré",
     "authors": [
