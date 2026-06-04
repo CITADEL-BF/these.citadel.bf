@@ -92,6 +92,7 @@ img { max-width: 100%; display: block; }
   font-size: .82rem !important;
   letter-spacing: .06em;
   transition: background .2s !important;
+  opacity: 0;
 }
 .btn-connect:hover { background: var(--red-light) !important; }
 .btn-connect::after { display: none !important; }

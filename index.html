@@ -278,14 +278,19 @@ function toggleLang() {
   }
 </script>
 <script>
-  netlifyIdentity.on("init", user => {
-    const btn = document.getElementById("btnConnexion");
+  document.addEventListener("DOMContentLoaded", () => {
+  if (typeof netlifyIdentity === "undefined") return;
+  const user = netlifyIdentity.currentUser();
+  const btn = document.getElementById("btnConnexion");
+  if (btn) {
     if (user) {
       btn.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size:1.6rem;"></i>`;
       btn.style.background = "var(--green)";
       btn.style.padding = "5px 12px";
     }
-  });
+    btn.style.opacity = "1";
+  }
+});
 </script>
 </body>
 </html>

@@ -238,6 +238,53 @@
       gap: 10px;
       margin-top: 20px;
     }
+    .profile-dropdown { position: relative; }
+.profile-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  min-width: 220px;
+  z-index: 300;
+  overflow: hidden;
+  animation: fadeDown .2s ease;
+}
+.profile-menu.open { display: block; }
+.profile-menu-header {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: #f7f8f6;
+  font-size: .85rem;
+  color: var(--gray);
+  word-break: break-all;
+  text-align: center;
+}
+.profile-menu-item {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 12px 16px;
+  text-align: left;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--dark);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background .15s;
+}
+.profile-menu-item:hover { background: #f0faf5; color: var(--green); }
+.profile-menu-item.danger:hover { background: #fce4ec; color: var(--red); }
+.profile-menu-item i { width: 16px; }
   </style>
 </head>
 <body>
@@ -265,7 +312,24 @@
       </div>
     </div>
     <a href="contact.html">Contact</a>
-    <a href="soumettre.html" class="active btn-connect">SE CONNECTER</a>
+    <div class="profile-dropdown" id="profileDropdown" style="display:none;">
+<button id="btnProfil" onclick="toggleProfileMenu()" style="background:var(--green);padding:5px 12px;border:none;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;">    <i class="fa-solid fa-circle-user" style="font-size:1.6rem;color:white;"></i>
+<i class="fa-solid fa-chevron-down" style="font-size:.7rem;color:white;margin-left:4px;"></i>
+  </button>
+  <div class="profile-menu" id="profileMenu">
+    <div class="profile-menu-header">
+  <i class="fa-solid fa-circle-user" style="font-size:2.5rem;color:var(--green);"></i>
+  <strong id="userName" style="font-size:.95rem;color:var(--dark);"></strong>
+  <span id="userEmail" style="font-size:.78rem;color:var(--gray);"></span>
+  <span id="userSince" style="font-size:.75rem;color:var(--gray);"></span>
+</div>
+<hr style="border:none;border-top:1px solid var(--border);margin:8px 0;">
+<button class="profile-menu-item danger" onclick="handleLogout()">
+  <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
+</button>
+  </div>
+</div>
+<a href="soumettre.html" class="active btn-connect" id="btnConnexion" style="opacity:0;">SE CONNECTER</a>
   </nav>
 </header>
 
@@ -291,11 +355,6 @@
 
   <!-- ─ DASHBOARD ─ -->
   <div class="dashboard" id="dashboard">
-
-    <div class="user-bar visible">
-      <span>Connecté en tant que <strong id="userEmail"></strong></span>
-      <button class="btn-logout" onclick="handleLogout()">Déconnexion</button>
-    </div>
 
     <div class="dashboard-header">
       <div>
@@ -563,10 +622,26 @@ function showDashboard() {
   document.getElementById("authGate").style.display = "none";
   document.getElementById("dashboard").classList.add("visible");
   document.getElementById("userEmail").textContent = currentUser.email;
+  document.getElementById("userName").textContent = currentUser.user_metadata?.full_name || "Fellow CITADEL";
+  const date = new Date(currentUser.created_at);
+  const mois = date.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
+  document.getElementById("userSince").textContent = "Membre depuis : " + mois;
+  document.getElementById("profileDropdown").style.display = "block";
+  document.getElementById("btnConnexion").style.display = "none";
   loadMyPublications();
 }
 
 function handleLogout() { netlifyIdentity.logout(); }
+function toggleProfileMenu() {
+  document.getElementById("profileMenu").classList.toggle("open");
+}
+
+document.addEventListener("click", e => {
+  const dropdown = document.getElementById("profileDropdown");
+  if (dropdown && !dropdown.contains(e.target)) {
+    document.getElementById("profileMenu").classList.remove("open");
+  }
+});
 
 // ══ TABS / VUES ══
 function showView(view) {
