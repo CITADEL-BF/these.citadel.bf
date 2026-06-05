@@ -2,6 +2,7 @@ let fellowsData = [];
 let pubsData = [];
 function countPubs(fellow) {
   return pubsData.filter(p =>
+    (p.submitted_by && p.submitted_by.toLowerCase() === fellow.email.toLowerCase()) ||
     p.authors.some(a =>
       a.name.toLowerCase().includes(fellow.name.split(' ').pop().toLowerCase()) ||
       fellow.name.toLowerCase().includes(a.name.split(' ').pop().toLowerCase())
@@ -114,11 +115,12 @@ function showProfile(id) {
 
   // Trouver les publications de ce fellow
   const fellowPubs = pubsData.filter(p =>
-    p.authors.some(a =>
-      a.name.toLowerCase().includes(fellow.name.split(' ').pop().toLowerCase()) ||
-      fellow.name.toLowerCase().includes(a.name.split(' ').pop().toLowerCase())
-    )
-  );
+  (p.submitted_by && p.submitted_by.toLowerCase() === fellow.email.toLowerCase()) ||
+  p.authors.some(a =>
+    a.name.toLowerCase().includes(fellow.name.split(' ').pop().toLowerCase()) ||
+    fellow.name.toLowerCase().includes(a.name.split(' ').pop().toLowerCase())
+  )
+);
 
   const photoHtml = fellow.photo
     ? `<img src="${fellow.photo}" alt="${fellow.name}" />`
