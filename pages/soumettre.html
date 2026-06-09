@@ -12,6 +12,7 @@
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <link rel="stylesheet" href="../assets/css/soumettre.css" />
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="../assets/js/supabase-config.js"></script>
 
   <style>
     /* ── Espace personnel ── */
@@ -607,8 +608,8 @@
     </div>
 
     <div class="form-group">
-      <label for="profil-photo">URL de la photo (optionnel)</label>
-      <input type="text" id="profil-photo" class="form-control" placeholder="https://..." />
+      <label for="profil-photo-file">Photo de profil (optionnel)</label>
+      <input type="file" id="profil-photo-file" class="form-control" accept="image/*" />
     </div>
 
     <div class="form-group">
@@ -789,34 +790,64 @@ async function handleSaveProfil() {
   btn.innerHTML = `<span class="spinner"></span> Enregistrement...`;
   btn.disabled = true;
 
-  const payload = {
-    name:   currentUser.user_metadata?.full_name || currentUser.email,
-    email:  currentUser.email,
-    title:  document.getElementById("profil-role").options[document.getElementById("profil-role").selectedIndex].text,
-    role:   document.getElementById("profil-role").value,
-    photo:  document.getElementById("profil-photo").value.trim(),
-    bio:    bio,
-    themes: themes
-  };
-
   try {
-    const res  = await fetch("/.netlify/functions/update-profile", {
-      method:  "POST",
-      headers: {
-        "Content-Type":  "application/json",
-        "Authorization": `Bearer ${currentUser.token.access_token}`
-      },
-      body: JSON.stringify(payload)
-    });
-    const data = await res.json();
-    if (data.success) {
-      document.getElementById("profileSuccess").classList.add("visible");
-      setTimeout(() => document.getElementById("profileSuccess").classList.remove("visible"), 5000);
-    } else {
-      alert("Erreur : " + (data.error || "Réessayez."));
+    let photoUrl = "";
+
+    // Upload photo si sélectionnée
+    const photoInput = document.getElementById("profil-photo-file");
+    if (photoInput && photoInput.files[0]) {
+      const file = photoInput.files[0];
+      const fileName = `${currentUser.email}-${Date.now()}.${file.name.split('.').pop()}`;
+      
+      const uploadRes = await fetch(
+        `${SUPABASE_URL}/storage/v1/object/photos/${fileName}`,
+        {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_ANON,
+            "Authorization": `Bearer ${SUPABASE_ANON}`,
+            "Content-Type": file.type
+          },
+          body: file
+        }
+      );
+      if (!uploadRes.ok) throw new Error("Erreur upload photo");
+      photoUrl = `${SUPABASE_URL}/storage/v1/object/public/photos/${fileName}`;
     }
-  } catch {
-    alert("Erreur réseau.");
+
+    const fellowData = {
+      name:   currentUser.user_metadata?.full_name || currentUser.email,
+      email:  currentUser.email,
+      title:  document.getElementById("profil-role").options[document.getElementById("profil-role").selectedIndex].text,
+      bio:    bio,
+      themes: themes.join(", "),
+      ...(photoUrl && { photo: photoUrl })
+    };
+
+    // Vérifier si le fellow existe déjà
+    const existing = await supabaseFetch(
+      `fellows?email=eq.${encodeURIComponent(currentUser.email)}`
+    );
+
+    if (existing.length > 0) {
+      // Mettre à jour
+      await supabaseFetch(
+        `fellows?email=eq.${encodeURIComponent(currentUser.email)}`,
+        { method: "PATCH", prefer: "return=minimal", body: JSON.stringify(fellowData) }
+      );
+    } else {
+      // Créer
+      await supabaseFetch(
+        "fellows",
+        { method: "POST", prefer: "return=minimal", body: JSON.stringify(fellowData) }
+      );
+    }
+
+    document.getElementById("profileSuccess").classList.add("visible");
+    setTimeout(() => document.getElementById("profileSuccess").classList.remove("visible"), 5000);
+
+  } catch (err) {
+    alert("Erreur : " + err.message);
   } finally {
     btn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Enregistrer mon profil`;
     btn.disabled = false;
@@ -861,16 +892,11 @@ async function loadMyPublications() {
   list.innerHTML = `<div class="empty-state"><div class="empty-icon">⏳</div><h3>Chargement...</h3></div>`;
 
   try {
-    // Charger publications.json depuis la racine du site
-    const res  = await fetch("../data/publications.json?nocache=" + Date.now());
-    allPubs    = await res.json();
-
-    // Filtrer par email du fellow connecté
-    const myPubs = allPubs.filter(p =>
-      p.submitted_by && p.submitted_by.toLowerCase() === currentUser.email.toLowerCase()
+    const pubs = await supabaseFetch(
+      `publications?submitted_by=eq.${encodeURIComponent(currentUser.email)}&order=created_at.desc`
     );
 
-    if (myPubs.length === 0) {
+    if (pubs.length === 0) {
       list.innerHTML = `
         <div class="empty-state">
           <div class="empty-icon">📂</div>
@@ -883,27 +909,22 @@ async function loadMyPublications() {
       return;
     }
 
-    list.innerHTML = myPubs.map(pub => `
+    list.innerHTML = pubs.map(pub => `
       <div class="my-pub-card">
         <div class="my-pub-info">
           <div class="my-pub-title">${pub.title}</div>
           <div class="my-pub-meta">
             <span><i class="fa-solid fa-calendar"></i> ${pub.year}</span>
             <span><i class="fa-solid fa-tag"></i> ${pub.type}</span>
-            <span><i class="fa-solid fa-university"></i> ${pub.venue || pub.universite || ""}</span>
+            <span><i class="fa-solid fa-university"></i> ${pub.venue || ""}</span>
           </div>
           <div class="my-pub-actions">
-            <button class="btn-action" onclick="openEditModal('${pub.id}')">
-              <i class="fa-solid fa-pen"></i> Modifier
-            </button>
-            ${pub.pdf_url ? `<a class="btn-action" href="../${pub.pdf_url}" target="_blank">
+            ${pub.pdf_url ? `<a class="btn-action" href="${pub.pdf_url}" target="_blank">
               <i class="fa-solid fa-file-pdf"></i> Voir PDF
             </a>` : ""}
           </div>
         </div>
-        <span class="pub-status ${pub.status === 'Publié' ? 'publie' : pub.status === 'Rejeté' ? 'rejete' : 'attente'}">
-          ${pub.status === 'Publié' ? '✅ Publié' : pub.status === 'Rejeté' ? '❌ Rejeté' : '⏳ En attente'}
-        </span>
+        <span class="pub-status publie">✅ ${pub.status}</span>
       </div>
     `).join("");
 
@@ -1103,41 +1124,53 @@ async function handleSubmit() {
   btn.innerHTML = `<span class="spinner"></span> Envoi en cours...`;
   btn.disabled = true;
 
-  const payload = {
-    titre:           document.getElementById("titre").value.trim(),
-    auteurs:         document.getElementById("auteurs").value.trim(),
-    resume:          document.getElementById("resume").value.trim(),
-    annee:           document.getElementById("annee").value.trim(),
-    universite:      document.getElementById("universite").value.trim(),
-    domaine:         document.getElementById("domaine").value,
-    type_doc:        document.getElementById("type_doc").value,
-    mots_cles:       tags.join(", "),
-    doi:             document.getElementById("doi").value.trim(),
-    submitter_email: currentUser.email,
-    pdf_base64:      pdfBase64,
-    pdf_filename:    pdfFilename
-  };
-
   try {
-    const res = await fetch("/.netlify/functions/submit-publication", {
-      method:  "POST",
-      headers: {
-        "Content-Type":  "application/json",
-        "Authorization": `Bearer ${currentUser.token.access_token}`
-      },
-      body: JSON.stringify(payload)
+    // 1. Upload le PDF dans Supabase Storage
+    const pdfBlob = await fetch(`data:application/pdf;base64,${pdfBase64}`).then(r => r.blob());
+    const fileName = `${Date.now()}-${pdfFilename}`;
+    
+    const uploadRes = await fetch(
+      `${SUPABASE_URL}/storage/v1/object/photos/${fileName}`,
+      {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_ANON,
+          "Authorization": `Bearer ${SUPABASE_ANON}`,
+          "Content-Type": "application/pdf"
+        },
+        body: pdfBlob
+      }
+    );
+
+    if (!uploadRes.ok) throw new Error("Erreur upload PDF");
+
+    const pdfPublicUrl = `${SUPABASE_URL}/storage/v1/object/public/photos/${fileName}`;
+
+    // 2. Insérer la publication dans Supabase
+    await supabaseFetch("publications", {
+      method: "POST",
+      prefer: "return=minimal",
+      body: JSON.stringify({
+        title:        document.getElementById("titre").value.trim(),
+        authors:      document.getElementById("auteurs").value.trim(),
+        abstract:     document.getElementById("resume").value.trim(),
+        year:         parseInt(document.getElementById("annee").value.trim()),
+        venue:        document.getElementById("universite").value.trim(),
+        theme:        document.getElementById("domaine").value,
+        type:         document.getElementById("type_doc").value,
+        keywords:     tags.join(", "),
+        doi:          document.getElementById("doi").value.trim(),
+        submitted_by: currentUser.email,
+        pdf_url:      pdfPublicUrl,
+        status:       "Publié"
+      })
     });
-    const data = await res.json();
-    if (data.success) {
-      document.getElementById("dashboard").style.display = "none";
-      document.getElementById("toastSuccess").classList.add("visible");
-    } else {
-      alert("Erreur : " + (data.error || "Réessayez plus tard."));
-      btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Soumettre`;
-      btn.disabled = false;
-    }
-  } catch {
-    alert("Erreur réseau. Vérifiez votre connexion et réessayez.");
+
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("toastSuccess").classList.add("visible");
+
+  } catch (err) {
+    alert("Erreur : " + err.message);
     btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Soumettre`;
     btn.disabled = false;
   }
