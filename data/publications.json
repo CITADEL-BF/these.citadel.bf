@@ -1,5 +1,30 @@
 [
   {
+    "id": "citadel-2024-titre-test-8",
+    "title": "Titre test 8",
+    "authors": [
+      {
+        "name": "tabsoba ab",
+        "affiliation": "Université Virtuelle"
+      }
+    ],
+    "type": "Conférence",
+    "venue": "Université Virtuelle",
+    "year": 2024,
+    "date": "2024",
+    "abstract": "nouveau.....................\n................",
+    "keywords": [
+      "langue"
+    ],
+    "pdf_url": "papers/citadel-2024-titre-test-8.pdf",
+    "doi": "",
+    "status": "Publié",
+    "theme": "LANGUE & PATRIMOINE",
+    "featured": false,
+    "submitted_by": "ouedraogoaziz578@gmail.com",
+    "submitted_at": "2026-06-09T11:19:13.156Z"
+  },
+  {
     "id": "citadel-2019-titre-test",
     "title": "Titre test",
     "authors": [
