@@ -766,7 +766,7 @@
 <script src="../assets/js/main.js"></script>
 <script>
 let currentUser = null;
-let pdfBase64   = null;
+let pdfFile = null;
 let pdfFilename = null;
 let tags        = [];
 let currentStep = 1;
@@ -1228,26 +1228,23 @@ function handleFileSelect(input) {
   if (!file) return;
   if (file.size > 20 * 1024 * 1024) { alert("Le fichier dépasse 20 Mo."); return; }
   pdfFilename = file.name;
+  pdfFile = file;
   document.getElementById("pdfFileName").textContent = `✔ ${file.name}`;
   document.getElementById("pdfFileName").classList.add("visible");
   document.getElementById("uploadArea").classList.add("has-file");
-  const reader = new FileReader();
-  reader.onload = e => { pdfBase64 = e.target.result.split(",")[1]; };
-  reader.readAsDataURL(file);
 }
 
 // ══ SOUMISSION ══
 async function handleSubmit() {
   if (!validateStep(2)) { goToStep(2); return; }
-  if (!pdfBase64) { alert("Veuillez sélectionner un fichier PDF."); return; }
-
+  if (!pdfFile) { alert("Veuillez sélectionner un fichier PDF."); return; }
   const btn = document.getElementById("btnSubmit");
   btn.innerHTML = `<span class="spinner"></span> Envoi en cours...`;
   btn.disabled = true;
 
   try {
     // 1. Upload le PDF dans Supabase Storage
-    const pdfBlob = await fetch(`data:application/pdf;base64,${pdfBase64}`).then(r => r.blob());
+    const pdfBlob = pdfFile;
     const fileName = `${Date.now()}-${pdfFilename}`;
     
     const uploadRes = await fetch(

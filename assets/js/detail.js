@@ -3,15 +3,15 @@ const pubId = params.get('id');
 
 Promise.all([
   fetch('../data/publications.json').then(r => r.json()).catch(() => []),
-  fetch(`${SUPABASE_URL}/rest/v1/publications?id=eq.${pubId}`, {
+  fetch(`${SUPABASE_URL}/rest/v1/publications?select=*`, {
     headers: {
       "apikey": SUPABASE_ANON,
       "Authorization": `Bearer ${SUPABASE_ANON}`
     }
   }).then(r => r.json()).catch(() => [])
 ]).then(([jsonPubs, supaPubs]) => {
-  const allPubs = [...jsonPubs, ...supaPubs];
-  const pub = allPubs.find(p => p.id == pubId || p.id === pubId);
+  const allPubs = [...jsonPubs, ...(Array.isArray(supaPubs) ? supaPubs : [])];
+  const pub = allPubs.find(p => String(p.id) === String(pubId));
   if (!pub) {
     document.getElementById('detailPage').innerHTML = '<p style="text-align:center;padding:60px;">Publication introuvable</p>';
     return;
