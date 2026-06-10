@@ -73,7 +73,7 @@ function render() {
       <div class="pub-body">
         <span class="pub-abstract-label">Abstract</span>
         <p class="pub-abstract-text">${p.abstract}</p>
-        <p style="font-size:.8rem;color:var(--gray)"><strong>Keywords:</strong> ${p.keywords.join(', ')}</p>
+        <p style="font-size:.8rem;color:var(--gray)"><strong>Keywords:</strong> ${p.keywords || ''}</p>
         <a class="btn-pdf" href="${p.pdf_url}">📄 PDF</a>
         <a class="btn-pdf" href="detail.html?id=${p.id}" style="background:#e3f2fd;color:#1565c0;border-color:#90caf9">🔗 Détails</a>
       </div>
