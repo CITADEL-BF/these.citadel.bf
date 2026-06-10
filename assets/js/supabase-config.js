@@ -15,5 +15,5 @@ async function supabaseFetch(endpoint, options = {}) {
     const err = await res.json();
     throw new Error(JSON.stringify(err));
   }
-  return options.method === "DELETE" ? true : res.json();
-}
+    const text = await res.text();
+    return text ? JSON.parse(text) : {};}
