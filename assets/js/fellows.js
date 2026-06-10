@@ -9,11 +9,13 @@ function countPubs(fellow) {
 
 // Charger les données depuis Supabase
 Promise.all([
-  supabaseFetch("fellows?select=*"),
-  supabaseFetch("publications?select=*")
-]).then(([fellows, pubs]) => {
-  fellowsData = fellows;
-  pubsData = pubs;
+  supabaseFetch("fellows?select=*").catch(() => []),
+  supabaseFetch("publications?select=*").catch(() => []),
+  fetch('../data/publications.json').then(r => r.json()).catch(() => []),
+  fetch('../data/fellows.json').then(r => r.json()).catch(() => [])
+]).then(([supaFellows, supaPubs, jsonPubs, jsonFellows]) => {
+  fellowsData = [...jsonFellows, ...supaFellows];
+  pubsData = [...jsonPubs, ...supaPubs];
 
   const params = new URLSearchParams(window.location.search);
   const fellowId = params.get('id');

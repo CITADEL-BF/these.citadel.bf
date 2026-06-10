@@ -1,12 +1,15 @@
 let allPubs = [], filtered = [], currentPage = 1, perPage = 5, currentType = '';
 
-fetch(`${SUPABASE_URL}/rest/v1/publications?select=*&order=created_at.desc`, {
-  headers: {
-    "apikey": SUPABASE_ANON,
-    "Authorization": `Bearer ${SUPABASE_ANON}`
-  }
-}).then(r => r.json()).then(data => {
-  allPubs = data;
+Promise.all([
+  fetch('../data/publications.json').then(r => r.json()).catch(() => []),
+  fetch(`${SUPABASE_URL}/rest/v1/publications?select=*&order=created_at.desc`, {
+    headers: {
+      "apikey": SUPABASE_ANON,
+      "Authorization": `Bearer ${SUPABASE_ANON}`
+    }
+  }).then(r => r.json()).catch(() => [])
+]).then(([jsonPubs, supaPubs]) => {
+  allPubs = [...jsonPubs, ...supaPubs];
   // Lire le paramètre ?type= dans l'URL
       const urlParams = new URLSearchParams(window.location.search);
       const typeParam = urlParams.get('type');
