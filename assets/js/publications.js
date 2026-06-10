@@ -1,6 +1,11 @@
 let allPubs = [], filtered = [], currentPage = 1, perPage = 5, currentType = '';
 
-fetch('../data/publications.json').then(r => r.json()).then(data => {
+fetch(`${SUPABASE_URL}/rest/v1/publications?select=*&order=created_at.desc`, {
+  headers: {
+    "apikey": SUPABASE_ANON,
+    "Authorization": `Bearer ${SUPABASE_ANON}`
+  }
+}).then(r => r.json()).then(data => {
   allPubs = data;
   // Lire le paramètre ?type= dans l'URL
       const urlParams = new URLSearchParams(window.location.search);
@@ -26,7 +31,7 @@ fetch('../data/publications.json').then(r => r.json()).then(data => {
 
 function populateFilters() {
   const years = [...new Set(allPubs.map(p => p.year))].sort((a,b) => b-a);
-  const authors = [...new Set(allPubs.flatMap(p => p.authors.map(a => a.name)))];
+  const authors = [...new Set(allPubs.map(p => p.authors || ''))];
   const themes = [...new Set(allPubs.map(p => p.theme))];
   years.forEach(y => filterYear.innerHTML += `<option value="${y}">${y}</option>`);
   authors.forEach(a => filterAuthor.innerHTML += `<option value="${a}">${a}</option>`);
@@ -39,7 +44,7 @@ function applyFilters() {
   let res = allPubs;
   if (currentType) res = res.filter(p => p.type === currentType);
   if (filterYear.value) res = res.filter(p => p.year == filterYear.value);
-  if (filterAuthor.value) res = res.filter(p => p.authors.some(a => a.name === filterAuthor.value));
+  if (filterAuthor.value) res = res.filter(p => p.authors && p.authors.includes(filterAuthor.value));
   if (filterType.value) res = res.filter(p => p.type === filterType.value);
   if (filterTheme.value) res = res.filter(p => p.theme === filterTheme.value);
   if (q) {
@@ -61,7 +66,7 @@ function render() {
         <div style="flex:1">
           <span class="pub-type-badge ${p.type.toLowerCase()}">${p.type}</span>
           <div class="pub-title">${p.title}</div>
-          <span class="pub-meta">${p.authors.map(a=>a.name).join(', ')} • ${p.date}</span>
+          <span class="pub-meta">${p.authors || ''} • ${p.year}</span>
         </div>
         <button class="pub-toggle">▼</button>
       </div>
