@@ -2,8 +2,8 @@ let allPubs = [], filtered = [], currentPage = 1, perPage = 5, currentType = '';
 
 Promise.all([
   fetch('../data/publications.json').then(r => r.json()).catch(() => []),
-  fetch(`${SUPABASE_URL}/rest/v1/publications?select=*&order=created_at.desc`, {
-    headers: {
+  fetch(`${SUPABASE_URL}/rest/v1/publications?select=*&status=eq.Publié&order=created_at.desc`, {
+      headers: {
       "apikey": SUPABASE_ANON,
       "Authorization": `Bearer ${SUPABASE_ANON}`
     }

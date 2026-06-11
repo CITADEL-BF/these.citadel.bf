@@ -2,9 +2,16 @@ let fellowsData = [];
 let pubsData = [];
 
 function countPubs(fellow) {
-  return pubsData.filter(p =>
-    p.submitted_by && p.submitted_by.toLowerCase() === fellow.email.toLowerCase()
-  ).length;
+  return pubsData.filter(p => {
+    if (p.submitted_by && p.submitted_by.toLowerCase() === fellow.email.toLowerCase()) return true;
+    if (Array.isArray(p.authors)) {
+      return p.authors.some(a =>
+        a.name.toLowerCase().includes(fellow.name.split(' ').pop().toLowerCase()) ||
+        fellow.name.toLowerCase().includes(a.name.split(' ').pop().toLowerCase())
+      );
+    }
+    return false;
+  }).length;
 }
 
 // Charger les données depuis Supabase
@@ -98,9 +105,16 @@ function showProfile(id) {
   document.getElementById('fellowsGrid').style.display = 'none';
   document.getElementById('fellowProfile').style.display = 'block';
 
-  const fellowPubs = pubsData.filter(p =>
-    p.submitted_by && p.submitted_by.toLowerCase() === fellow.email.toLowerCase()
-  );
+  const fellowPubs = pubsData.filter(p => {
+    if (p.submitted_by && p.submitted_by.toLowerCase() === fellow.email.toLowerCase()) return true;
+    if (Array.isArray(p.authors)) {
+      return p.authors.some(a =>
+        a.name.toLowerCase().includes(fellow.name.split(' ').pop().toLowerCase()) ||
+        fellow.name.toLowerCase().includes(a.name.split(' ').pop().toLowerCase())
+      );
+    }
+    return false;
+  });
 
   const photoHtml = fellow.photo
     ? `<img src="${fellow.photo}" alt="${fellow.name}" />`
