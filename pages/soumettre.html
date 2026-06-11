@@ -1248,7 +1248,7 @@ async function handleSubmit() {
     const fileName = `${Date.now()}-${pdfFilename}`;
     
     const uploadRes = await fetch(
-      `${SUPABASE_URL}/storage/v1/object/photos/${fileName}`,
+  `${SUPABASE_URL}/storage/v1/object/papers/${fileName}`,
       {
         method: "POST",
         headers: {
@@ -1260,7 +1260,9 @@ async function handleSubmit() {
       }
     );
 
-    if (!uploadRes.ok) throw new Error("Erreur upload PDF");
+    const uploadText = await uploadRes.text();
+    console.log("Upload status:", uploadRes.status, uploadText);
+    if (!uploadRes.ok) throw new Error("Erreur upload PDF: " + uploadText);
 
       const pdfPublicUrl = `${SUPABASE_URL}/storage/v1/object/public/papers/${fileName}`;
 
