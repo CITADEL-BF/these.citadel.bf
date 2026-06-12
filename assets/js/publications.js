@@ -69,8 +69,7 @@ function render() {
         <div style="flex:1">
           <span class="pub-type-badge ${p.type.toLowerCase()}">${p.type}</span>
           <div class="pub-title">${p.title}</div>
-          <span class="pub-meta">${p.authors || ''} • ${p.year}</span>
-        </div>
+          <span class="pub-meta">${Array.isArray(p.authors) ? p.authors.map(a => a.name).join(', ') : (p.authors || '')} • ${p.year}</span>        </div>
         <button class="pub-toggle">▼</button>
       </div>
       <div class="pub-body">

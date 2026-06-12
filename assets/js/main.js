@@ -104,19 +104,27 @@ let allPublications = [];
 
 /* ── Chargement dynamique des publications depuis le JSON ── */
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('data/publications.json')
-    .then(res => res.json())
-    .then(pubs => {
+      Promise.all([
+      fetch('data/publications.json').then(r => r.json()).catch(() => []),
+      fetch(`${SUPABASE_URL}/rest/v1/publications?select=*&status=eq.Publié`, {
+        headers: {
+          "apikey": SUPABASE_ANON,
+          "Authorization": `Bearer ${SUPABASE_ANON}`
+        }
+      }).then(r => r.json()).catch(() => [])
+    ]).then(([jsonPubs, supaPubs]) => {
+      const pubs = [...jsonPubs, ...supaPubs];
       allPublications = pubs;
 
       // ── Mettre a jour les statistiques dynamiquement ──
-      const pubCount = pubs.length;
-
-      // Compter les auteurs uniques
       const authorNames = new Set();
       pubs.forEach(p => {
         if (p.authors) {
-          p.authors.forEach(a => authorNames.add(a.name));
+          if (Array.isArray(p.authors)) {
+            p.authors.forEach(a => authorNames.add(a.name));
+          } else {
+            p.authors.split(',').forEach(a => authorNames.add(a.trim()));
+          }
         }
       });
       const authorCount = authorNames.size;

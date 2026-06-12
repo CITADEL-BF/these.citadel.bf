@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -238,8 +237,8 @@
 <a href="#">Politique de Confidentialité</a>
   </div>
 </footer>
-<script src="assets/js/main.js"></script>
-<script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/main.js"></script><script>
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({
     pageLanguage: 'fr',
@@ -275,15 +274,17 @@ function toggleLang() {
   }
 </script>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-  if (typeof netlifyIdentity === "undefined") return;
-  const user = netlifyIdentity.currentUser();
+document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("sb_access_token");
   const btn = document.getElementById("btnConnexion");
   if (btn) {
-    if (user) {
-      btn.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size:1.6rem;"></i>`;
+    if (token) {
+      btn.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size:1.6rem;color:white;"></i>`;
       btn.style.background = "var(--green)";
       btn.style.padding = "5px 12px";
+      btn.style.display = "flex";
+      btn.style.alignItems = "center";
+      btn.style.borderRadius = "4px";
     }
     btn.style.opacity = "1";
   }
