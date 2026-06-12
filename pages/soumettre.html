@@ -857,7 +857,7 @@ async function handleSaveProfil() {
       const fileName = `${currentUser.email}-${Date.now()}.${file.name.split('.').pop()}`;
       
       const uploadRes = await fetch(
-        `${SUPABASE_URL}/storage/v1/object/papers/${fileName}`,
+      `${SUPABASE_URL}/storage/v1/object/photos/${fileName}`,
         {
           method: "POST",
           headers: {
