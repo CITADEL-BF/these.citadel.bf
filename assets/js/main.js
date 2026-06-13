@@ -116,6 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const pubs = [...jsonPubs, ...supaPubs];
       allPublications = pubs;
 
+      const pubCount = pubs.length;
+
       // ── Mettre a jour les statistiques dynamiquement ──
       const authorNames = new Set();
       pubs.forEach(p => {
