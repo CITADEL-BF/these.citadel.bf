@@ -130,9 +130,9 @@
       border: 1px solid rgba(0,165,80,.2);
     }
     .pub-status.attente {
-      background: #fff8e1;
-      color: #f0a500;
-      border: 1px solid rgba(240,165,0,.2);
+      background: #fff8e1 !important;
+      color: #f0a500 !important;
+      border: 1px solid rgba(240,165,0,.2) !important;
     }
     .pub-status.rejete {
       background: #fce4ec;
@@ -1045,7 +1045,9 @@ async function loadMyPublications() {
             </a>` : ""}
           </div>
         </div>
-        <span class="pub-status publie">✅ ${pub.status}</span>
+        <span class="pub-status ${pub.status === 'Publié' ? 'publie' : 'attente'}">
+          ${pub.status === 'Publié' ? '✅ Publié' : '⏳ En attente'}
+        </span>
       </div>
     `).join("");
 
