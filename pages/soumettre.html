@@ -356,6 +356,146 @@
   gap: 8px;
 }
 .profile-success.visible { display: flex; }
+
+/* ── Dashboard Admin ── */
+.admin-dashboard {
+  max-width: 960px;
+  margin: 0 auto;
+  display: none;
+}
+.admin-dashboard.visible { display: block; }
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.admin-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: var(--red);
+}
+.admin-badge {
+  background: var(--red);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+.admin-pub-card {
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--gold);
+}
+.admin-pub-card.publie { border-left-color: var(--green); }
+.admin-pub-card.rejete { border-left-color: var(--red); }
+.admin-pub-title {
+  font-weight: 700;
+  font-size: .95rem;
+  color: var(--dark);
+  margin-bottom: 6px;
+}
+.admin-pub-meta {
+  font-size: .8rem;
+  color: var(--gray);
+  margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.admin-pub-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.btn-valider {
+  background: var(--green);
+  color: white;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 700;
+  font-size: .82rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+.btn-valider:hover { background: var(--green-light); }
+.btn-rejeter {
+  background: none;
+  color: var(--red);
+  border: 1px solid var(--red);
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 700;
+  font-size: .82rem;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.btn-rejeter:hover { background: var(--red); color: white; }
+.admin-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--border);
+}
+.admin-tab {
+  padding: 10px 20px;
+  font-weight: 700;
+  font-size: .85rem;
+  color: var(--gray);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: color .2s, border-color .2s;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.admin-tab.active { color: var(--red); border-bottom-color: var(--red); }
+.admin-tab:hover { color: var(--red); }
+.admin-empty {
+  text-align: center;
+  padding: 48px;
+  color: var(--gray);
+  font-style: italic;
+}
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.admin-stat-card {
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+  text-align: center;
+}
+.admin-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--green);
+  display: block;
+}
+.admin-stat-num.red { color: var(--red); }
+.admin-stat-num.gold { color: var(--gold); }
+.admin-stat-label {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
   </style>
 </head>
 <body>
@@ -525,6 +665,15 @@
           <label for="auteurs">Auteur(s) <span class="required">*</span></label>
           <input type="text" id="auteurs" class="form-control" placeholder="Ex : Nom Prénom, Nom Prénom" />
         </div>
+        <div class="form-group">
+        <label>Auteurs cités
+          <span style="font-weight:400;color:var(--gray);text-transform:none;letter-spacing:0">(Entrée pour ajouter)</span>
+        </label>
+        <div class="tags-input-wrapper" id="citationsWrapper" onclick="document.getElementById('citationInput').focus()">
+          <input type="text" id="citationInput" class="tags-input" placeholder="Ex : Nom Prénom..." />
+        </div>
+        <input type="hidden" id="citations_hidden" />
+      </div>
         <div class="form-row">
           <div class="form-group">
             <label for="annee">Année <span class="required">*</span></label>
@@ -683,6 +832,48 @@
 </div>
 
   </div><!-- fin dashboard -->
+  <!-- ─ DASHBOARD ADMIN ─ -->
+<div class="admin-dashboard" id="adminDashboard" style="display:none;">
+
+  <div class="admin-header">
+    <div>
+      <h1>Dashboard Admin <span class="admin-badge">ADMIN</span></h1>
+      <p style="color:var(--gray);font-size:.88rem;">Gérez les soumissions des fellows</p>
+    </div>
+  </div>
+
+  <!-- Stats admin -->
+  <div class="admin-stats">
+    <div class="admin-stat-card">
+      <span class="admin-stat-num gold" id="adminCountAttente">0</span>
+      <span class="admin-stat-label">En attente</span>
+    </div>
+    <div class="admin-stat-card">
+      <span class="admin-stat-num" id="adminCountPublie">0</span>
+      <span class="admin-stat-label">Publiées</span>
+    </div>
+    <div class="admin-stat-card">
+      <span class="admin-stat-num red" id="adminCountRejete">0</span>
+      <span class="admin-stat-label">Rejetées</span>
+    </div>
+  </div>
+
+  <!-- Tabs admin -->
+  <div class="admin-tabs">
+    <div class="admin-tab active" id="admin-tab-attente" onclick="showAdminTab('attente')">
+      ⏳ En attente
+    </div>
+    <div class="admin-tab" id="admin-tab-publie" onclick="showAdminTab('publie')">
+      ✅ Publiées
+    </div>
+    <div class="admin-tab" id="admin-tab-rejete" onclick="showAdminTab('rejete')">
+      ❌ Rejetées
+    </div>
+  </div>
+
+  <div id="adminPubsList"></div>
+
+</div>
 
   <!-- ─ SUCCÈS ─ -->
   <div class="toast-success" id="toastSuccess">
@@ -763,6 +954,18 @@
   </div>
 </footer>
 
+<!-- Modal confirmation -->
+<div id="confirmModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:white;border-radius:12px;padding:32px;max-width:400px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.2);text-align:center;">
+    <div id="confirmIcon" style="font-size:2.5rem;margin-bottom:12px;">✅</div>
+    <h3 id="confirmTitle" style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--dark);margin-bottom:8px;"></h3>
+    <p id="confirmMessage" style="color:var(--gray);font-size:.88rem;margin-bottom:24px;line-height:1.6;"></p>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button id="confirmCancelBtn" style="padding:10px 24px;border:2px solid var(--border);background:none;border-radius:6px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--gray);">Annuler</button>
+      <button id="confirmOkBtn" style="padding:10px 24px;border:none;border-radius:6px;font-weight:700;font-size:.88rem;cursor:pointer;color:white;">Confirmer</button>
+  </div>
+</div>
+
 <script src="../assets/js/main.js"></script>
 <script>
 let currentUser = null;
@@ -770,12 +973,27 @@ let pdfFile = null;
 let pdfFilename = null;
 let tags        = [];
 let currentStep = 1;
+let citations = [];
 let editingPub  = null;
 let allPubs     = [];
 
 // ══ SUPABASE AUTH ══
 window.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("tagInput").addEventListener("keydown", handleTagInput);
+  document.getElementById("citationInput").addEventListener("keydown", handleCitationInput);
+
+  // Boutons modal confirmation
+  document.getElementById("confirmOkBtn").addEventListener("click", function() {
+    const cb = confirmCallback;
+    confirmCallback = null;
+    document.getElementById("confirmModal").style.display = "none";
+    if (cb) cb();
+  });
+
+  document.getElementById("confirmCancelBtn").addEventListener("click", function() {
+    confirmCallback = null;
+    document.getElementById("confirmModal").style.display = "none";
+  });
 
   // Vérifier si déjà connecté
   const { data } = await supabaseAuthFetch("auth/v1/user");
@@ -802,15 +1020,22 @@ async function supabaseAuthFetch(endpoint, options = {}) {
 
 function showDashboard() {
   document.getElementById("authGate").style.display = "none";
-  document.getElementById("dashboard").classList.add("visible");
-  document.getElementById("userEmail").textContent = currentUser.email;
-  document.getElementById("userName").textContent = currentUser.user_metadata?.full_name || currentUser.email;
-  const date = new Date(currentUser.created_at);
-  const mois = date.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
-  document.getElementById("userSince").textContent = "Membre depuis : " + mois;
-  document.getElementById("profileDropdown").style.display = "block";
-  document.getElementById("btnConnexion").style.display = "none";
-  loadMyPublications();
+  
+  if (isAdmin()) {
+    document.getElementById("dashboard").style.display = "none"; // cacher le dashboard fellow
+    showAdminDashboard();
+  } else {
+    document.getElementById("adminDashboard").style.display = "none"; // cacher le dashboard admin
+    document.getElementById("dashboard").classList.add("visible");
+    document.getElementById("userEmail").textContent = currentUser.email;
+    document.getElementById("userName").textContent = currentUser.user_metadata?.full_name || currentUser.email;
+    const date = new Date(currentUser.created_at);
+    const mois = date.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
+    document.getElementById("userSince").textContent = "Membre depuis : " + mois;
+    document.getElementById("profileDropdown").style.display = "block";
+    document.getElementById("btnConnexion").style.display = "none";
+    loadMyPublications();
+  }
 }
 
 async function handleLogout() {
@@ -827,6 +1052,8 @@ async function handleLogout() {
   currentUser = null;
   document.getElementById("authGate").style.display = "block";
   document.getElementById("dashboard").classList.remove("visible");
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("adminDashboard").style.display = "none";
   document.getElementById("profileDropdown").style.display = "none";
   document.getElementById("btnConnexion").style.display = "block";
   document.getElementById("btnConnexion").style.opacity = "1";
@@ -974,6 +1201,156 @@ async function handleSignup() {
     errEl.classList.add("visible");
   }
 }
+// ══ ADMIN ══
+const ADMIN_EMAIL = "citadel.uvbf@gmail.com";
+let allAdminPubs = [];
+let currentAdminTab = "attente";
+
+function isAdmin() {
+  return currentUser && currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+}
+
+function showAdminDashboard() {
+  document.getElementById("authGate").style.display = "none";
+  document.getElementById("dashboard").classList.remove("visible");
+  document.getElementById("adminDashboard").style.display = "block";
+  document.getElementById("userEmail").textContent = currentUser.email;
+  document.getElementById("userName").textContent = "Administrateur";
+  document.getElementById("userSince").textContent = "";
+  document.getElementById("profileDropdown").style.display = "block";
+  document.getElementById("btnConnexion").style.display = "none";
+  loadAdminPublications();
+}
+
+async function loadAdminPublications() {
+  try {
+    const pubs = await supabaseFetch("publications?order=created_at.desc");
+    allAdminPubs = pubs;
+
+    // Compter par statut
+    const attente = pubs.filter(p => p.status === "En attente").length;
+    const publie  = pubs.filter(p => p.status === "Publié").length;
+    const rejete  = pubs.filter(p => p.status === "Rejeté").length;
+
+    document.getElementById("adminCountAttente").textContent = attente;
+    document.getElementById("adminCountPublie").textContent  = publie;
+    document.getElementById("adminCountRejete").textContent  = rejete;
+
+    showAdminTab(currentAdminTab);
+  } catch (err) {
+    console.error("Erreur chargement admin:", err);
+  }
+}
+
+function showAdminTab(tab) {
+  currentAdminTab = tab;
+
+  document.querySelectorAll(".admin-tab").forEach(t => t.classList.remove("active"));
+  document.getElementById(`admin-tab-${tab}`).classList.add("active");
+
+  const statusMap = { attente: "En attente", publie: "Publié", rejete: "Rejeté" };
+  const filtered = allAdminPubs.filter(p => p.status === statusMap[tab]);
+  renderAdminPubs(filtered);
+}
+
+function renderAdminPubs(pubs) {
+  const list = document.getElementById("adminPubsList");
+
+  if (pubs.length === 0) {
+    list.innerHTML = `<div class="admin-empty">Aucune publication dans cette catégorie.</div>`;
+    return;
+  }
+
+  list.innerHTML = pubs.map(pub => `
+    <div class="admin-pub-card ${pub.status === 'Publié' ? 'publie' : pub.status === 'Rejeté' ? 'rejete' : ''}">
+      <div class="admin-pub-title">${pub.title}</div>
+      <div class="admin-pub-meta">
+  <span>👤 ${pub.authors || ''}</span>
+  <span>📅 ${pub.year}</span>
+  <span>🏛️ ${pub.venue || ''}</span>
+  <span>📧 Soumis par : <strong>${pub.submitted_by || ''}</strong></span>
+  <span>🕐 ${new Date(pub.created_at).toLocaleDateString('fr-FR')}</span>
+  </div>
+  ${pub.abstract ? `<div style="margin:10px 0;font-size:.85rem;color:var(--gray);line-height:1.6;background:#f7f8f6;padding:10px;border-radius:6px;"><strong>Résumé :</strong> ${pub.abstract}</div>` : ''}
+  ${pub.citations ? `<div style="margin:6px 0;font-size:.82rem;color:var(--gray);"><strong>Citations :</strong> ${pub.citations}</div>` : ''}
+      <div class="admin-pub-actions">
+        ${pub.pdf_url ? `<a class="btn-action" href="${pub.pdf_url}" target="_blank">
+          <i class="fa-solid fa-file-pdf"></i> Voir PDF
+        </a>` : ""}
+        ${pub.status !== 'Publié' ? `<button class="btn-valider" onclick="validerPublication(${pub.id})">
+          ✅ Valider
+        </button>` : ""}
+        ${pub.status !== 'Rejeté' ? `<button class="btn-rejeter" onclick="rejeterPublication(${pub.id})">
+          ❌ Rejeter
+        </button>` : ""}
+      </div>
+    </div>
+  `).join("");
+}
+
+async function validerPublication(id) {
+  showConfirm(
+    "Valider cette publication ?",
+    "Elle sera visible publiquement sur le site.",
+    "✅", "var(--green)",
+    async () => {
+      try {
+        const token = localStorage.getItem("sb_access_token");
+        console.log("TOKEN:", token);
+        console.log("ID:", id);
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/publications?id=eq.${id}`, {
+          method: "PATCH",
+          headers: {
+            "apikey": SUPABASE_ANON,
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({ status: "Publié" })
+        });
+        console.log("STATUS:", res.status);
+        const responseText = await res.text();
+        console.log("RESPONSE:", responseText);
+        if (!res.ok) {
+          throw new Error(responseText);
+        }
+        await loadAdminPublications();
+      } catch (err) {
+        alert("Erreur : " + err.message);
+      }
+    }
+  );
+}
+
+async function rejeterPublication(id) {
+  showConfirm(
+    "Rejeter cette publication ?",
+    "Le fellow sera informé que sa soumission n'a pas été retenue.",
+    "❌", "var(--red)",
+    async () => {
+      try {
+        const token = localStorage.getItem("sb_access_token");
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/publications?id=eq.${id}`, {
+          method: "PATCH",
+          headers: {
+            "apikey": SUPABASE_ANON,
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({ status: "Rejeté" })
+        });
+        if (!res.ok) {
+          const err = await res.text();
+          throw new Error(err);
+        }
+        await loadAdminPublications();
+      } catch (err) {
+        alert("Erreur : " + err.message);
+      }
+    }
+  );
+}
 function toggleProfileMenu() {
   document.getElementById("profileMenu").classList.toggle("open");
 }
@@ -1002,9 +1379,13 @@ function showView(view) {
 
 function backToDashboard() {
   document.getElementById("toastSuccess").classList.remove("visible");
-  document.getElementById("dashboard").style.display = "block";
-  showView("pubs");
-  loadMyPublications();
+  if (isAdmin()) {
+    document.getElementById("adminDashboard").style.display = "block";
+  } else {
+    document.getElementById("dashboard").style.display = "block";
+    showView("pubs");
+    loadMyPublications();
+  }
 }
 
 // ══ MES PUBLICATIONS ══
@@ -1076,9 +1457,21 @@ function openEditModal(pubId) {
   document.getElementById("modalOverlay").classList.add("open");
 }
 
-function closeModal() {
-  document.getElementById("modalOverlay").classList.remove("open");
-  editingPub = null;
+// ══ MODAL CONFIRMATION ══
+let confirmCallback = null;
+
+function showConfirm(title, message, icon, color, callback) {
+  document.getElementById("confirmIcon").textContent = icon;
+  document.getElementById("confirmTitle").textContent = title;
+  document.getElementById("confirmMessage").textContent = message;
+  document.getElementById("confirmOkBtn").style.background = color;
+  confirmCallback = callback;
+  document.getElementById("confirmModal").style.display = "flex";
+}
+
+function confirmOk() {
+  closeConfirm();
+  if (confirmCallback) confirmCallback();
 }
 
 async function handleEdit() {
@@ -1157,6 +1550,8 @@ function resetForm() {
     if (el) { el.value = ""; el.classList.remove("error"); }
   });
   tags = [];
+  citations = [];
+  document.getElementById("citationsWrapper").querySelectorAll(".tag-chip").forEach(c => c.remove());
   pdfBase64 = null;
   pdfFilename = null;
   document.getElementById("tagsWrapper").querySelectorAll(".tag-chip").forEach(c => c.remove());
@@ -1223,6 +1618,29 @@ function renderTags() {
 }
 
 function removeTag(i) { tags.splice(i, 1); renderTags(); }
+function handleCitationInput(e) {
+  if (e.key === "Enter" || e.key === ",") {
+    e.preventDefault();
+    const val = e.target.value.trim().replace(/,$/, "");
+    if (val && !citations.includes(val)) { citations.push(val); renderCitations(); }
+    e.target.value = "";
+  }
+}
+
+function renderCitations() {
+  const wrapper = document.getElementById("citationsWrapper");
+  const input   = document.getElementById("citationInput");
+  wrapper.querySelectorAll(".tag-chip").forEach(c => c.remove());
+  citations.forEach((t, i) => {
+    const chip = document.createElement("div");
+    chip.className = "tag-chip";
+    chip.innerHTML = `${t}<button onclick="removeCitation(${i})" type="button">×</button>`;
+    wrapper.insertBefore(chip, input);
+  });
+  document.getElementById("citations_hidden").value = citations.join(", ");
+}
+
+function removeCitation(i) { citations.splice(i, 1); renderCitations(); }
 
 // ══ UPLOAD PDF ══
 function handleFileSelect(input) {
@@ -1284,7 +1702,8 @@ async function handleSubmit() {
         doi:          document.getElementById("doi").value.trim(),
         submitted_by: currentUser.email,
         pdf_url:      pdfPublicUrl,
-        status:       "En attente"
+        status:    "En attente",
+        citations: citations.join(", ")
       })
     });
 

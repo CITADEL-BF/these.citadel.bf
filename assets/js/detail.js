@@ -19,6 +19,7 @@ Promise.all([
   render(pub);
 });
 
+const backUrl = 'publications.html';
 function render(p) {
   const authorsHtml = Array.isArray(p.authors)
     ? p.authors.map(a => `${a.name} <span style="color:#999">(${a.affiliation})</span>`).join(', ')
@@ -32,13 +33,12 @@ function render(p) {
   const pdfUrl = p.pdf_url ? (p.pdf_url.startsWith('http') ? p.pdf_url : `../${p.pdf_url}`) : '#';
 
   document.getElementById('detailPage').innerHTML = `
-    <a class="back-link" href="publications.html">← Retour aux publications</a>
-    <div class="detail-card">
+  <a class="back-link" href="${backUrl}" style="cursor:pointer;">← Retour aux publications</a>    <div class="detail-card">
       <span class="detail-type">${p.type}</span>
       <span class="detail-status">${p.status || ''}</span>
       <h1 class="detail-title">${p.title}</h1>
       <p class="detail-authors"><strong>Auteurs :</strong> ${authorsHtml}</p>
-      <p class="detail-meta">Publié dans <strong>${p.venue || ''}</strong> • ${p.date || p.year} • Axe : ${p.theme || ''}</p>
+      ${p.citations ? `<p class="detail-authors" style="margin-top:6px;"><strong>Citations :</strong> ${p.citations}</p>` : ''}      <p class="detail-meta">Publié dans <strong>${p.venue || ''}</strong> • ${p.date || p.year} • Axe : ${p.theme || ''}</p>
       <div class="detail-section">
         <h3>Résumé</h3>
         <p class="detail-abstract">${p.abstract}</p>

@@ -130,6 +130,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
       const authorCount = authorNames.size;
+      // Compter les citations
+      const JSON_CITATIONS_BASE = 47;
+      let totalCitations = JSON_CITATIONS_BASE;
+      supaPubs.forEach(p => {
+        if (p.citations) {
+          totalCitations += p.citations.split(',').filter(c => c.trim()).length;
+        }
+      });
 
       // Mettre a jour les data-target des compteurs
       document.querySelectorAll('.stat-num[data-target]').forEach(el => {
@@ -142,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (labelText === 'auteurs') {
             el.dataset.target = authorCount;
           }
+          if (labelText === 'citations') el.dataset.target = totalCitations;
         }
       });
 
@@ -190,7 +199,11 @@ function renderPublications(pubs) {
     const btnColor   = isFeatured ? 'var(--red)' : 'var(--green)';
     const labelColor = isFeatured ? 'var(--red)' : 'var(--green)';
     const openClass  = isFeatured ? ' open' : '';
-    const authorNames = pub.authors ? pub.authors.map(a => a.name).join(', ') : '';
+
+    // ← gère les deux formats authors
+    const authorNames = Array.isArray(pub.authors)
+      ? pub.authors.map(a => a.name).join(', ')
+      : (pub.authors || '');
 
     const item = document.createElement('div');
     item.className = 'pub-item';
@@ -199,32 +212,30 @@ function renderPublications(pubs) {
     item.innerHTML = `
       <div class="pub-header" onclick="togglePub(this)">
         <div class="pub-dot" style="background:${dotColor}"></div>
-        <span class="pub-title">${pub.title}</span>
-        <span class="pub-meta">${authorNames}, ${pub.date}</span>
-        <button class="pub-toggle" style="background:${btnColor}">${isFeatured ? '▲' : '▼'}</button>
+        <div style="flex:1;min-width:0;">
+          <div class="pub-title">${pub.title}</div>
+          <div class="pub-meta" style="margin-top:4px;">${authorNames} • ${pub.date || pub.year}</div>
+        </div>
+        <button class="pub-toggle" style="background:${btnColor};flex-shrink:0;">${isFeatured ? '▲' : '▼'}</button>
       </div>
       <div class="pub-body${openClass}">
         <span class="pub-abstract-label" style="background:${labelColor}">Abstract</span>
         <p class="pub-abstract-text">${pub.abstract}</p>
         <a class="btn-pdf" href="${pub.pdf_url || '#'}">📄 PDF</a>
-      </div>
+        <a class="btn-pdf" href="pages/detail.html?id=${pub.id}" style="background:#e3f2fd;color:#1565c0;border-color:#90caf9;">🔗 Détails</a>      </div>
     `;
 
     list.appendChild(item);
   });
 }
 
-/* ── Filtrer les publications par type ── */
 function filterPublications(type) {
   const typeMap = {
-    'Articles': 'Article',
-    'Theses': 'These',
-    'Thèses': 'Thèse',
-    'Memoires': 'Memoire',
-    'Mémoires': 'Mémoire',
-    'Rapports': 'Rapport',
-    'Posters': 'Poster',
-    'Conferences': 'Conférence',
+    'Articles':    'Article',
+    'Thèses':      'Thèse',
+    'Mémoires':    'Mémoire',
+    'Rapports':    'Rapport',
+    'Posters':     'Poster',
     'Conférences': 'Conférence'
   };
 

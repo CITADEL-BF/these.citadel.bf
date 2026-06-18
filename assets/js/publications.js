@@ -3,34 +3,63 @@ let allPubs = [], filtered = [], currentPage = 1, perPage = 5, currentType = '';
 Promise.all([
   fetch('../data/publications.json').then(r => r.json()).catch(() => []),
   fetch(`${SUPABASE_URL}/rest/v1/publications?select=*&status=eq.Publié&order=created_at.desc`, {
-      headers: {
+    headers: {
       "apikey": SUPABASE_ANON,
       "Authorization": `Bearer ${SUPABASE_ANON}`
     }
   }).then(r => r.json()).catch(() => [])
 ]).then(([jsonPubs, supaPubs]) => {
   allPubs = [...jsonPubs, ...supaPubs];
-  // Lire le paramètre ?type= dans l'URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const typeParam = urlParams.get('type');
-      if (typeParam) {
-        currentType = typeParam;
-        // Activer l'onglet correspondant
-        document.querySelectorAll('.tab').forEach(t => {
-          t.classList.remove('active');
-          if (t.dataset.type === typeParam) t.classList.add('active');
-        });
-      }
-      // Déplacer le soulignement vert dans la navbar
-      if (typeParam === 'Thèse') {
-        document.querySelectorAll('.navbar nav a').forEach(a => {
-          a.classList.remove('active');
-          if (a.textContent.trim() === 'Thèses') a.classList.add('active');
-        });
-      }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const typeParam = urlParams.get('type');
+  if (typeParam) {
+    currentType = typeParam;
+    document.querySelectorAll('.tab').forEach(t => {
+      t.classList.remove('active');
+      if (t.dataset.type === typeParam) t.classList.add('active');
+    });
+    if (typeParam === 'Thèse') {
+      document.querySelectorAll('.navbar nav a').forEach(a => {
+        a.classList.remove('active');
+        if (a.textContent.trim() === 'Thèses') a.classList.add('active');
+      });
+    }
+  }
+
+  // Restaurer état depuis sessionStorage
+  const saved = sessionStorage.getItem('pubState');
+  if (saved && !typeParam) {
+    const s = JSON.parse(saved);
+    currentType  = s.type  || '';
+    currentPage  = s.page  || 1;
+    searchInput.value    = s.q      || '';
+    filterYear.value     = s.year   || '';
+    filterAuthor.value   = s.author || '';
+    filterType.value     = s.ftype  || '';
+    filterTheme.value    = s.theme  || '';
+    document.querySelectorAll('.tab').forEach(t => {
+      t.classList.remove('active');
+      if (t.dataset.type === currentType) t.classList.add('active');
+      if (!currentType && t.dataset.type === '') t.classList.add('active');
+    });
+  }
+
   populateFilters();
-  applyFilters();
+  applyFilters(true); // true = conserver la page courante
 });
+
+function saveState() {
+  sessionStorage.setItem('pubState', JSON.stringify({
+    type: currentType,
+    year: filterYear.value,
+    author: filterAuthor.value,
+    ftype: filterType.value,
+    theme: filterTheme.value,
+    q: searchInput.value.trim(),
+    page: currentPage
+  }));
+}
 
 function populateFilters() {
   const years = [...new Set(allPubs.map(p => p.year))].sort((a,b) => b-a);
@@ -40,9 +69,20 @@ function populateFilters() {
   authors.forEach(a => filterAuthor.innerHTML += `<option value="${a}">${a}</option>`);
   ['Article','Thèse','Rapport','Poster','Mémoire'].forEach(t => filterType.innerHTML += `<option value="${t}">${t}</option>`);
   themes.forEach(t => filterTheme.innerHTML += `<option value="${t}">${t}</option>`);
+
+  // Réappliquer les valeurs sauvegardées après populateFilters
+  const saved = sessionStorage.getItem('pubState');
+  if (saved) {
+    const s = JSON.parse(saved);
+    filterYear.value   = s.year   || '';
+    filterAuthor.value = s.author || '';
+    filterType.value   = s.ftype  || '';
+    filterTheme.value  = s.theme  || '';
+  }
 }
 
-function applyFilters() {
+function applyFilters(keepPage = false) {
+  if (!keepPage) currentPage = 1;
   const q = searchInput.value.trim();
   let res = allPubs;
   if (currentType) res = res.filter(p => p.type === currentType);
@@ -55,7 +95,7 @@ function applyFilters() {
     res = fuse.search(q).map(r => r.item);
   }
   filtered = res;
-  currentPage = 1;
+  saveState();
   render();
 }
 
@@ -69,7 +109,8 @@ function render() {
         <div style="flex:1">
           <span class="pub-type-badge ${p.type.toLowerCase()}">${p.type}</span>
           <div class="pub-title">${p.title}</div>
-          <span class="pub-meta">${Array.isArray(p.authors) ? p.authors.map(a => a.name).join(', ') : (p.authors || '')} • ${p.year}</span>        </div>
+          <span class="pub-meta">${Array.isArray(p.authors) ? p.authors.map(a => a.name).join(', ') : (p.authors || '')} • ${p.year}</span>
+        </div>
         <button class="pub-toggle">▼</button>
       </div>
       <div class="pub-body">
@@ -87,8 +128,14 @@ function renderPagination() {
   const pages = Math.ceil(filtered.length / perPage);
   pagination.innerHTML = '';
   for (let i = 1; i <= pages; i++) {
-    pagination.innerHTML += `<button class="${i===currentPage?'active':''}" onclick="currentPage=${i};render()">${i}</button>`;
+    pagination.innerHTML += `<button class="${i===currentPage?'active':''}" onclick="goToPage(${i})">${i}</button>`;
   }
+}
+
+function goToPage(i) {
+  currentPage = i;
+  saveState();
+  render();
 }
 
 function togglePub(h) {
@@ -97,13 +144,13 @@ function togglePub(h) {
   h.querySelector('.pub-toggle').textContent = body.classList.contains('open') ? '▲' : '▼';
 }
 
-searchInput.addEventListener('input', applyFilters);
-[filterYear, filterAuthor, filterType, filterTheme].forEach(s => s.addEventListener('change', applyFilters));
+searchInput.addEventListener('input', () => applyFilters(false));
+[filterYear, filterAuthor, filterType, filterTheme].forEach(s => s.addEventListener('change', () => applyFilters(false)));
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
   t.classList.add('active');
   currentType = t.dataset.type;
-  applyFilters();
+  applyFilters(false);
 }));
 expandAll.addEventListener('click', () => document.querySelectorAll('.pub-body').forEach(b => b.classList.add('open')));
 collapseAll.addEventListener('click', () => document.querySelectorAll('.pub-body').forEach(b => b.classList.remove('open')));
