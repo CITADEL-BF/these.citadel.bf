@@ -6,7 +6,7 @@
   <title>Contact — these.citadel.bf</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link rel="stylesheet" href="../assets/css/contact.css" />
@@ -28,7 +28,7 @@
     <a href="publications.html">Publications</a>
     <a href="publications.html?type=Thèse">Thèses</a>
     <div class="nav-dropdown">
-    <a href="#">Fellows ▾</a>
+      <a href="#">Fellows ▾</a>
       <div class="nav-dropdown-menu">
         <a href="fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
         <a href="fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
@@ -36,17 +36,16 @@
       </div>
     </div>
     <a href="contact.html" class="active">Contact</a>
-<div id="google_translate_element" style="display:none"></div>
-<button id="langBtn" class="notranslate" onclick="toggleLang()" style="background:var(--green);color:white;border:none;padding:6px 14px;border-radius:4px;font-weight:700;font-size:.82rem;cursor:pointer;letter-spacing:.06em;">EN</button>
-<a href="../pages/soumettre.html" class="btn-connect" id="btnConnexion">SE CONNECTER</a>
+    <div id="google_translate_element" style="display:none"></div>
+    <button id="langBtn" class="btn-lang notranslate" onclick="toggleLang()">EN</button>
+    <a href="../pages/soumettre.html" class="btn-connect" id="btnConnexion">Se connecter</a>
   </nav>
 </header>
 
 <!-- ══ HERO ══ -->
-<section class="hero" style="padding: 40px 20px;">
+<section class="hero" style="padding: 48px 20px 44px;">
   <div class="hero-content">
-<h1>Contactez-nous</h1>
-<p>Une question, une suggestion ou une collaboration ? Écrivez-nous</p>
+    <h1>Contactez-<span>nous</span></h1>
   </div>
 </section>
 
@@ -60,7 +59,7 @@
       <p class="contact-subtitle">Centre d'Excellence Interdisciplinaire en Intelligence Artificielle pour le Développement</p>
 
       <div class="info-item">
-        <i class="fa-solid fa-location-dot info-icon"></i>
+        <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
         <div>
           <strong>Adresse</strong>
           <p>Ouagadougou, Burkina Faso</p>
@@ -68,7 +67,7 @@
       </div>
 
       <div class="info-item">
-        <i class="fa-solid fa-envelope info-icon"></i>
+        <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
         <div>
           <strong>Email</strong>
           <p>contact@citadel.bf</p>
@@ -76,15 +75,15 @@
       </div>
 
       <div class="info-item">
-        <i class="fa-solid fa-phone info-icon"></i>
+        <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
         <div>
           <strong>Téléphone</strong>
-          <p>+226 70 11 62 48 </p>
+          <p>+226 70 11 62 48</p>
         </div>
       </div>
 
       <div class="info-item">
-        <i class="fa-solid fa-globe info-icon"></i>
+        <div class="info-icon"><i class="fa-solid fa-globe"></i></div>
         <div>
           <strong>Site web</strong>
           <p>www.citadel.bf</p>
@@ -92,9 +91,9 @@
       </div>
 
       <div class="contact-socials">
-        <a href="#" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#" title="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="#" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://web.facebook.com/people/Citadel-uvbf/100072284842721/#" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://x.com/citadel_uvbf" target="_blank" title="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://bf.linkedin.com/company/citadel-bf" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         <a href="#" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
       </div>
     </div>
@@ -102,34 +101,28 @@
     <!-- Colonne droite : Formulaire -->
     <div class="contact-form-wrapper">
       <h2>Envoyez-nous un message</h2>
-
       <div class="contact-form" id="contactForm">
         <div class="form-group">
           <label for="name">Nom complet</label>
           <input type="text" id="name" placeholder="Votre nom et prénom" />
         </div>
-
         <div class="form-group">
           <label for="email">Adresse email</label>
           <input type="email" id="email" placeholder="votremail@gmail.com" />
         </div>
-
         <div class="form-group">
           <label for="subject">Sujet</label>
           <input type="text" id="subject" placeholder="Objet de votre message" />
         </div>
-
         <div class="form-group">
           <label for="message">Message</label>
           <textarea id="message" rows="6" placeholder="Écrivez votre message ici..."></textarea>
         </div>
-
         <button class="btn-send" onclick="sendMessage()">
           <i class="fa-solid fa-paper-plane"></i> Envoyer le message
         </button>
-
         <div class="form-success" id="formSuccess">
-          <i class="fa-solid fa-circle-check"></i> Votre message a été envoyé avec succès!
+          <i class="fa-solid fa-circle-check"></i> Votre message a été envoyé avec succès !
         </div>
       </div>
     </div>
@@ -140,43 +133,35 @@
 <!-- ══ FOOTER ══ -->
 <footer>
   <div class="footer-social">
-    <a class="social-link" href="https://web.facebook.com/people/Citadel-uvbf/100072284842721/#" target="_blank" title="Facebook">𝕗</a>
-    <a class="social-link" href="https://x.com/citadel_uvbf" target="_blank" title="X / Twitter">𝕏</a>
-    <a class="social-link" href="https://bf.linkedin.com/company/citadel-bf" target="_blank" title="LinkedIn">in</a>
+    <a class="social-link" href="https://web.facebook.com/people/Citadel-uvbf/100072284842721/#" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+    <a class="social-link" href="https://x.com/citadel_uvbf" target="_blank" title="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+    <a class="social-link" href="https://bf.linkedin.com/company/citadel-bf" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
   </div>
   <div class="footer-bottom">
-<span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
-<a href="#">Politique de Confidentialité</a>
+    <span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
+    <a href="#">Politique de Confidentialité</a>
   </div>
 </footer>
 
 <script>
 function sendMessage() {
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
+  const name    = document.getElementById('name').value.trim();
+  const email   = document.getElementById('email').value.trim();
   const message = document.getElementById('message').value.trim();
-
   if (!name || !email || !message) {
     alert('Veuillez remplir tous les champs obligatoires.');
     return;
   }
-
-  // Afficher le message de succès
   document.getElementById('formSuccess').style.display = 'flex';
-
-  // Réinitialiser le formulaire
-  document.getElementById('name').value = '';
-  document.getElementById('email').value = '';
+  document.getElementById('name').value    = '';
+  document.getElementById('email').value   = '';
   document.getElementById('subject').value = '';
   document.getElementById('message').value = '';
-
-  // Cacher le message après 5 secondes
   setTimeout(() => {
     document.getElementById('formSuccess').style.display = 'none';
   }, 5000);
 }
 
-/* ── Menu hamburger mobile ── */
 function toggleMenu() {
   const nav = document.getElementById('mainNav');
   const btn = document.querySelector('.menu-toggle');
@@ -185,7 +170,6 @@ function toggleMenu() {
   btn.classList.toggle('active');
 }
 
-// Fermer le menu au clic sur un lien
 document.addEventListener('click', (e) => {
   if (e.target.closest('#mainNav a')) {
     const nav = document.getElementById('mainNav');
@@ -194,8 +178,7 @@ document.addEventListener('click', (e) => {
     if (btn) btn.classList.remove('active');
   }
 });
-</script>
-<script>
+
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({
     pageLanguage: 'fr',
@@ -207,9 +190,7 @@ function googleTranslateElementInit() {
 function toggleLang() {
   var btn = document.getElementById('langBtn');
   var select = document.querySelector('.goog-te-combo');
-
   if (!select) return;
-
   if (btn.textContent === 'EN') {
     select.value = 'en';
     select.dispatchEvent(new Event('change'));
@@ -220,25 +201,22 @@ function toggleLang() {
     btn.textContent = 'EN';
   }
 }
-</script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-</script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<script>
+
 document.addEventListener("DOMContentLoaded", () => {
-  if (typeof netlifyIdentity === "undefined") return;
-  const user = netlifyIdentity.currentUser();
+  const token = localStorage.getItem("sb_access_token");
   const btn = document.getElementById("btnConnexion");
-  if (btn && user) {
-  btn.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size:1.6rem;color:white;"></i>`;
-  btn.style.background = "var(--green)";
-  btn.style.padding = "5px 12px";
-  btn.style.display = "flex";
-  btn.style.alignItems = "center";
-  btn.style.borderRadius = "4px";
-}
-btn.style.opacity = "1";
+  if (btn) {
+    if (token) {
+      btn.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size:1.3rem;color:white;"></i>`;
+      btn.style.padding = "5px 14px";
+      btn.style.display = "flex";
+      btn.style.alignItems = "center";
+      btn.style.borderRadius = "6px";
+    }
+    btn.style.opacity = "1";
+  }
 });
 </script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

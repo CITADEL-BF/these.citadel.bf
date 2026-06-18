@@ -6,7 +6,7 @@
   <title>Publications — these.citadel.bf</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link rel="stylesheet" href="../assets/css/publications.css" />
@@ -15,38 +15,43 @@
 </head>
 <body>
 
-<!-- ══ NAVBAR ══ -->
 <header class="navbar">
-  <a href="../index.html">
-  <img src="../assets/images/logo-citadel.png" alt="CITADEL" class="logo-img" />
-</a>
-<button class="menu-toggle" aria-label="Menu" onclick="toggleMenu()">
+  <div class="navbar-logo">
+    <a href="../index.html">
+      <img src="../assets/images/logo-citadel.png" alt="CITADEL" class="logo-img" />
+    </a>
+  </div>
+  <button class="menu-toggle" aria-label="Menu" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
-  <nav id="mainNav">
-    <a href="../index.html">Accueil</a>
-    <a href="publications.html" class="active">Publications</a>
-    <a href="publications.html?type=Thèse">Thèses</a>
-    <div class="nav-dropdown">
-    <a href="#">Fellows ▾</a>
-      <div class="nav-dropdown-menu">
-        <a href="fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
-        <a href="fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
-        <a href="fellows.html?role=fellow"><i class="fa-solid fa-graduation-cap"></i> Fellows</a>
-      </div>
-    </div>
-    <a href="contact.html">Contact</a>
-<div id="google_translate_element" style="display:none"></div>
-<button id="langBtn" class="notranslate" onclick="toggleLang()" style="background:var(--green);color:white;border:none;padding:6px 14px;border-radius:4px;font-weight:700;font-size:.82rem;cursor:pointer;letter-spacing:.06em;">EN</button>
-<a href="../pages/soumettre.html" class="btn-connect" id="btnConnexion">SE CONNECTER</a>
+  <nav>
+    <ul class="navbar-nav" id="mainNav">
+      <li><a href="../index.html">Accueil</a></li>
+      <li><a href="publications.html" class="active">Publications</a></li>
+      <li><a href="publications.html?type=Thèse">Thèses</a></li>
+      <li class="nav-dropdown">
+        <a href="#">Fellows ▾</a>
+        <div class="nav-dropdown-menu">
+          <a href="fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
+          <a href="fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
+          <a href="fellows.html?role=fellow"><i class="fa-solid fa-graduation-cap"></i> Fellows</a>
+        </div>
+      </li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
   </nav>
+  <div class="navbar-actions">
+    <div id="google_translate_element" style="display:none"></div>
+    <button id="langBtn" class="btn-lang notranslate" onclick="toggleLang()">EN</button>
+    <a href="../pages/soumettre.html" class="btn-connect" id="btnConnexion">Se connecter</a>
+  </div>
 </header>
 
 <!-- ══ HERO ══ -->
-<section class="hero" style="padding: 40px 20px;">
+<section class="hero" style="padding: 48px 20px 44px;">
   <div class="hero-content">
-<h1>Publications Scientifiques</h1>
-<p>Accédez à l'ensemble des travaux de recherche produits par les membres de CITADEL</p>
+    <h1>Publications <span>Scientifiques</span></h1>
+    <p>Accédez à l'ensemble des travaux de recherche produits par les membres de CITADEL</p>
   </div>
 </section>
 
@@ -73,8 +78,9 @@
   </div>
 
   <div class="toggle-all">
-<button id="expandAll">Tout déplier</button>
-<button id="collapseAll">Tout replier</button>  </div>
+    <button id="expandAll">Tout déplier</button>
+    <button id="collapseAll">Tout replier</button>
+  </div>
 
   <div id="pubResults" class="pub-list"></div>
   <div id="pagination" class="pagination"></div>
@@ -83,13 +89,13 @@
 <!-- ══ FOOTER ══ -->
 <footer>
   <div class="footer-social">
-    <a class="social-link" href="https://web.facebook.com/people/Citadel-uvbf/100072284842721/#" target="_blank" title="Facebook">𝕗</a>
-    <a class="social-link" href="https://x.com/citadel_uvbf" target="_blank" title="X / Twitter">𝕏</a>
-    <a class="social-link" href="https://bf.linkedin.com/company/citadel-bf" target="_blank" title="LinkedIn">in</a>
+    <a class="social-link" href="https://web.facebook.com/people/Citadel-uvbf/100072284842721/#" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+    <a class="social-link" href="https://x.com/citadel_uvbf" target="_blank" title="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+    <a class="social-link" href="https://bf.linkedin.com/company/citadel-bf" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
   </div>
   <div class="footer-bottom">
-<span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
-<a href="#">Politique de Confidentialité</a>
+    <span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
+    <a href="#">Politique de Confidentialité</a>
   </div>
 </footer>
 
@@ -106,9 +112,7 @@ function googleTranslateElementInit() {
 function toggleLang() {
   var btn = document.getElementById('langBtn');
   var select = document.querySelector('.goog-te-combo');
-
   if (!select) return;
-
   if (btn.textContent === 'EN') {
     select.value = 'en';
     select.dispatchEvent(new Event('change'));
@@ -120,45 +124,38 @@ function toggleLang() {
   }
 }
 
-/* ── Menu hamburger mobile ── */
 function toggleMenu() {
-  const nav = document.getElementById('mainNav');
+  const nav = document.querySelector('.navbar-nav');
   const btn = document.querySelector('.menu-toggle');
   if (!nav || !btn) return;
   nav.classList.toggle('open');
   btn.classList.toggle('active');
 }
 
-// Fermer le menu au clic sur un lien
 document.addEventListener('click', (e) => {
-  if (e.target.closest('#mainNav a')) {
-    const nav = document.getElementById('mainNav');
+  if (e.target.closest('.navbar-nav a')) {
+    const nav = document.querySelector('.navbar-nav');
     const btn = document.querySelector('.menu-toggle');
     if (nav) nav.classList.remove('open');
     if (btn) btn.classList.remove('active');
   }
 });
-</script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-</script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-<script>
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("sb_access_token");
   const btn = document.getElementById("btnConnexion");
   if (btn) {
     if (token) {
-      btn.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size:1.6rem;color:white;"></i>`;
-      btn.style.background = "var(--green)";
-      btn.style.padding = "5px 12px";
+      btn.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size:1.3rem;color:white;"></i>`;
+      btn.style.padding = "5px 14px";
       btn.style.display = "flex";
       btn.style.alignItems = "center";
-      btn.style.borderRadius = "4px";
+      btn.style.borderRadius = "6px";
     }
     btn.style.opacity = "1";
   }
 });
 </script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

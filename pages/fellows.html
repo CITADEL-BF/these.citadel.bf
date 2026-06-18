@@ -6,7 +6,7 @@
   <title>Fellows — these.citadel.bf</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link rel="stylesheet" href="../assets/css/fellows.css" />
@@ -14,6 +14,7 @@
 </head>
 <body>
 
+<!-- ══ NAVBAR ══ -->
 <header class="navbar">
   <div class="navbar-logo">
     <a href="../index.html">
@@ -27,46 +28,49 @@
     <a href="../index.html">Accueil</a>
     <a href="publications.html">Publications</a>
     <a href="publications.html?type=Thèse">Thèses</a>
-<div class="nav-dropdown">
-    <a href="#">Fellows ▾</a>
-  <div class="nav-dropdown-menu">
-    <a href="fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
-     <a href="fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
-    <a href="fellows.html?role=fellow"><i class="fa-solid fa-graduation-cap"></i> Fellows</a>
-  </div>
-</div>    <a href="contact.html">Contact</a>
-<div id="google_translate_element" style="display:none"></div>
-<button id="langBtn" class="notranslate" onclick="toggleLang()" style="background:var(--green);color:white;border:none;padding:6px 14px;border-radius:4px;font-weight:700;font-size:.82rem;cursor:pointer;letter-spacing:.06em;">EN</button>
-<a href="../pages/soumettre.html" class="btn-connect" id="btnConnexion">SE CONNECTER</a>
+    <div class="nav-dropdown">
+      <a href="#">Fellows ▾</a>
+      <div class="nav-dropdown-menu">
+        <a href="fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
+        <a href="fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
+        <a href="fellows.html?role=fellow"><i class="fa-solid fa-graduation-cap"></i> Fellows</a>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+    <div id="google_translate_element" style="display:none"></div>
+    <button id="langBtn" class="btn-lang notranslate" onclick="toggleLang()">EN</button>
+    <a href="../pages/soumettre.html" class="btn-connect" id="btnConnexion">Se connecter</a>
   </nav>
 </header>
 
-<section class="hero" style="padding: 40px 20px;">
+<!-- ══ HERO ══ -->
+<section class="hero" style="padding: 48px 20px 44px;">
   <div class="hero-content">
-<h1>Nos Fellows</h1>
-    <p>Decouvrez les chercheurs et Fellows du CITADEL et explorez leurs publications</p>
+    <h1>Nos <span>Fellows</span></h1>
+    <p>Découvrez les chercheurs et Fellows de CITADEL et explorez leurs publications</p>
   </div>
 </section>
 
-<!-- VUE GRILLE (affichee par defaut) -->
+<!-- VUE GRILLE -->
 <section class="fellows-page" id="fellowsGrid">
   <div class="fellows-grid" id="gridContainer"></div>
 </section>
 
-<!-- VUE PROFIL (affichee au clic sur un fellow) -->
+<!-- VUE PROFIL -->
 <section class="fellow-profile" id="fellowProfile" style="display:none;">
   <div id="profileContent"></div>
 </section>
 
+<!-- ══ FOOTER ══ -->
 <footer>
   <div class="footer-social">
-    <a class="social-link" href="https://web.facebook.com/people/Citadel-uvbf/100072284842721/#" target="_blank" title="Facebook">𝕗</a>
-    <a class="social-link" href="https://x.com/citadel_uvbf" target="_blank" title="X / Twitter">𝕏</a>
-    <a class="social-link" href="https://bf.linkedin.com/company/citadel-bf" target="_blank" title="LinkedIn">in</a>
+    <a class="social-link" href="https://web.facebook.com/people/Citadel-uvbf/100072284842721/#" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+    <a class="social-link" href="https://x.com/citadel_uvbf" target="_blank" title="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+    <a class="social-link" href="https://bf.linkedin.com/company/citadel-bf" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
   </div>
   <div class="footer-bottom">
-    <span>© [CITADEL], 2019 | UV-BF. Tous droits reserves.</span>
-    <a href="#">Politique de Confidentialite</a>
+    <span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
+    <a href="#">Politique de Confidentialité</a>
   </div>
 </footer>
 
@@ -83,9 +87,7 @@ function googleTranslateElementInit() {
 function toggleLang() {
   var btn = document.getElementById('langBtn');
   var select = document.querySelector('.goog-te-combo');
-
   if (!select) return;
-
   if (btn.textContent === 'EN') {
     select.value = 'en';
     select.dispatchEvent(new Event('change'));
@@ -97,7 +99,6 @@ function toggleLang() {
   }
 }
 
-/* ── Menu hamburger mobile ── */
 function toggleMenu() {
   const nav = document.getElementById('mainNav');
   const btn = document.querySelector('.menu-toggle');
@@ -106,7 +107,6 @@ function toggleMenu() {
   btn.classList.toggle('active');
 }
 
-// Fermer le menu au clic sur un lien
 document.addEventListener('click', (e) => {
   if (e.target.closest('#mainNav a')) {
     const nav = document.getElementById('mainNav');
@@ -115,25 +115,22 @@ document.addEventListener('click', (e) => {
     if (btn) btn.classList.remove('active');
   }
 });
-</script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-</script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<script>
+
 document.addEventListener("DOMContentLoaded", () => {
-  if (typeof netlifyIdentity === "undefined") return;
-  const user = netlifyIdentity.currentUser();
+  const token = localStorage.getItem("sb_access_token");
   const btn = document.getElementById("btnConnexion");
-  if (btn && user) {
-  btn.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size:1.6rem;color:white;">`;
-  btn.style.background = "var(--green)";
-  btn.style.padding = "5px 12px";
-  btn.style.display = "flex";
-  btn.style.alignItems = "center";
-  btn.style.borderRadius = "4px";
-}
-btn.style.opacity = "1";
+  if (btn) {
+    if (token) {
+      btn.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size:1.3rem;color:white;"></i>`;
+      btn.style.padding = "5px 14px";
+      btn.style.display = "flex";
+      btn.style.alignItems = "center";
+      btn.style.borderRadius = "6px";
+    }
+    btn.style.opacity = "1";
+  }
 });
 </script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

@@ -3,297 +3,1240 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>these.citadel.bf – Portail des thèses et publications scientifiques</title>
+  <title>these.citadel.bf – Portail des publications scientifiques</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <style>
+    /* ── Reset & Variables ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --green:        #006633;
+      --green-light:  #008844;
+      --green-pale:   #e8f5ee;
+      --gold:         #C8960C;
+      --gold-light:   #f0b429;
+      --dark:         #1A1A2E;
+      --gray-dark:    #444;
+      --gray:         #6B7280;
+      --gray-light:   #9CA3AF;
+      --border:       #E5E7EB;
+      --bg:           #F8F9FA;
+      --white:        #ffffff;
+      --hero-bg:      #0D1B2A;
+      --shadow-sm:    0 1px 3px rgba(0,0,0,.08);
+      --shadow:       0 4px 16px rgba(0,0,0,.10);
+      --shadow-lg:    0 12px 40px rgba(0,0,0,.14);
+      --radius:       8px;
+      --radius-lg:    14px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: var(--white);
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-img { height: 40px; width: auto; object-fit: contain; }
+
+    .navbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+    }
+    .navbar-nav a {
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--gray-dark);
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: color .2s, background .2s;
+    }
+    .navbar-nav a:hover,
+    .navbar-nav a.active { color: var(--green); background: var(--green-pale); }
+
+    /* Dropdown */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      min-width: 220px;
+      overflow: hidden;
+      z-index: 300;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      font-size: .83rem;
+      color: var(--gray-dark);
+      border-bottom: 1px solid var(--border);
+      text-transform: none;
+      letter-spacing: 0;
+      border-radius: 0;
+      background: none;
+    }
+    .nav-dropdown-menu a:last-child { border-bottom: none; }
+    .nav-dropdown-menu a:hover { background: var(--green-pale); color: var(--green); }
+    .nav-dropdown-menu i { color: var(--green); width: 16px; }
+
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-lang {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--gray-dark);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: .78rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: .06em;
+      transition: all .2s;
+    }
+    .btn-lang:hover { border-color: var(--green); color: var(--green); }
+    .btn-connect {
+      background: var(--green);
+      color: var(--white) !important;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      transition: background .2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-connect:hover { background: var(--green-light); }
+
+    /* Hamburger */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--dark);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+    position: relative;
+    background: 
+        linear-gradient(rgba(13,27,42,.95), rgba(13,27,42,.75)),
+        url('assets/images/Capture_d.png') center/cover no-repeat;
+    overflow: hidden;
+    padding: 100px 5% 90px;
+    text-align: center;
+    }
+
+    /* Grille de points — signature visuelle */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(0,102,51,.35) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+
+    /* Lueur verte subtile */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(0,136,68,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,102,51,.25);
+      border: 1px solid rgba(0,102,51,.4);
+      color: #5EE89A;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #5EE89A;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .5; transform: scale(1.3); }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 18px;
+      letter-spacing: -.02em;
+    }
+    .hero h1 .accent { color: #5EE89A; }
+
+    .hero p {
+      font-size: 1rem;
+      color: rgba(255,255,255,.6);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .hero-search {
+      display: flex;
+      max-width: 540px;
+      margin: 0 auto 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.3);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .hero-search input {
+      flex: 1;
+      padding: 15px 20px;
+      border: none;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      font-size: .93rem;
+      color: var(--dark);
+      background: var(--white);
+    }
+    .hero-search input::placeholder { color: var(--gray-light); }
+    .hero-search button {
+      background: var(--gold);
+      border: none;
+      padding: 0 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+    }
+    .hero-search button:hover { background: var(--gold-light); }
+    .hero-search button svg { width: 18px; height: 18px; fill: white; }
+
+    .hero-tags {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-tag {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.65);
+      font-size: .75rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .hero-tag:hover {
+      background: rgba(0,102,51,.3);
+      border-color: #5EE89A;
+      color: #5EE89A;
+    }
+
+    /* ── STATS ── */
+    .stats-section {
+      background: var(--white);
+      padding: 56px 5%;
+      border-bottom: 1px solid var(--border);
+    }
+    .stats-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .stat-item {
+      text-align: center;
+      padding: 20px 32px;
+      position: relative;
+    }
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background: var(--border);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+    .stat-icon {
+      display: block;
+      font-size: .9rem;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    /* ── SECTION TITRE ── */
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .section-eyebrow {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+    .section-subtitle {
+      font-size: .9rem;
+      color: var(--gray);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── EXPLORE ── */
+    .explore-section {
+      background: var(--bg);
+      padding: 56px 5%;
+    }
+    .explore-grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .explore-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: all .2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .explore-card:hover {
+      border-color: var(--green);
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+    .explore-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--green-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--green);
+      flex-shrink: 0;
+    }
+    .explore-card-title {
+      font-weight: 600;
+      font-size: .88rem;
+      color: var(--dark);
+      margin-bottom: 2px;
+    }
+    .explore-card-count {
+      font-size: .75rem;
+      color: var(--gray);
+    }
+    .explore-arrow {
+      margin-left: auto;
+      color: var(--gray-light);
+      font-size: .8rem;
+      transition: transform .2s, color .2s;
+    }
+    .explore-card:hover .explore-arrow {
+      transform: translateX(4px);
+      color: var(--green);
+    }
+
+    /* ── PUBLICATIONS ── */
+    .pubs-section {
+      background: var(--white);
+      padding: 64px 5%;
+    }
+    .pubs-inner { max-width: 860px; margin: 0 auto; }
+
+    .pub-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    }
+    .pub-item {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+    }
+    .pub-item:last-child { border-bottom: none; }
+    /* ── Nouvelles cards publications ── */
+    .pub-card-new {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: box-shadow .2s, border-color .2s;
+    }
+    .pub-card-new:hover { box-shadow: var(--shadow); border-color: #D1D5DB; }
+    .pub-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px 0;
+    cursor: pointer;
+    }
+    .pub-card-badges { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .pub-theme-badge {
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    }
+    .pub-id-badge { font-size: .72rem; font-weight: 600; color: var(--gray); font-family: 'Inter', sans-serif; }
+    .pub-chevron { color: var(--gray-light); font-size: .8rem; transition: transform .25s; flex-shrink: 0; }
+    .pub-card-middle { padding: 10px 20px 16px; cursor: pointer; }
+    .pub-card-title-new { font-weight: 700; font-size: .98rem; color: var(--dark); line-height: 1.45; margin-bottom: 8px; }
+    .pub-card-meta-new {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: .78rem;
+    color: var(--gray);
+    }
+    .pub-card-meta-new i { color: var(--gray-light); margin-right: 4px; font-size: .75rem; }
+    .pub-card-body-new {
+    display: none;
+    padding: 16px 20px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--light);
+    }
+    .pub-card-body-new.open { display: block; }
+    .pub-header {
+      display: flex;
+      align-items: center;
+      padding: 18px 22px;
+      cursor: pointer;
+      gap: 14px;
+    }
+    .pub-header:hover { background: var(--bg); }
+    .pub-type-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+    .pub-info { flex: 1; min-width: 0; }
+    .pub-title {
+      font-weight: 600;
+      font-size: .92rem;
+      color: var(--dark);
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+    .pub-meta {
+      font-size: .78rem;
+      color: var(--gray);
+    }
+    .pub-badge {
+      font-size: .65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--green-pale);
+      color: var(--green);
+      flex-shrink: 0;
+    }
+    .pub-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--gray);
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .75rem;
+      flex-shrink: 0;
+      transition: all .2s;
+    }
+    .pub-toggle:hover { border-color: var(--green); color: var(--green); }
+    .pub-body {
+      display: none;
+      padding: 0 22px 20px 44px;
+      border-top: 1px solid var(--border);
+    }
+    .pub-body.open { display: block; }
+    .pub-abstract-label {
+      display: inline-block;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-left: 3px solid var(--gold);
+      padding-left: 8px;
+      margin: 14px 0 8px;
+    }
+    .pub-abstract-text {
+      font-size: .85rem;
+      color: var(--gray-dark);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .btn-pdf {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .78rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--gray-dark);
+      border: 1px solid var(--border);
+      transition: all .2s;
+    }
+    .btn-pdf:hover { background: var(--green-pale); color: var(--green); border-color: var(--green); }
+
+    .btn-voir-plus {
+      text-align: center;
+      margin-top: 28px;
+    }
+    .btn-voir-plus a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: white;
+      font-weight: 600;
+      font-size: .85rem;
+      padding: 11px 28px;
+      border-radius: 8px;
+      transition: background .2s, transform .2s;
+    }
+    .btn-voir-plus a:hover { background: var(--green-light); transform: translateY(-1px); }
+
+    /* ── FELLOWS + AXES ── */
+    .bottom-section {
+      background: var(--bg);
+      padding: 64px 5%;
+    }
+    .bottom-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .sub-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sub-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Fellows */
+    .fellows-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .fellow-card-mini {
+      flex: 1;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      text-align: center;
+      transition: all .2s;
+      cursor: pointer;
+    }
+    .fellow-card-mini:hover {
+      border-color: var(--green);
+      box-shadow: var(--shadow);
+      transform: translateY(-3px);
+    }
+    .fellow-avatar {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .fellow-avatar-placeholder {
+      width: 100%;
+      height: 110px;
+      background: var(--green-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--green);
+      opacity: .5;
+    }
+    .fellow-name {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--dark);
+      padding: 10px 8px;
+      line-height: 1.3;
+    }
+
+    .fellows-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .btn-fellows {
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+      background: var(--white);
+      border: 1px solid var(--border);
+      color: var(--gray-dark);
+      font-size: .78rem;
+      font-weight: 600;
+      padding: 9px 14px;
+      border-radius: 7px;
+      transition: all .2s;
+    }
+    .btn-fellows:hover { border-color: var(--green); color: var(--green); background: var(--green-pale); }
+
+    /* Axes */
+    .axes-list { display: flex; flex-direction: column; gap: 0; }
+    .axe-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--gray-dark);
+      cursor: pointer;
+      transition: color .2s;
+    }
+    .axe-item:last-child { border-bottom: none; }
+    .axe-item:hover { color: var(--green); }
+    .axe-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .axe-arrow {
+      margin-left: auto;
+      font-size: .7rem;
+      color: var(--gray-light);
+      transition: transform .2s, color .2s;
+    }
+    .axe-item:hover .axe-arrow { transform: translateX(3px); color: var(--green); }
+    .axe-item.priority {
+    background: linear-gradient(90deg, var(--green-pale), transparent);
+    border-left: 3px solid var(--green);
+    padding-left: 10px;
+    font-weight: 700;
+    color: var(--green);
+    font-size: .88rem;
+    margin: 2px 0;
+    border-radius: 0 4px 4px 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,.7);
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 5%;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--white);
+      font-weight: 600;
+    }
+    .footer-brand span { color: #5EE89A; }
+    .footer-social { display: flex; gap: 12px; }
+    .social-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 7px;
+      border: 1px solid rgba(255,255,255,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .85rem;
+      color: rgba(255,255,255,.6);
+      transition: all .2s;
+    }
+    .social-btn:hover { border-color: #5EE89A; color: #5EE89A; }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 5%;
+      font-size: .75rem;
+      color: rgba(255,255,255,.35);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .footer-bottom a { color: rgba(255,255,255,.35); transition: color .2s; }
+    .footer-bottom a:hover { color: #5EE89A; }
+
+    /* ── Google Translate ── */
+    #google_translate_element { display: none !important; }
+    .goog-te-banner-frame { display: none !important; }
+    body { top: 0 !important; }
+    .skiptranslate { display: none !important; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .bottom-grid { grid-template-columns: 1fr; gap: 40px; }
+      .explore-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .navbar-nav, .navbar-actions { display: none; }
+      .navbar-nav.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 64px;
+        left: 0; right: 0;
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 5%;
+        gap: 4px;
+        box-shadow: var(--shadow);
+        z-index: 199;
+      }
+      .menu-toggle { display: flex; }
+      .stats-inner { grid-template-columns: 1fr; }
+      .stat-item::after { display: none; }
+      .stat-item { padding: 16px; }
+      .explore-grid { grid-template-columns: 1fr; }
+      .fellows-row { gap: 8px; }
+      .hero { padding: 64px 5% 56px; }
+    }
+  </style>
 </head>
 <body>
 
+<!-- ══ NAVBAR ══ -->
 <header class="navbar">
   <div class="navbar-logo">
-  <a href="index.html">
-    <img src="assets/images/logo-citadel.png" alt="CITADEL" class="logo-img" />
-  </a>
-</div>
-<button class="menu-toggle" aria-label="Menu" onclick="toggleMenu()">
+    <a href="index.html">
+      <img src="assets/images/logo-citadel.png" alt="CITADEL" class="logo-img" />
+    </a>
+  </div>
+
+  <button class="menu-toggle" aria-label="Menu" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
 
-  <nav id="mainNav">
-    <a href="index.html" class="active">Accueil</a>
-    <a href="pages/publications.html">Publications</a>
-    <a href="pages/publications.html?type=Thèse">Thèses</a>
-    <div class="nav-dropdown">
-    <a href="#">Fellows ▾</a>
-      <div class="nav-dropdown-menu">
-        <a href="pages/fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
-        <a href="pages/fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
-        <a href="pages/fellows.html?role=fellow"><i class="fa-solid fa-graduation-cap"></i> Fellows</a>
-      </div>
-    </div>
-    <a href="pages/contact.html">Contact</a>
-<div id="google_translate_element" style="display:none"></div>
-<button id="langBtn" class="notranslate" onclick="toggleLang()" style="background:var(--green);color:white;border:none;padding:6px 14px;border-radius:4px;font-weight:700;font-size:.82rem;cursor:pointer;letter-spacing:.06em;">EN</button>
-<a href="pages/soumettre.html" class="btn-connect" id="btnConnexion">
-  SE CONNECTER
-</a>
+  <nav>
+    <ul class="navbar-nav" id="mainNav">
+      <li><a href="index.html" class="active">Accueil</a></li>
+      <li><a href="pages/publications.html">Publications</a></li>
+      <li><a href="pages/publications.html?type=Thèse">Thèses</a></li>
+      <li class="nav-dropdown">
+        <a href="#">Fellows ▾</a>
+        <div class="nav-dropdown-menu">
+          <a href="pages/fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
+          <a href="pages/fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
+          <a href="pages/fellows.html?role=fellow"><i class="fa-solid fa-graduation-cap"></i> Fellows</a>
+        </div>
+      </li>
+      <li><a href="pages/contact.html">Contact</a></li>
+    </ul>
   </nav>
+
+  <div class="navbar-actions">
+    <div id="google_translate_element" style="display:none"></div>
+    <button id="langBtn" class="btn-lang notranslate" onclick="toggleLang()">EN</button>
+    <a href="pages/soumettre.html" class="btn-connect" id="btnConnexion">Se connecter</a>
+  </div>
 </header>
 
-
+<!-- ══ HERO ══ -->
 <section class="hero">
   <div class="hero-content">
-<h1>Bienvenue sur <span>these.citadel.bf</span></h1>      
-<p>Portail des thèses et publications scientifiques du Citadel</p>
-    <div class="search-bar">
-<input type="text" placeholder="Rechercher des articles, thèses..." />
-      <button>
+    <div class="hero-eyebrow">Portail scientifique du CITADEL</div>
+    <h1>Bienvenue sur <span class="accent">these.citadel.bf</span></h1>
+    <p>Explorez les thèses, articles et mémoires produits par les chercheurs et fellows du CITADEL</p>
+
+    <div class="hero-search">
+      <input type="text" id="searchInput" placeholder="Rechercher une publication, un auteur, un mot-clé…" />
+      <button onclick="handleSearch()">
         <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>
       </button>
+    </div>
+
+    <div class="hero-tags">
+      <span class="hero-tag" onclick="goTo('Article')">Articles</span>
+      <span class="hero-tag" onclick="goTo('Thèse')">Thèses</span>
+      <span class="hero-tag" onclick="goTo('Mémoire')">Mémoires</span>
+      <span class="hero-tag" onclick="goTo('Conférence')">Conférences</span>
+      <span class="hero-tag" onclick="goTo('Rapport')">Rapports</span>
     </div>
   </div>
 </section>
 
 <!-- ══ STATS ══ -->
-<div class="stats">
-  <div class="stat-item">
-    <span class="stat-num" data-target="120">0</span>
-<span class="stat-label">Publications</span>
+<section class="stats-section">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <i class="fa-regular fa-file-lines stat-icon"></i>
+      <span class="stat-num" data-target="0" id="statPubs">0</span>
+      <span class="stat-label">Publications</span>
+    </div>
+    <div class="stat-item">
+      <i class="fa-regular fa-user stat-icon"></i>
+      <span class="stat-num" data-target="0" id="statAuthors">0</span>
+      <span class="stat-label">Auteurs</span>
+    </div>
   </div>
-  <div class="stat-item">
-    <span class="stat-num" data-target="20">0</span>
-<span class="stat-label">Auteurs</span>
+</section>
+
+<!-- ══ EXPLORER ══ -->
+<section class="explore-section">
+  <div class="section-header">
+    <h2 class="section-title">Explorez nos ressources</h2>
+    <p class="section-subtitle">Retrouvez l'ensemble des travaux scientifiques de CITADEL organisés par type de publication.</p>
   </div>
-  <div class="stat-item">
-    <span class="stat-num" data-target="500">0</span>
-<span class="stat-label">Citations</span>
+
+  <div class="explore-grid">
+    <a href="pages/publications.html?type=Article" class="explore-card">
+      <div class="explore-icon"><i class="fa-solid fa-newspaper"></i></div>
+      <div>
+        <div class="explore-card-title">Articles</div>
+        <div class="explore-card-count">Publications dans des journaux</div>
+      </div>
+      <i class="fa-solid fa-chevron-right explore-arrow"></i>
+    </a>
+    <a href="pages/publications.html?type=Thèse" class="explore-card">
+      <div class="explore-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div>
+        <div class="explore-card-title">Thèses</div>
+        <div class="explore-card-count">Travaux doctoraux</div>
+      </div>
+      <i class="fa-solid fa-chevron-right explore-arrow"></i>
+    </a>
+    <a href="pages/publications.html?type=Mémoire" class="explore-card">
+      <div class="explore-icon"><i class="fa-solid fa-book-open"></i></div>
+      <div>
+        <div class="explore-card-title">Mémoires</div>
+        <div class="explore-card-count">Mémoires de fin d'études</div>
+      </div>
+      <i class="fa-solid fa-chevron-right explore-arrow"></i>
+    </a>
+    <a href="pages/publications.html?type=Conférence" class="explore-card">
+      <div class="explore-icon"><i class="fa-solid fa-microphone"></i></div>
+      <div>
+        <div class="explore-card-title">Conférences</div>
+        <div class="explore-card-count">Communications scientifiques</div>
+      </div>
+      <i class="fa-solid fa-chevron-right explore-arrow"></i>
+    </a>
+    <a href="pages/publications.html?type=Rapport" class="explore-card">
+      <div class="explore-icon"><i class="fa-solid fa-file-lines"></i></div>
+      <div>
+        <div class="explore-card-title">Rapports</div>
+        <div class="explore-card-count">Rapports de recherche</div>
+      </div>
+      <i class="fa-solid fa-chevron-right explore-arrow"></i>
+    </a>
+    <a href="pages/publications.html?type=Poster" class="explore-card">
+      <div class="explore-icon"><i class="fa-solid fa-image"></i></div>
+      <div>
+        <div class="explore-card-title">Posters</div>
+        <div class="explore-card-count">Présentations IndabaX</div>
+      </div>
+      <i class="fa-solid fa-chevron-right explore-arrow"></i>
+    </a>
+  </div>
+</section>
+
+<!-- ══ DERNIÈRES PUBLICATIONS ══ -->
+<section class="pubs-section">
+  <div class="pubs-inner">
+    <div class="section-header">
+      <h2 class="section-title">Dernières Publications</h2>
+    </div>
+    <div class="pub-list" id="pub-list">
+      <div class="pub-item">
+        <div class="pub-header" onclick="togglePub(this)">
+          <div class="pub-type-dot"></div>
+          <div class="pub-info">
+            <div class="pub-title">Chargement des publications…</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-voir-plus">
+      <a href="pages/publications.html">Voir toutes les publications <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FELLOWS + AXES ══ -->
+<div class="bottom-section">
+  <div class="bottom-grid">
+
+    <!-- Fellows -->
+    <div>
+      <p class="sub-title">Chercheurs Seniors</p>
+      <div class="fellows-row">
+        <a class="fellow-card-mini" href="pages/fellows.html?id=bissyande">
+        <img src="assets/images/chercheurs/bissyande.png" alt="Dr BISSYANDE" class="fellow-avatar" onerror="this.style.display='none'" />
+        <div class="fellow-name">Dr BISSYANDE</div>
+        </a>
+        <a class="fellow-card-mini" href="pages/fellows.html?id=sabane">
+        <img src="assets/images/chercheurs/sabane.png" alt="Dr SABANE" class="fellow-avatar" onerror="this.style.display='none'" />
+        <div class="fellow-name">Dr SABANE</div>
+        </a>
+        <a class="fellow-card-mini" href="pages/fellows.html?id=tinto">
+        <img src="assets/images/chercheurs/tinto.png" alt="Mr TINTO" class="fellow-avatar" onerror="this.style.display='none'" />
+        <div class="fellow-name">Mr TINTO</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Axes -->
+    <div>
+      <p class="sub-title">Axes de Recherche</p>
+      <div class="axes-list">
+  <div class="axe-item priority">
+    <span class="axe-dot" style="background:#e53935"></span>
+    Langue &amp; Patrimoine
+  </div>
+  <div class="axe-item priority">
+    <span class="axe-dot" style="background:#43a047"></span>
+    Santé &amp; Bien-être
+  </div>
+  <div class="axe-item priority">
+    <span class="axe-dot" style="background:#f0a500"></span>
+    Agriculture et Pastoralisme
+  </div>
+  <div class="axe-item">
+    <span class="axe-dot" style="background:#1e88e5"></span>
+    Fintech &amp; Sécurité
+  </div>
+  <div class="axe-item">
+    <span class="axe-dot" style="background:#8e24aa"></span>
+    Confidentialité &amp; Explicabilité
+  </div>
+  <div class="axe-item">
+    <span class="axe-dot" style="background:#00897b"></span>
+    Énergie &amp; Changement Climatique
   </div>
 </div>
-
-<!-- ══ EXPLORE ══ -->
-<section class="explore">
-<h2 class="section-title">Explorez nos ressources</h2>
-  <div class="custom-select-wrapper">
-    <div class="custom-select" id="categorySelect">
-      <div class="select-selected" onclick="toggleDropdown()">
-<span id="selectLabel">Sélectionnez une catégorie...</span>
-        <svg class="select-arrow" id="selectArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <ul class="select-options" id="selectOptions">
-        <li onclick="selectCategory(event, 'Articles')"> Articles</li>
-        <li onclick="selectCategory(event, 'Thèses')"> Thèses</li>
-        <li onclick="selectCategory(event, 'Mémoires')"> Mémoires</li>
-        <li onclick="selectCategory(event, 'Rapports')"> Rapports</li>
-        <li onclick="selectCategory(event, 'Posters')"> Posters</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ══ PUBLICATIONS ══ -->
-<section class="publications">
-<h2 class="section-title">Dernières Publications</h2>
-  <div class="pub-list" id="pub-list">
-
-    <!-- Les publications sont chargées dynamiquement depuis data/publications.json -->
-    <!-- Fallback statique si le JSON n'est pas disponible -->
-
-    <div class="pub-item">
-      <div class="pub-header" onclick="togglePub(this)">
-        <div class="pub-dot"></div>
-        <span class="pub-title">Evaluating Acoustic Parameters for DeepFake Detection in Audio Signals</span>
-        <span class="pub-meta">Abeeze Burpte Dire, 30 Jan 2024</span>
-        <button class="pub-toggle">▼</button>
-      </div>
-      <div class="pub-body">
-        <span class="pub-abstract-label">Abstract</span>
-        <p class="pub-abstract-text">This study evaluates acoustic parameters for detecting deepfake audio signals, analyzing spectral and temporal features to distinguish authentic from synthetic speech. Results show high accuracy using MFCC and pitch variation metrics.</p>
-        <a class="btn-pdf" href="#">📄 PDF</a>
-      </div>
-    </div>
-
-    <div class="pub-item">
-      <div class="pub-header" onclick="togglePub(this)">
-        <div class="pub-dot"></div>
-        <span class="pub-title">Text-to-OWL: Automated Ontology Construction from Natural Language Text</span>
-        <span class="pub-meta">Zénabo Ouédraogo, 2023</span>
-        <button class="pub-toggle">▼</button>
-      </div>
-      <div class="pub-body">
-        <span class="pub-abstract-label">Abstract</span>
-        <p class="pub-abstract-text">Presents an automated pipeline converting unstructured text into OWL ontologies using NLP and transformer-based models. Evaluated on domain-specific corpora with promising precision and recall scores.</p>
-        <a class="btn-pdf" href="#">📄 PDF</a>
-      </div>
-    </div>
-
-    <div class="pub-item">
-      <div class="pub-header" onclick="togglePub(this)">
-        <div class="pub-dot"></div>
-        <span class="pub-title">Voice Interaction in Moore Language: A Speech Recognition Approach</span>
-        <span class="pub-meta">Rodrigue KABANGO, December, 2023</span>
-        <button class="pub-toggle">▼</button>
-      </div>
-      <div class="pub-body">
-        <span class="pub-abstract-label">Abstract</span>
-        <p class="pub-abstract-text">Proposes a speech recognition system adapted to the Moore language (spoken in Burkina Faso), addressing data scarcity with transfer learning and data augmentation techniques. Achieves competitive word error rates.</p>
-        <a class="btn-pdf" href="#">📄 PDF</a>
-      </div>
-    </div>
-
-    <div class="pub-item">
-      <div class="pub-header" onclick="togglePub(this)">
-        <div class="pub-dot"></div>
-        <span class="pub-title">Detecting Illicit Data Leaks on Android Applications</span>
-        <span class="pub-meta">Serge Lionel Nikiema, December, 2024</span>
-        <button class="pub-toggle">▼</button>
-      </div>
-      <div class="pub-body">
-        <span class="pub-abstract-label">Abstract</span>
-        <p class="pub-abstract-text">Introduces a static and dynamic analysis framework for detecting unauthorized data exfiltration in Android apps, identifying sensitive API misuse and network leaks across a large app corpus.</p>
-        <a class="btn-pdf" href="#">📄 PDF</a>
-      </div>
-    </div>
-
-    <div class="pub-item" id="featured-pub">
-      <div class="pub-header" onclick="togglePub(this)">
-        <div class="pub-dot" style="background:var(--red)"></div>
-        <span class="pub-title">AI-Based Approach for Early Diagnosis of Hemorrhagic Stroke</span>
-        <span class="pub-meta">Serge Lionel Nikiema, December, 2022</span>
-        <button class="pub-toggle" style="background:var(--red)">▼</button>
-      </div>
-      <div class="pub-body open">
-        <span class="pub-abstract-label" style="background:var(--red)">Abstract</span>
-        <p class="pub-abstract-text">A hemorrhagic stroke is a life-threatening medical condition that happens when a blood vessel in your brain ruptures and bleeds — it constitutes a burden on health services and the victim's family. The current definitive diagnosis of stroke is based on brain scanning and AI-assisted methods are explored to accelerate detection.</p>
-        <a class="btn-pdf" href="#">📄 PDF</a>
-      </div>
-    </div>
-
-  </div>
-  <div class="btn-voir-plus">
-    <a href="pages/publications.html">Voir Plus ▼</a>
-  </div>
-</section>
-
-<!-- ══ CHERCHEURS + AXES ══ -->
-<div style="background:var(--white); padding: 0 5% 48px;">
-  <div class="bottom-section" style="padding-top:48px;">
-
-    <div>
-<p class="sub-title">Nos Fellows</p>
-      <div class="chercheurs-grid">
-        <div class="chercheur-card">
-          <div class="chercheur-avatar">
-            <img src="assets/images/chercheurs/bissyande.png" alt="Dr BISSYANDE" />
-          </div>
-          <span class="chercheur-name">Dr BISSYANDE</span>
-        </div>
-        <div class="chercheur-card">
-          <div class="chercheur-avatar">
-            <img src="assets/images/chercheurs/sabane.png" alt="Dr SABANE" />
-          </div>
-          <span class="chercheur-name">Dr SABANE</span>
-        </div>
-        <div class="chercheur-card">
-          <div class="chercheur-avatar">
-            <img src="assets/images/chercheurs/tinto.png" alt="Mr TINTO" />
-          </div>
-          <span class="chercheur-name">Mr TINTO</span>
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-      <a class="btn-all-chercheurs" href="pages/fellows.html?role=directeur">Directeurs de Recherche</a>
-      <a class="btn-all-chercheurs" href="pages/fellows.html?role=senior">Chercheurs Seniors</a>
-      <a class="btn-all-chercheurs" href="pages/fellows.html?role=fellow">Fellows</a>
-    </div>
-    </div>
-
-    <div>
-<p class="sub-title">Axes de Recherche</p>
-      <div class="axes-list">
-        <div class="axe-item priority"><span class="axe-dot" style="background:#e53935"></span>LANGUE &amp; PATRIMOINE</div>
-        <div class="axe-item priority"><span class="axe-dot" style="background:#43a047"></span>SANTÉ &amp; BIEN-ÊTRE</div>
-        <div class="axe-item priority"><span class="axe-dot" style="background:#f0a500"></span>AGRICULTURE ET PASTORALISME</div>
-        <div class="axe-item"><span class="axe-dot" style="background:#1e88e5"></span>FINTECH &amp; SÉCURITÉ</div>
-        <div class="axe-item"><span class="axe-dot" style="background:#8e24aa"></span>CONFIDENTIALITÉ ET EXPLICABILITÉ</div>
-        <div class="axe-item"><span class="axe-dot" style="background:#00897b"></span>ÉNERGIE ET CHANGEMENT CLIMATIQUE</div>
-      </div>
-    </div>
 
   </div>
 </div>
 
 <!-- ══ FOOTER ══ -->
 <footer>
-  <div class="footer-social">
-    <a class="social-link" href="https://web.facebook.com/people/Citadel-uvbf/100072284842721/#" target="_blank" title="Facebook">𝕗</a>
-    <a class="social-link" href="https://x.com/citadel_uvbf" target="_blank" title="X / Twitter">𝕏</a>
-    <a class="social-link" href="https://bf.linkedin.com/company/citadel-bf" target="_blank" title="LinkedIn">in</a>
+  <div class="footer-top">
+    <div class="footer-brand">these.<span>citadel</span>.bf</div>
+    <div class="footer-social">
+      <a class="social-btn" href="https://web.facebook.com/people/Citadel-uvbf/100072284842721/#" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+      <a class="social-btn" href="https://x.com/citadel_uvbf" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+      <a class="social-btn" href="https://bf.linkedin.com/company/citadel-bf" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+    </div>
   </div>
   <div class="footer-bottom">
-<span>© [CITADEL], 2019 | UV-BF. Tous droits réservés.</span>
-<a href="#">Politique de Confidentialité</a>
+    <span>© 2019 CITADEL Research Center. Tous droits réservés.</span>
+    <a href="#">Politique de confidentialité</a>
   </div>
 </footer>
+
 <script src="assets/js/supabase-config.js"></script>
 <script>
-const SUPABASE_URL  = "https://kajnizlzzpdcmaahnmnf.supabase.co";
-const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtham5pemx6enBkY21hYWhubW5mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5OTkzMTAsImV4cCI6MjA5NjU3NTMxMH0.CSaSsaU7xul6FweioT00rvKczbyiacC27f2la7PqUeo";
-</script>
-<script src="assets/js/main.js"></script>
-<script>
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'fr',
-    includedLanguages: 'fr,en',
-    autoDisplay: false
-  }, 'google_translate_element');
+/* ── Compteur animé ── */
+function animateCounter(el, target) {
+  const duration = 1600;
+  const step = Math.ceil(target / (duration / 16));
+  let current = 0;
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = current;
+    if (current >= target) clearInterval(timer);
+  }, 16);
 }
 
-function toggleLang() {
-  var btn = document.getElementById('langBtn');
-  var select = document.querySelector('.goog-te-combo');
+/* ── Intersection observer pour les stats ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      animateCounter(el, parseInt(el.dataset.target) || 0);
+      observer.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
 
-  if (!select) return;
+/* ── Chargement dynamique ── */
+document.addEventListener('DOMContentLoaded', () => {
+  Promise.all([
+    fetch('data/publications.json').then(r => r.json()).catch(() => []),
+    fetch(`${SUPABASE_URL}/rest/v1/publications?select=*&status=eq.Publié`, {
+      headers: { "apikey": SUPABASE_ANON, "Authorization": `Bearer ${SUPABASE_ANON}` }
+    }).then(r => r.json()).catch(() => [])
+  ]).then(([jsonPubs, supaPubs]) => {
+    const pubs = [...jsonPubs, ...supaPubs];
 
-  if (btn.textContent === 'EN') {
-    select.value = 'en';
-    select.dispatchEvent(new Event('change'));
-    btn.textContent = 'FR';
-  } else {
-    select.value = 'fr';
-    select.dispatchEvent(new Event('change'));
-    btn.textContent = 'EN';
-  }
-}
-</script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-</script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<script>
-  // Rediriger vers soumettre.html après confirmation du compte Netlify
-  if (window.location.hash && window.location.hash.includes('confirmation_token')) {
-    window.location.href = '/pages/soumettre.html' + window.location.hash;
-  }
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
+    /* Stats */
+    const pubCount = pubs.length;
+    const authorNames = new Set();
+    pubs.forEach(p => {
+      if (Array.isArray(p.authors)) p.authors.forEach(a => authorNames.add(a.name));
+      else if (p.authors) p.authors.split(',').forEach(a => authorNames.add(a.trim()));
+    });
+
+    document.getElementById('statPubs').dataset.target = pubCount;
+    document.getElementById('statAuthors').dataset.target = authorNames.size;
+    document.querySelectorAll('.stat-num[data-target]').forEach(el => observer.observe(el));
+
+    /* Publications */
+    const combined = [...supaPubs, ...jsonPubs];
+    renderPublications(combined.slice(0, 6));  });
+
+  /* Bouton connexion */
   const token = localStorage.getItem("sb_access_token");
   const btn = document.getElementById("btnConnexion");
-  if (btn) {
-    if (token) {
-      btn.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size:1.6rem;color:white;"></i>`;
-      btn.style.background = "var(--green)";
-      btn.style.padding = "5px 12px";
-      btn.style.display = "flex";
-      btn.style.alignItems = "center";
-      btn.style.borderRadius = "4px";
-    }
-    btn.style.opacity = "1";
+  if (btn && token) {
+    btn.innerHTML = `<i class="fa-solid fa-circle-user"></i>`;
+    btn.style.padding = "6px 14px";
+    btn.style.fontSize = "1.1rem";
   }
+  if (btn) btn.style.opacity = "1";
 });
+
+/* ── Rendu publications ── */
+/* ══ REMPLACE LA FONCTION renderPublications() DANS index.html ══ */
+
+function renderPublications(pubs) {
+  const list = document.getElementById('pub-list');
+  if (!list || !pubs.length) return;
+
+  const themeColors = {
+    'LANGUE & PATRIMOINE':              { bg: '#EDE9FE', color: '#6D28D9' },
+    'SANTÉ & BIEN-ÊTRE':                { bg: '#D1FAE5', color: '#065F46' },
+    'AGRICULTURE ET PASTORALISME':      { bg: '#FEF3C7', color: '#92400E' },
+    'FINTECH & SÉCURITÉ':               { bg: '#DBEAFE', color: '#1E40AF' },
+    'CONFIDENTIALITÉ ET EXPLICABILITÉ': { bg: '#FCE7F3', color: '#9D174D' },
+    'ÉNERGIE ET CHANGEMENT CLIMATIQUE': { bg: '#D1FAE5', color: '#065F46' },
+  };
+  const typeColors = {
+    'Article':    { bg: '#FEE2E2', color: '#991B1B' },
+    'Thèse':      { bg: '#D1FAE5', color: '#065F46' },
+    'Conférence': { bg: '#DBEAFE', color: '#1E40AF' },
+    'Rapport':    { bg: '#FEF3C7', color: '#92400E' },
+    'Poster':     { bg: '#F3E8FF', color: '#6B21A8' },
+    'Mémoire':    { bg: '#CCFBF1', color: '#0F766E' },
+  };
+
+  list.innerHTML = pubs.map((pub, i) => {
+    const authors = Array.isArray(pub.authors) ? pub.authors.map(a => a.name).join(', ') : (pub.authors || '');
+    const themeStyle = themeColors[pub.theme] || typeColors[pub.type] || { bg: '#F3F4F6', color: '#374151' };
+    const pubId = `CIT-${pub.year || 2024}-${String(i + 1).padStart(3, '0')}`;
+
+    return `
+      <div class="pub-card-new">
+        <div class="pub-card-top" onclick="togglePubCard(this)">
+          <div class="pub-card-badges">
+            <span class="pub-theme-badge" style="background:${(typeColors[pub.type]||{bg:'#F3F4F6'}).bg};color:${(typeColors[pub.type]||{color:'#374151'}).color}">${pub.type}</span>
+          </div>
+          <i class="fa-solid fa-chevron-down pub-chevron" style="color:var(--green)"></i>
+        </div>
+        <div class="pub-card-middle" onclick="togglePubCard(this.previousElementSibling)">
+          <div class="pub-card-title-new">${pub.title}</div>
+          <div class="pub-card-meta-new">
+            <span><i class="fa-regular fa-user"></i> ${authors.split(',')[0].trim()}${authors.split(',').length > 1 ? ' et al.' : ''}</span>
+            <span><i class="fa-regular fa-calendar"></i> ${pub.date || pub.year}</span>
+            ${pub.theme ? `<span><i class="fa-solid fa-microscope"></i> ${pub.theme}</span>` : ''}
+          </div>
+        </div>
+        <div class="pub-card-body-new">
+          <p class="pub-abstract-text">${pub.abstract}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+            ${pub.pdf_url ? `<a class="btn-pdf" href="${pub.pdf_url}" target="_blank"><i class="fa-regular fa-file-pdf"></i> PDF</a>` : ''}
+            <a class="btn-pdf" href="pages/detail.html?id=${pub.id}" style="background:var(--green-pale);color:var(--green);border-color:rgba(0,102,51,.2)"><i class="fa-solid fa-arrow-up-right-from-square"></i> Détails</a>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function togglePubCard(topEl) {
+  const card = topEl.closest('.pub-card-new');
+  const body = card.querySelector('.pub-card-body-new');
+  const chevron = card.querySelector('.pub-chevron');
+  body.classList.toggle('open');
+  chevron.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+
+/* ── Navigation ── */
+function handleSearch() {
+  const q = document.getElementById('searchInput').value.trim();
+  if (q) window.location.href = `pages/publications.html?q=${encodeURIComponent(q)}`;
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const inp = document.getElementById('searchInput');
+  if (inp) inp.addEventListener('keydown', e => { if (e.key === 'Enter') handleSearch(); });
+});
+function goTo(type) {
+  window.location.href = `pages/publications.html?type=${encodeURIComponent(type)}`;
+}
+function toggleMenu() {
+  document.getElementById('mainNav').classList.toggle('open');
+}
+
+/* ── Google Translate ── */
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({ pageLanguage: 'fr', includedLanguages: 'fr,en', autoDisplay: false }, 'google_translate_element');
+}
+function toggleLang() {
+  const btn = document.getElementById('langBtn');
+  const select = document.querySelector('.goog-te-combo');
+  if (!select) return;
+  if (btn.textContent === 'EN') { select.value = 'en'; select.dispatchEvent(new Event('change')); btn.textContent = 'FR'; }
+  else { select.value = 'fr'; select.dispatchEvent(new Event('change')); btn.textContent = 'EN'; }
+}
 </script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>
