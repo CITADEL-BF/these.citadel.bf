@@ -138,6 +138,9 @@
           <span id="userSince" style="font-size:.72rem;color:var(--gray-light);"></span>
         </div>
         <hr style="border:none;border-top:1px solid var(--border);margin:0;">
+        <button class="profile-menu-item" onclick="toggleProfileMenu(); showView('profil')">
+        <i class="fa-solid fa-pen"></i> Modifier mon profil
+        </button>
         <button class="profile-menu-item danger" onclick="handleLogout()">
           <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
         </button>
@@ -203,7 +206,7 @@
   <div class="dashboard" id="dashboard">
     <div class="dashboard-header">
       <div>
-        <h1>Mon Espace</h1>
+        <h1>Mon Profil</h1>
         <p>Gérez vos publications et soumettez de nouveaux documents</p>
       </div>
       <button class="btn-new-pub" onclick="showView('submit')">
@@ -213,7 +216,6 @@
     <div class="dash-tabs">
       <div class="dash-tab active" id="tab-pubs" onclick="showView('pubs')"><i class="fa-solid fa-book"></i> Mes publications</div>
       <div class="dash-tab" id="tab-submit" onclick="showView('submit')"><i class="fa-solid fa-upload"></i> Soumettre</div>
-      <div class="dash-tab" id="tab-profil" onclick="showView('profil')"><i class="fa-solid fa-user"></i> Mon Profil</div>
     </div>
 
     <!-- VUE : MES PUBLICATIONS -->
@@ -510,8 +512,8 @@ async function supabaseAuthFetch(endpoint, options = {}) {
   return { data: await res.json() };
 }
 
-function showDashboard() {
-  document.getElementById("authGate").style.display = "none";
+async function showDashboard() {
+    document.getElementById("authGate").style.display = "none";
   if (isAdmin()) {
     document.getElementById("dashboard").style.display = "none";
     showAdminDashboard();
@@ -526,12 +528,12 @@ function showDashboard() {
     document.getElementById("profileDropdown").style.display = "block";
     document.getElementById("btnConnexion").style.display = "none";
 
-    if (isNewSignup) {
-    isNewSignup = false;
-    showOnboardingProfile();
-  } else {
-    loadMyPublications();
-  }
+    const profileOk = await isProfileComplete();
+if (!profileOk) {
+  showOnboardingProfile();
+} else {
+  loadMyPublications();
+}
   }
 }
   function showOnboardingProfile() {
@@ -593,11 +595,18 @@ async function handleSaveProfil() {
 
     // Si c'était l'onboarding, retour au dashboard normal
     if (document.querySelector(".dashboard-header").style.display === "none") {
-      setTimeout(() => {
-        document.querySelector(".dashboard-header").style.display = "flex";
-        document.querySelector(".dash-tabs").style.display = "flex";
-        showView('pubs');
-      }, 1500);
+  setTimeout(() => {
+    document.querySelector(".dashboard-header").style.display = "flex";
+    document.querySelector(".dash-tabs").style.display = "flex";
+    showView('pubs');
+    loadMyPublications();
+  }, 1500);
+} else {
+  // Cas 2 : modification volontaire via le menu -> retour à "Mes publications"
+  setTimeout(() => {
+    showView('pubs');
+    loadMyPublications();
+  }, 1500);
 }
   } catch (err) { alert("Erreur : " + err.message); }
   finally { btn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Enregistrer mon profil`; btn.disabled = false; }
@@ -615,6 +624,7 @@ async function handleLogin() {
     const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, { method: "POST", headers: { "apikey": SUPABASE_ANON, "Content-Type": "application/json" }, body: JSON.stringify({ email, password }) });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error_description || data.msg || "Erreur connexion");
+    console.log("Réponse signup complète:", data);
     localStorage.setItem("sb_access_token", data.access_token);
     localStorage.setItem("sb_refresh_token", data.refresh_token);
     currentUser = data.user;
@@ -752,22 +762,13 @@ function toggleMenu() {
   btn.classList.toggle('active');
 }
 
-async function showView(view) {
-  if (view === "submit") {
-    const complete = await isProfileComplete();
-    if (!complete) {
-      alert("Veuillez compléter votre profil (biographie et thème de recherche) avant de soumettre une publication.");
-      view = "profil";
-    }
-  }
-
+function showView(view) {
   document.getElementById("view-pubs").style.display   = view === "pubs"   ? "block" : "none";
   document.getElementById("view-submit").style.display = view === "submit" ? "block" : "none";
   document.getElementById("view-profil").style.display = view === "profil" ? "block" : "none";
   document.getElementById("toastSuccess").classList.remove("visible");
   document.getElementById("tab-pubs").classList.toggle("active",   view === "pubs");
   document.getElementById("tab-submit").classList.toggle("active", view === "submit");
-  document.getElementById("tab-profil").classList.toggle("active", view === "profil");
   if (view === "submit") resetForm();
   if (view === "profil") loadProfil();
 }
@@ -806,7 +807,6 @@ function backToDashboard() {
 }
 
 async function loadMyPublications() {
-  await checkProfileBadge();
   const list = document.getElementById("myPubsList");
   list.innerHTML = `<div class="empty-state"><div class="empty-icon">⏳</div><h3>Chargement...</h3></div>`;
   try {
