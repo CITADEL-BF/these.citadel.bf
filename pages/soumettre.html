@@ -483,6 +483,7 @@ let tags = [];
 let currentStep = 1;
 let citations = [];
 let editingPub = null;
+let isNewSignup = false;
 let allPubs = [];
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -524,9 +525,23 @@ function showDashboard() {
     document.getElementById("userSince").textContent = "Membre depuis : " + date.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
     document.getElementById("profileDropdown").style.display = "block";
     document.getElementById("btnConnexion").style.display = "none";
+
+    if (isNewSignup) {
+    isNewSignup = false;
+    showOnboardingProfile();
+  } else {
     loadMyPublications();
   }
+  }
 }
+  function showOnboardingProfile() {
+    document.querySelector(".dashboard-header").style.display = "none";
+    document.querySelector(".dash-tabs").style.display = "none";
+    document.getElementById("view-pubs").style.display = "none";
+    document.getElementById("view-submit").style.display = "none";
+    document.getElementById("view-profil").style.display = "block";
+    loadProfil();
+  }
 
 async function handleLogout() {
   const token = localStorage.getItem("sb_access_token");
@@ -575,6 +590,15 @@ async function handleSaveProfil() {
     }
     document.getElementById("profileSuccess").classList.add("visible");
     setTimeout(() => document.getElementById("profileSuccess").classList.remove("visible"), 5000);
+
+    // Si c'était l'onboarding, retour au dashboard normal
+    if (document.querySelector(".dashboard-header").style.display === "none") {
+      setTimeout(() => {
+        document.querySelector(".dashboard-header").style.display = "flex";
+        document.querySelector(".dash-tabs").style.display = "flex";
+        showView('pubs');
+      }, 1500);
+}
   } catch (err) { alert("Erreur : " + err.message); }
   finally { btn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Enregistrer mon profil`; btn.disabled = false; }
 }
@@ -613,6 +637,21 @@ async function handleSignup() {
     localStorage.setItem("sb_refresh_token", data.refresh_token);
     currentUser = data.user;
     errEl.classList.remove("visible");
+
+    // Créer automatiquement une fiche fellow minimale (profil incomplet)
+    await supabaseFetch("fellows", {
+      method: "POST",
+      prefer: "return=minimal",
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        title: "Fellow",
+        bio: "",
+        themes: ""
+      })
+    });
+
+    isNewSignup = true;
     showDashboard();
   } catch (err) { errEl.textContent = err.message; errEl.classList.add("visible"); }
 }
@@ -713,7 +752,15 @@ function toggleMenu() {
   btn.classList.toggle('active');
 }
 
-function showView(view) {
+async function showView(view) {
+  if (view === "submit") {
+    const complete = await isProfileComplete();
+    if (!complete) {
+      alert("Veuillez compléter votre profil (biographie et thème de recherche) avant de soumettre une publication.");
+      view = "profil";
+    }
+  }
+
   document.getElementById("view-pubs").style.display   = view === "pubs"   ? "block" : "none";
   document.getElementById("view-submit").style.display = view === "submit" ? "block" : "none";
   document.getElementById("view-profil").style.display = view === "profil" ? "block" : "none";
@@ -725,6 +772,33 @@ function showView(view) {
   if (view === "profil") loadProfil();
 }
 
+async function isProfileComplete() {
+  try {
+    const fellow = await supabaseFetch(`fellows?email=eq.${encodeURIComponent(currentUser.email)}`);
+    if (fellow.length === 0) return false;
+    return !!(fellow[0].bio && fellow[0].bio.trim() && fellow[0].themes && fellow[0].themes.trim());
+  } catch {
+    return false;
+  }
+}
+
+async function checkProfileBadge() {
+  const complete = await isProfileComplete();
+  const header = document.querySelector(".dashboard-header div:first-child");
+  let badge = document.getElementById("profileIncompleteBadge");
+  if (!complete) {
+    if (!badge) {
+      badge = document.createElement("div");
+      badge.id = "profileIncompleteBadge";
+      badge.style = "background:#fff8e1;color:var(--gold);border:1px solid rgba(200,150,12,.3);padding:8px 14px;border-radius:8px;font-size:.82rem;font-weight:600;margin-top:8px;display:flex;align-items:center;gap:6px;cursor:pointer;";
+      badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Profil incomplet, cliquez sur MON PROFIL pour le compléter`;
+      badge.onclick = () => showView('profil');
+      header.appendChild(badge);
+    }
+  } else if (badge) {
+    badge.remove();
+  }
+}
 function backToDashboard() {
   document.getElementById("toastSuccess").classList.remove("visible");
   if (isAdmin()) { document.getElementById("adminDashboard").style.display = "block"; }
@@ -732,6 +806,7 @@ function backToDashboard() {
 }
 
 async function loadMyPublications() {
+  await checkProfileBadge();
   const list = document.getElementById("myPubsList");
   list.innerHTML = `<div class="empty-state"><div class="empty-icon">⏳</div><h3>Chargement...</h3></div>`;
   try {
