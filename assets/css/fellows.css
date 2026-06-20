@@ -27,7 +27,7 @@
 }
 .fellow-card-photo {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 1 / 1;          /* carré, ratio constant peu importe la largeur de la card */
   object-fit: cover;
   display: flex;
   align-items: center;
@@ -39,6 +39,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;   /* recentre vers le haut → priorise le visage */
 }
 .fellow-card-photo .placeholder-avatar {
   font-size: 64px;

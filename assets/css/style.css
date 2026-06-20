@@ -713,6 +713,7 @@ font[style] { background: none !important; box-shadow: none !important; }
   gap: 5px;
   padding: 0;
   z-index: 101;
+  margin-left: auto;
 }
 .menu-toggle span {
   display: block;
@@ -781,7 +782,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
     position: relative;
     background: var(--white);
   }
-  .menu-toggle { display: flex; }
+  .menu-toggle { display: flex; margin-left: auto; }
 
   .nav-dropdown-menu {
     display: block;
