@@ -23,23 +23,27 @@
   <button class="menu-toggle" aria-label="Menu" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
-  <nav id="mainNav">
-    <a href="../index.html">Accueil</a>
-    <a href="publications.html">Publications</a>
-    <a href="publications.html?type=Thèse">Thèses</a>
-    <div class="nav-dropdown">
+  <nav>
+  <ul class="navbar-nav" id="mainNav">
+    <li><a href="../index.html">Accueil</a></li>
+    <li><a href="publications.html">Publications</a></li>
+    <li><a href="publications.html?type=Thèse">Thèses</a></li>
+    <li class="nav-dropdown">
       <a href="#">Fellows ▾</a>
       <div class="nav-dropdown-menu">
         <a href="fellows.html?role=senior"><i class="fa-solid fa-user-tie"></i> Chercheurs Seniors</a>
         <a href="fellows.html?role=directeur"><i class="fa-solid fa-crown"></i> Directeurs de Recherche</a>
         <a href="fellows.html?role=fellow"><i class="fa-solid fa-graduation-cap"></i> Fellows</a>
       </div>
-    </div>
-    <a href="contact.html" class="active">Contact</a>
-    <div id="google_translate_element" style="display:none"></div>
-    <button id="langBtn" class="btn-lang notranslate" onclick="toggleLang()">EN</button>
-    <a href="../pages/soumettre.html" class="btn-connect" id="btnConnexion">Se connecter</a>
-  </nav>
+    </li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+<div class="navbar-actions">
+  <div id="google_translate_element" style="display:none"></div>
+  <button id="langBtn" class="btn-lang notranslate" onclick="toggleLang()">EN</button>
+  <a href="../pages/soumettre.html" class="btn-connect" id="btnConnexion">Se connecter</a>
+</div>
 </header>
 
 <!-- ══ HERO ══ -->
@@ -163,10 +167,12 @@ function sendMessage() {
 }
 
 function toggleMenu() {
-  const nav = document.getElementById('mainNav');
+  const nav = document.querySelector('.navbar-nav');
+  const actions = document.querySelector('.navbar-actions');
   const btn = document.querySelector('.menu-toggle');
   if (!nav || !btn) return;
   nav.classList.toggle('open');
+  if (actions) actions.classList.toggle('open');
   btn.classList.toggle('active');
 }
 

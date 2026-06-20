@@ -153,13 +153,14 @@
 
     /* Hamburger */
     .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-      flex-direction: column;
-      gap: 5px;
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    flex-direction: column;
+    gap: 5px;
+    margin-left: auto;
     }
     .menu-toggle span {
       display: block;
@@ -169,6 +170,9 @@
       border-radius: 2px;
       transition: transform .3s, opacity .3s;
     }
+    .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* ── HERO ── */
     .hero {
@@ -827,28 +831,49 @@
       .explore-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 640px) {
-      .navbar-nav, .navbar-actions { display: none; }
-      .navbar-nav.open {
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 64px;
-        left: 0; right: 0;
-        background: var(--white);
-        border-bottom: 1px solid var(--border);
-        padding: 16px 5%;
-        gap: 4px;
-        box-shadow: var(--shadow);
-        z-index: 199;
-      }
-      .menu-toggle { display: flex; }
-      .stats-inner { grid-template-columns: 1fr; }
-      .stat-item::after { display: none; }
-      .stat-item { padding: 16px; }
-      .explore-grid { grid-template-columns: 1fr; }
-      .fellows-row { gap: 8px; }
-      .hero { padding: 64px 5% 56px; }
-    }
+  .navbar-nav, .navbar-actions { display: none; }
+  .navbar-nav.open, .navbar-actions.open {
+    display: flex;
+    position: fixed;
+    top: 64px;
+    left: 0; right: 0;
+    bottom: 0;
+    background: var(--white);
+    z-index: 199;
+    overflow-y: auto;
+  }
+  .navbar-nav.open {
+    flex-direction: column;
+    padding: 8px 5% 0;
+    gap: 0;
+    height: auto;
+  }
+  .navbar-nav.open li {
+    border-bottom: 1px solid var(--border);
+  }
+  .navbar-nav.open li a {
+    display: block;
+    padding: 16px 0;
+    font-size: .92rem;
+  }
+  .navbar-actions.open {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 12px 5%;
+    gap: 10px;
+    top: auto;
+    bottom: auto;
+    position: relative;
+    background: var(--white);
+  }
+  .menu-toggle { display: flex; }
+  .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  .stat-item { padding: 16px 8px; }
+  .explore-grid { grid-template-columns: 1fr; }
+  .fellows-row { gap: 8px; }
+  .hero { padding: 64px 5% 56px; }
+}
   </style>
 </head>
 <body>
@@ -862,7 +887,7 @@
   </div>
 
   <button class="menu-toggle" aria-label="Menu" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
+  <span></span><span></span><span></span>
   </button>
 
   <nav>
@@ -1221,7 +1246,12 @@ function goTo(type) {
   window.location.href = `pages/publications.html?type=${encodeURIComponent(type)}`;
 }
 function toggleMenu() {
-  document.getElementById('mainNav').classList.toggle('open');
+  const nav = document.getElementById('mainNav');
+  const actions = document.querySelector('.navbar-actions');
+  const btn = document.querySelector('.menu-toggle');
+  nav.classList.toggle('open');
+  actions.classList.toggle('open');
+  btn.classList.toggle('active');
 }
 
 /* ── Google Translate ── */

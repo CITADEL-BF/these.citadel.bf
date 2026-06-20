@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Simulateur Mobile — these.citadel.bf</title>
+<style>
+  body {
+    margin: 0;
+    background: #2d2d2d;
+    font-family: -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  .controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .controls button {
+    background: #444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .controls button.active { background: #006633; }
+  .controls button:hover { background: #555; }
+  .controls button.active:hover { background: #008844; }
+
+  .phone-frame {
+    background: #111;
+    border-radius: 36px;
+    padding: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    transition: width .3s ease;
+  }
+  .phone-notch {
+    width: 120px;
+    height: 18px;
+    background: #111;
+    border-radius: 0 0 14px 14px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+  }
+  .phone-screen {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    height: 720px;
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .size-label {
+    color: #aaa;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <button onclick="setWidth(375, this)" class="active">iPhone SE (375px)</button>
+  <button onclick="setWidth(390, this)">iPhone 12/13 (390px)</button>
+  <button onclick="setWidth(414, this)">iPhone Plus (414px)</button>
+  <button onclick="setWidth(360, this)">Android (360px)</button>
+  <button onclick="setWidth(768, this)">Tablette (768px)</button>
+  <button onclick="setWidth(320, this)">Très petit (320px)</button>
+</div>
+
+<div class="phone-frame" id="phoneFrame" style="width: 375px;">
+  <div class="phone-notch"></div>
+  <div class="phone-screen">
+    <iframe id="previewFrame" src="index.html"></iframe>
+  </div>
+</div>
+
+<div class="size-label" id="sizeLabel">375px de largeur</div>
+
+<script>
+function setWidth(w, btn) {
+  document.getElementById('phoneFrame').style.width = w + 'px';
+  document.getElementById('sizeLabel').textContent = w + 'px de largeur';
+  document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+
+</body>
+</html>

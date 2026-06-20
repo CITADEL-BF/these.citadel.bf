@@ -126,9 +126,11 @@ function toggleLang() {
 
 function toggleMenu() {
   const nav = document.querySelector('.navbar-nav');
+  const actions = document.querySelector('.navbar-actions');
   const btn = document.querySelector('.menu-toggle');
   if (!nav || !btn) return;
   nav.classList.toggle('open');
+  if (actions) actions.classList.toggle('open');
   btn.classList.toggle('active');
 }
 
