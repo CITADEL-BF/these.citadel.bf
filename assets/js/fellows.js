@@ -1,5 +1,6 @@
 let fellowsData = [];
 let pubsData = [];
+let currentRoleFilter = null;
 
 function countPubs(fellow) {
   return pubsData.filter(p => {
@@ -42,6 +43,7 @@ function showGrid() {
 
   const params = new URLSearchParams(window.location.search);
   const roleParam = params.get('role');
+  currentRoleFilter = roleParam;
 
   let displayedFellows = fellowsData;
   let pageTitle = 'Nos Fellows';
@@ -94,7 +96,8 @@ function showGrid() {
 }
 
 function navigateToFellow(id) {
-  window.history.pushState({}, '', `fellows.html?id=${id}`);
+  const url = currentRoleFilter ? `fellows.html?id=${id}&role=${currentRoleFilter}` : `fellows.html?id=${id}`;
+  window.history.pushState({}, '', url);
   showProfile(id);
 }
 
@@ -143,7 +146,7 @@ function showProfile(id) {
 
   document.getElementById('profileContent').innerHTML = `
     <a class="profile-back" onclick="backToGrid()">
-      <i class="fa-solid fa-arrow-left"></i> Retour aux Fellows
+      <i class="fa-solid fa-arrow-left"></i> Retour
     </a>
     <div class="profile-card">
       <div class="profile-header">
@@ -155,6 +158,15 @@ function showProfile(id) {
         </div>
       </div>
       <div class="profile-body">
+      <div class="profile-section">
+        <h2>Contribution chez CITADEL</h2>
+        <p class="profile-bio">${fellow.contribution || ""}</p>
+      </div>
+      <div class="profile-section">
+        <h2>Fonction actuelle</h2>
+        <p class="profile-bio">${fellow.fonction_actuelle || ""}</p>
+      </div>
+      
         <div class="profile-section">
           <h2>Biographie</h2>
           <p class="profile-bio">${fellow.bio || ""}</p>
@@ -177,7 +189,8 @@ function showProfile(id) {
 }
 
 function backToGrid() {
-  window.history.pushState({}, '', 'fellows.html');
+  const url = currentRoleFilter ? `fellows.html?role=${currentRoleFilter}` : 'fellows.html';
+  window.history.pushState({}, '', url);
   showGrid();
   window.scrollTo(0, 0);
 }

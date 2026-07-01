@@ -247,15 +247,14 @@
           <input type="text" id="titre" class="form-control" placeholder="Titre de la thèse ou publication..." />
         </div>
         <div class="form-group">
-          <label for="auteurs">Auteur(s) <span class="required">*</span></label>
-          <input type="text" id="auteurs" class="form-control" placeholder="Ex : Nom Prénom, Nom Prénom" />
-        </div>
-        <div class="form-group">
-          <label>Auteurs cités <span style="font-weight:400;color:var(--gray);text-transform:none;letter-spacing:0">(Entrée pour ajouter)</span></label>
-          <div class="tags-input-wrapper" id="citationsWrapper" onclick="document.getElementById('citationInput').focus()">
-            <input type="text" id="citationInput" class="tags-input" placeholder="Ex : Nom Prénom..." />
+          <label>Auteur(s) <span class="required">*</span></label>
+          <div style="display:flex;gap:8px;margin-bottom:10px;">
+            <input type="text" id="coauthorName" class="form-control" placeholder="Nom Prénom" style="flex:1.2;" />
+            <input type="text" id="coauthorAffil" class="form-control" placeholder="Affiliation (optionnel)" style="flex:1.5;" />
+            <button type="button" class="btn-next" style="white-space:nowrap;padding:0 16px;" onclick="addCoauthor()">+ Ajouter</button>
           </div>
-          <input type="hidden" id="citations_hidden" />
+          <div class="tags-input-wrapper" id="authorsWrapper" style="min-height:46px;flex-wrap:wrap;"></div>
+          <input type="hidden" id="auteurs" />
         </div>
         <div class="form-row">
           <div class="form-group">
@@ -367,6 +366,14 @@
         <div class="form-group">
           <label for="profil-bio">Biographie <span class="required">*</span></label>
           <textarea id="profil-bio" class="form-control" rows="5" placeholder="Décrivez votre parcours et vos activités de recherche..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="profil-contribution">À quoi avez-vous contribué ? <span class="required">*</span></label>
+          <textarea id="profil-contribution" class="form-control" rows="4" placeholder="Décrivez ce sur quoi vous avez travaillé chez CITADEL..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="profil-fonction">Fonction actuelle <span class="required">*</span></label>
+          <input type="text" id="profil-fonction" class="form-control" placeholder="Ex : Chercheur en IA appliquée à la santé" />
         </div>
         <div class="form-group">
           <label>Thèmes de recherche <span class="required">*</span></label>
@@ -487,14 +494,12 @@ let pdfFile = null;
 let pdfFilename = null;
 let tags = [];
 let currentStep = 1;
-let citations = [];
 let editingPub = null;
 let isNewSignup = false;
 let allPubs = [];
 
 window.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("tagInput").addEventListener("keydown", handleTagInput);
-  document.getElementById("citationInput").addEventListener("keydown", handleCitationInput);
   document.getElementById("confirmOkBtn").addEventListener("click", function() {
     const cb = confirmCallback;
     confirmCallback = null;
@@ -574,6 +579,10 @@ async function handleSaveProfil() {
   if (themes.length === 0) { alert("Sélectionnez au moins un thème."); return; }
   const bio = document.getElementById("profil-bio").value.trim();
   if (!bio) { alert("La biographie est obligatoire."); return; }
+  const contribution = document.getElementById("profil-contribution").value.trim();
+  if (!contribution) { alert("Le champ \"À quoi avez-vous contribué ?\" est obligatoire."); return; }
+  const fonction = document.getElementById("profil-fonction").value.trim();
+  if (!fonction) { alert("Le champ \"Fonction actuelle\" est obligatoire."); return; }
   const btn = document.getElementById("btnSaveProfil");
   btn.innerHTML = `<span class="spinner"></span> Enregistrement...`;
   btn.disabled = true;
@@ -587,8 +596,7 @@ async function handleSaveProfil() {
       if (!uploadRes.ok) throw new Error("Erreur upload photo");
       photoUrl = `${SUPABASE_URL}/storage/v1/object/public/photos/${fileName}`;
     }
-    const fellowData = { name: currentUser.user_metadata?.full_name || currentUser.email, email: currentUser.email, title: document.getElementById("profil-role").options[document.getElementById("profil-role").selectedIndex].text, bio, themes: themes.join(", "), ...(photoUrl && { photo: photoUrl }) };
-    const existing = await supabaseFetch(`fellows?email=eq.${encodeURIComponent(currentUser.email)}`);
+    const fellowData = { name: currentUser.user_metadata?.full_name || currentUser.email, email: currentUser.email, title: document.getElementById("profil-role").options[document.getElementById("profil-role").selectedIndex].text, bio, themes: themes.join(", "), contribution, fonction_actuelle: fonction, ...(photoUrl && { photo: photoUrl }) };    const existing = await supabaseFetch(`fellows?email=eq.${encodeURIComponent(currentUser.email)}`);
     if (existing.length > 0) {
       await supabaseFetch(`fellows?email=eq.${encodeURIComponent(currentUser.email)}`, { method: "PATCH", prefer: "return=minimal", body: JSON.stringify(fellowData) });
     } else {
@@ -783,7 +791,12 @@ async function isProfileComplete() {
   try {
     const fellow = await supabaseFetch(`fellows?email=eq.${encodeURIComponent(currentUser.email)}`);
     if (fellow.length === 0) return false;
-    return !!(fellow[0].bio && fellow[0].bio.trim() && fellow[0].themes && fellow[0].themes.trim());
+    return !!(
+      fellow[0].bio && fellow[0].bio.trim() &&
+      fellow[0].themes && fellow[0].themes.trim() &&
+      fellow[0].contribution && fellow[0].contribution.trim() &&
+      fellow[0].fonction_actuelle && fellow[0].fonction_actuelle.trim()
+);
   } catch {
     return false;
   }
@@ -903,8 +916,7 @@ function updateProgress() {
 function resetForm() {
   currentStep = 1;
   ["titre","auteurs","annee","universite","doi","resume"].forEach(id => { const el = document.getElementById(id); if (el) { el.value = ""; el.classList.remove("error"); } });
-  tags = []; citations = [];
-  document.getElementById("citationsWrapper").querySelectorAll(".tag-chip").forEach(c => c.remove());
+  tags = [];
   pdfFilename = null; pdfFile = null;
   document.getElementById("tagsWrapper").querySelectorAll(".tag-chip").forEach(c => c.remove());
   document.getElementById("pdfFileName").textContent = "";
@@ -935,6 +947,41 @@ function validateStep(step) {
   }
   return true;
 }
+let authorsList = [];
+
+function addCoauthor() {
+  const nameEl = document.getElementById("coauthorName");
+  const affilEl = document.getElementById("coauthorAffil");
+  const name = nameEl.value.trim();
+  const affil = affilEl.value.trim();
+  if (!name) { nameEl.focus(); return; }
+  authorsList.push({ name, affil });
+  nameEl.value = "";
+  affilEl.value = "";
+  renderAuthors();
+  nameEl.focus();
+}
+
+function removeAuthor(i) {
+  authorsList.splice(i, 1);
+  renderAuthors();
+}
+
+function renderAuthors() {
+  const wrapper = document.getElementById("authorsWrapper");
+  wrapper.innerHTML = "";
+  authorsList.forEach((a, i) => {
+  const label = a.affil
+  ? `<strong>${a.name}</strong> <span style="font-weight:400;">(${a.affil})</span>`
+  : `<strong>${a.name}</strong>`;    const chip = document.createElement("div");
+    chip.className = "tag-chip";
+    chip.innerHTML = `${label}<button onclick="removeAuthor(${i})" type="button">×</button>`;
+    wrapper.appendChild(chip);
+  });
+  document.getElementById("auteurs").value = authorsList
+    .map(a => a.affil ? `${a.name} (${a.affil})` : a.name)
+    .join(", ");
+}
 
 function handleTagInput(e) {
   if (e.key === "Enter" || e.key === ",") { e.preventDefault(); const val = e.target.value.trim().replace(/,$/, ""); if (val && !tags.includes(val)) { tags.push(val); renderTags(); } e.target.value = ""; }
@@ -945,17 +992,6 @@ function renderTags() {
   tags.forEach((t, i) => { const chip = document.createElement("div"); chip.className = "tag-chip"; chip.innerHTML = `${t}<button onclick="removeTag(${i})" type="button">×</button>`; wrapper.insertBefore(chip, input); });
 }
 function removeTag(i) { tags.splice(i, 1); renderTags(); }
-
-function handleCitationInput(e) {
-  if (e.key === "Enter" || e.key === ",") { e.preventDefault(); const val = e.target.value.trim().replace(/,$/, ""); if (val && !citations.includes(val)) { citations.push(val); renderCitations(); } e.target.value = ""; }
-}
-function renderCitations() {
-  const wrapper = document.getElementById("citationsWrapper"); const input = document.getElementById("citationInput");
-  wrapper.querySelectorAll(".tag-chip").forEach(c => c.remove());
-  citations.forEach((t, i) => { const chip = document.createElement("div"); chip.className = "tag-chip"; chip.innerHTML = `${t}<button onclick="removeCitation(${i})" type="button">×</button>`; wrapper.insertBefore(chip, input); });
-  document.getElementById("citations_hidden").value = citations.join(", ");
-}
-function removeCitation(i) { citations.splice(i, 1); renderCitations(); }
 
 function handleFileSelect(input) {
   const file = input.files[0]; if (!file) return;
@@ -976,8 +1012,8 @@ async function handleSubmit() {
     const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/papers/${fileName}`, { method: "POST", headers: { "apikey": SUPABASE_ANON, "Authorization": `Bearer ${SUPABASE_ANON}`, "Content-Type": "application/pdf" }, body: pdfFile });
     if (!uploadRes.ok) throw new Error("Erreur upload PDF: " + await uploadRes.text());
     const pdfPublicUrl = `${SUPABASE_URL}/storage/v1/object/public/papers/${fileName}`;
-    await supabaseFetch("publications", { method: "POST", prefer: "return=minimal", body: JSON.stringify({ title: document.getElementById("titre").value.trim(), authors: document.getElementById("auteurs").value.trim(), abstract: document.getElementById("resume").value.trim(), year: parseInt(document.getElementById("annee").value.trim()), venue: document.getElementById("universite").value.trim(), theme: document.getElementById("domaine").value, type: document.getElementById("type_doc").value, keywords: tags.join(", "), doi: document.getElementById("doi").value.trim(), submitted_by: currentUser.email, pdf_url: pdfPublicUrl, status: "En attente", citations: citations.join(", ") }) });
-    document.getElementById("dashboard").style.display = "";
+    await supabaseFetch("publications", { method: "POST", prefer: "return=minimal", body: JSON.stringify({ title: document.getElementById("titre").value.trim(), authors: document.getElementById("auteurs").value.trim(), abstract: document.getElementById("resume").value.trim(), year: parseInt(document.getElementById("annee").value.trim()), venue: document.getElementById("universite").value.trim(), theme: document.getElementById("domaine").value, type: document.getElementById("type_doc").value, keywords: tags.join(", "), doi: document.getElementById("doi").value.trim(), submitted_by: currentUser.email, pdf_url: pdfPublicUrl, status: "En attente", }) });
+    document.getElementById("dashboard").style.display = "none";
     document.getElementById("toastSuccess").classList.add("visible");
   } catch (err) { alert("Erreur : " + err.message); btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Soumettre`; btn.disabled = false; }
 }
