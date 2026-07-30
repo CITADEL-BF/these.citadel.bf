@@ -159,7 +159,7 @@
   <!-- ─ ÉCRAN LOGIN ─ -->
   <div class="auth-gate" id="authGate">
     <div class="auth-gate-header">
-      <div class="lock-icon">🔐</div>
+      <div class="lock-icon"></div>
       <h2>Espace Fellows</h2>
       <p>Connectez-vous pour accéder à votre espace</p>
     </div>
@@ -410,16 +410,15 @@
       <div class="admin-stat-card"><span class="admin-stat-num red" id="adminCountRejete">0</span><span class="admin-stat-label">Rejetées</span></div>
     </div>
     <div class="admin-tabs">
-      <div class="admin-tab active" id="admin-tab-attente" onclick="showAdminTab('attente')">⏳ En attente</div>
-      <div class="admin-tab" id="admin-tab-publie" onclick="showAdminTab('publie')">✅ Publiées</div>
-      <div class="admin-tab" id="admin-tab-rejete" onclick="showAdminTab('rejete')">❌ Rejetées</div>
-    </div>
+      <div class="admin-tab active" id="admin-tab-attente" onclick="showAdminTab('attente')"> En attente</div>
+      <div class="admin-tab" id="admin-tab-publie" onclick="showAdminTab('publie')"><i class="fa-vellum fa-solid fa-check"></i> Publiées</div>
+      <div class="admin-tab" id="admin-tab-rejete" onclick="showAdminTab('rejete')"><i class="fa-solid fa-xmark"></i> Rejetées</div>    </div>
     <div id="adminPubsList"></div>
   </div>
 
   <!-- SUCCÈS -->
   <div class="toast-success" id="toastSuccess">
-    <div class="toast-icon">🎉</div>
+    <div class="toast-icon"></div>
     <h2>Soumission envoyée !</h2>
     <p>Votre publication a bien été reçue.<br />Elle sera examinée par un administrateur et publiée sous peu.<br /><strong>Merci pour votre contribution à CITADEL.</strong></p>
     <button class="btn-login" style="margin-top:20px;" onclick="backToDashboard()">
@@ -477,7 +476,7 @@
 <!-- Modal confirmation -->
 <div id="confirmModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center;padding:20px;">
   <div style="background:white;border-radius:14px;padding:32px;max-width:400px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.2);text-align:center;border:1px solid var(--border);">
-    <div id="confirmIcon" style="font-size:2.5rem;margin-bottom:12px;">✅</div>
+    <div id="confirmIcon" style="font-size:2.5rem;margin-bottom:12px;"></div>
     <h3 id="confirmTitle" style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--dark);margin-bottom:8px;"></h3>
     <p id="confirmMessage" style="color:var(--gray);font-size:.88rem;margin-bottom:24px;line-height:1.6;font-family:'Inter',sans-serif;"></p>
     <div style="display:flex;gap:10px;justify-content:center;">
@@ -723,23 +722,23 @@ function renderAdminPubs(pubs) {
     <div class="admin-pub-card ${pub.status === 'Publié' ? 'publie' : pub.status === 'Rejeté' ? 'rejete' : ''}">
       <div class="admin-pub-title">${pub.title}</div>
       <div class="admin-pub-meta">
-        <span>👤 ${pub.authors || ''}</span><span>📅 ${pub.year}</span>
-        <span>🏛️ ${pub.venue || ''}</span>
-        <span>📧 Soumis par : <strong>${pub.submitted_by || ''}</strong></span>
+        <span> ${pub.authors || ''}</span><span> ${pub.year}</span>
+        <span> ${pub.venue || ''}</span>
+        <span> Soumis par : <strong>${pub.submitted_by || ''}</strong></span>
         <span>🕐 ${new Date(pub.created_at).toLocaleDateString('fr-FR')}</span>
       </div>
       ${pub.abstract ? `<div style="margin:10px 0;font-size:.85rem;color:var(--gray);line-height:1.6;background:var(--light);padding:10px;border-radius:6px;"><strong>Résumé :</strong> ${pub.abstract}</div>` : ''}
       ${pub.citations ? `<div style="margin:6px 0;font-size:.82rem;color:var(--gray);"><strong>Citations :</strong> ${pub.citations}</div>` : ''}
       <div class="admin-pub-actions">
         ${pub.pdf_url ? `<a class="btn-action" href="${pub.pdf_url}" target="_blank"><i class="fa-solid fa-file-pdf"></i> Voir PDF</a>` : ""}
-        ${pub.status !== 'Publié' ? `<button class="btn-valider" onclick="validerPublication(${pub.id})">✅ Valider</button>` : ""}
-        ${pub.status !== 'Rejeté' ? `<button class="btn-rejeter" onclick="rejeterPublication(${pub.id})">❌ Rejeter</button>` : ""}
+        ${pub.status !== 'Publié' ? `<button class="btn-valider" onclick="validerPublication(${pub.id})"> Valider</button>` : ""}
+        ${pub.status !== 'Rejeté' ? `<button class="btn-rejeter" onclick="rejeterPublication(${pub.id})"> Rejeter</button>` : ""}
       </div>
     </div>`).join("");
 }
 
 async function validerPublication(id) {
-  showConfirm("Valider cette publication ?", "Elle sera visible publiquement sur le site.", "✅", "var(--green)", async () => {
+  showConfirm("Valider cette publication ?", "Elle sera visible publiquement sur le site.", "", "var(--green)", async () => {
     try {
       const token = localStorage.getItem("sb_access_token");
       const res = await fetch(`${SUPABASE_URL}/rest/v1/publications?id=eq.${id}`, { method: "PATCH", headers: { "apikey": SUPABASE_ANON, "Authorization": `Bearer ${token}`, "Content-Type": "application/json", "Prefer": "return=minimal" }, body: JSON.stringify({ status: "Publié" }) });
@@ -750,7 +749,7 @@ async function validerPublication(id) {
 }
 
 async function rejeterPublication(id) {
-  showConfirm("Rejeter cette publication ?", "Le fellow sera informé que sa soumission n'a pas été retenue.", "❌", "#c0392b", async () => {
+  showConfirm("Rejeter cette publication ?", "Le fellow sera informé que sa soumission n'a pas été retenue.", "", "#c0392b", async () => {
     try {
       const token = localStorage.getItem("sb_access_token");
       const res = await fetch(`${SUPABASE_URL}/rest/v1/publications?id=eq.${id}`, { method: "PATCH", headers: { "apikey": SUPABASE_ANON, "Authorization": `Bearer ${token}`, "Content-Type": "application/json", "Prefer": "return=minimal" }, body: JSON.stringify({ status: "Rejeté" }) });
@@ -827,7 +826,7 @@ function backToDashboard() {
 
 async function loadMyPublications() {
   const list = document.getElementById("myPubsList");
-  list.innerHTML = `<div class="empty-state"><div class="empty-icon">⏳</div><h3>Chargement...</h3></div>`;
+  list.innerHTML = `<div class="empty-state"><div class="empty-icon"></div><h3>Chargement...</h3></div>`;
   try {
     const pubs = await supabaseFetch(`publications?submitted_by=eq.${encodeURIComponent(currentUser.email)}&order=created_at.desc`);
     if (pubs.length === 0) {
@@ -847,10 +846,10 @@ async function loadMyPublications() {
             ${pub.pdf_url ? `<a class="btn-action" href="${pub.pdf_url}" target="_blank"><i class="fa-solid fa-file-pdf"></i> Voir PDF</a>` : ""}
           </div>
         </div>
-        <span class="pub-status ${pub.status === 'Publié' ? 'publie' : 'attente'}">${pub.status === 'Publié' ? '✅ Publié' : '⏳ En attente'}</span>
+        <span class="pub-status ${pub.status === 'Publié' ? 'publie' : 'attente'}">${pub.status === 'Publié' ? ' Publié' : ' En attente'}</span>
       </div>`).join("");
   } catch (err) {
-    list.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><h3>Erreur de chargement</h3><p>Impossible de charger vos publications.</p></div>`;
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon"></div><h3>Erreur de chargement</h3><p>Impossible de charger vos publications.</p></div>`;
   }
 }
 
@@ -889,7 +888,7 @@ async function handleEdit() {
       body: JSON.stringify({ title: document.getElementById("edit-titre").value.trim(), authors: document.getElementById("edit-auteurs").value.trim(), year: parseInt(document.getElementById("edit-annee").value), type: document.getElementById("edit-type").value, abstract: document.getElementById("edit-resume").value.trim(), venue: document.getElementById("edit-universite").value.trim(), status: "En attente" })
     });
     closeModal();
-    alert("✅ Modification envoyée ! Elle sera examinée par l'administrateur.");
+    alert(" Modification envoyée ! Elle sera examinée par l'administrateur.");
   } catch (err) { alert("Erreur : " + err.message); }
   finally { btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Envoyer la modification`; btn.disabled = false; }
 }
